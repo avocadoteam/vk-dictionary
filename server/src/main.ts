@@ -10,7 +10,6 @@ import * as logger from 'morgan';
 import * as sentry from '@sentry/node';
 import * as moment from 'moment';
 import { appV } from './constants';
-import { RedisIoAdapter } from './adapters/redis-io.adapter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -39,7 +38,6 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
-  app.useWebSocketAdapter(new RedisIoAdapter(app));
   app.useGlobalInterceptors(new TimeoutInterceptor());
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));

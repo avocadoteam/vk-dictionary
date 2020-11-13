@@ -8,7 +8,7 @@ import integrationConfig from 'src/config/integration.config';
 import { FetchLimiter } from './interceptors/rate-limiter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EventsModule } from './events/events.module';
+import { ExpDictionaryModule } from './exp-dictionary/exp-dictionary.module';
 
 @Module({
   imports: [
@@ -17,28 +17,28 @@ import { EventsModule } from './events/events.module';
       isGlobal: true,
     }),
     ScheduleModule.forRoot(),
-    // TypeOrmModule.forRootAsync({
-    //   useFactory: (configService: ConfigService) => ({
-    //     type: 'postgres',
-    //     ...(configService.get<string>('database.psqlUrl')
-    //       ? {
-    //           url: configService.get<string>('database.psqlUrl'),
-    //         }
-    //       : {
-    //           host: configService.get<string>('database.host'),
-    //           port: configService.get<number>('database.port'),
-    //           username: configService.get<string>('database.username'),
-    //           password: configService.get<string>('database.password'),
-    //           database: configService.get<string>('database.dbName'),
-    //         }),
-    //     entities: [__dirname + '/db/tables/*{.ts,.js}'],
-    //     migrations: [__dirname + '/db/migrations/*{.ts,.js}'],
-    //     synchronize: false,
-    //     migrationsRun: true,
-    //   }),
-    //   inject: [ConfigService],
-    // }),
-    EventsModule
+    TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        ...(configService.get<string>('database.psqlUrl')
+          ? {
+              url: configService.get<string>('database.psqlUrl'),
+            }
+          : {
+              host: configService.get<string>('database.host'),
+              port: configService.get<number>('database.port'),
+              username: configService.get<string>('database.username'),
+              password: configService.get<string>('database.password'),
+              database: configService.get<string>('database.dbName'),
+            }),
+        entities: [__dirname + '/db/tables/*{.ts,.js}'],
+        migrations: [__dirname + '/db/migrations/*{.ts,.js}'],
+        synchronize: false,
+        migrationsRun: true,
+      }),
+      inject: [ConfigService],
+    }),
+    ExpDictionaryModule,
   ],
   controllers: [AppController],
 })
