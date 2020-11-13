@@ -7,6 +7,7 @@ import coreConfig from 'src/config/core.config';
 import integrationConfig from 'src/config/integration.config';
 import { FetchLimiter } from './interceptors/rate-limiter';
 import { ScheduleModule } from '@nestjs/schedule';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventsModule } from './events/events.module';
 
 @Module({
