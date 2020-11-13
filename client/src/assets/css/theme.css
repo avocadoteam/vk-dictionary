@@ -1,0 +1,46 @@
+body[scheme='space_gray'] {
+  --background_content: #202125;
+  --header_alternate_background: #28292d;
+  --header_background: #202125;
+}
+.Div--android {
+  padding: 12px;
+}
+
+.CardGrid--android {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.SimpleCell--android {
+  font-size: 16px;
+  line-height: 20px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.Cell--android .Cell__in {
+  padding: 0 12px;
+}
+
+.PanelHeader__left,
+.PanelHeader__right {
+  flex-basis: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
+  opacity: 1;
+  transition: opacity 0.3s cubic-bezier(0.36, 0.66, 0.04, 1);
+  transition: opacity 0.3s var(--ios-easing);
+  padding: 4px 4px 4px 0;
+}
+
+.PanelHeader__content {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.PanelHeader--android .PanelHeader__content {
+  flex-grow: unset !important;
+  font-size: 21px !important;
+  line-height: 52px !important;
+}

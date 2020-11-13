@@ -1,0 +1,13 @@
+{
+  "name": "vk-app",
+  "version": "1.0",
+  "private": true,
+  "scripts": {
+    "heroku-prebuild": "yarn build:client && yarn build:server",
+    "build:client": "cd client && yarn && yarn build",
+    "build:server": "cd server && yarn && yarn build"
+  },
+  "engines": {
+    "yarn": "1.22.4"
+  }
+}

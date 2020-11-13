@@ -1,0 +1,8 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "files.exclude": {
+    "dist/": true,
+    "server/node_modules/": true,
+    "client/node_modules/": true
+  }
+}
