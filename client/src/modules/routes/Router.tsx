@@ -8,7 +8,6 @@ export const Router = React.memo(() => {
   const dispatch = useDispatch<AppDispatchActions>();
 
   React.useEffect(() => {
-    dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.User });
     dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.Ads });
   }, []);
 

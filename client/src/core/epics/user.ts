@@ -1,44 +1,13 @@
-import { UserInfo } from '@vkontakte/vk-bridge';
 import { getHash, getSearch } from 'connected-react-router';
 import { AppDispatch, AppEpic, AppUser, FetchingStateName, Skeys } from 'core/models';
 import { getLocationNotificationEnabled } from 'core/selectors/router';
-import { getUserData, getUserStorageKeys } from 'core/vk-bridge/user';
+import { getUserStorageKeys } from 'core/vk-bridge/user';
 import { ofType } from 'redux-observable';
 import { from } from 'rxjs';
 import { filter, mergeMap, switchMap } from 'rxjs/operators';
 import { devTimeout } from './addons';
 import { safeCombineEpics } from './combine';
 import { captureFetchErrorMoreActions } from './errors';
-
-const getUserInfo: AppEpic = (action$, state$) =>
-  action$.pipe(
-    ofType('SET_UPDATING_DATA'),
-    filter(({ payload }) => payload === FetchingStateName.User),
-    switchMap(() =>
-      from(getUserData()).pipe(
-        devTimeout(),
-        mergeMap((userInfo: UserInfo) => {
-          return [
-            {
-              type: 'SET_READY_DATA',
-              payload: {
-                name: FetchingStateName.User,
-                data: userInfo,
-              },
-            },
-            {
-              type: 'SET_UPDATING_DATA',
-              payload: FetchingStateName.AddToHomeInfo,
-            },
-          ] as AppDispatch[];
-        }),
-        captureFetchErrorMoreActions(FetchingStateName.User, {
-          type: 'SET_UPDATING_DATA',
-          payload: FetchingStateName.AddToHomeInfo,
-        })
-      )
-    )
-  );
 
 const getUserSKeysEpic: AppEpic = (action$, state$) =>
   action$.pipe(
@@ -73,8 +42,8 @@ const getUserSKeysEpic: AppEpic = (action$, state$) =>
 
 const setInitInfo: AppEpic = (action$, state$) =>
   action$.pipe(
-    ofType('SET_UPDATING_DATA'),
-    filter(({ payload }) => payload === FetchingStateName.User),
+    // ofType('SET_UPDATING_DATA'),
+    // filter(({ payload }) => payload === FetchingStateName.User),
     mergeMap(() => {
       const state = state$.value;
       const hash = getHash(state$.value);
@@ -101,4 +70,4 @@ const setInitInfo: AppEpic = (action$, state$) =>
     })
   );
 
-export const userEpics = safeCombineEpics(getUserInfo, getUserSKeysEpic, setInitInfo);
+export const userEpics = safeCombineEpics(getUserSKeysEpic, setInitInfo);

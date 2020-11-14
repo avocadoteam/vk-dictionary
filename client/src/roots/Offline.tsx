@@ -13,7 +13,6 @@ export const Offline = React.memo(() => {
 
   React.useEffect(() => {
     if (online) {
-      dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.User });
       dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.UserSKeys });
     }
   }, [online]);

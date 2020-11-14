@@ -6,7 +6,7 @@ import { ClientTheme } from 'core/models';
 vkBridge.subscribe(({ detail: { type, data } }) => {
   if (type === 'VKWebAppUpdateConfig') {
     const schemeAttribute = document.createAttribute('scheme');
-    const unknownData = data as any;
+    const unknownData: any = data;
     const theme = unknownData.scheme ? unknownData.scheme : 'client_light';
     schemeAttribute.value = theme;
     document.body.attributes.setNamedItem(schemeAttribute);
