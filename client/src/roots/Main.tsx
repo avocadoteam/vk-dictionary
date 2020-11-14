@@ -8,6 +8,7 @@ import { useViewChange } from 'core/hooks';
 import { AppDispatchActions, MainView } from 'core/models';
 import { goBack } from 'connected-react-router';
 import { DictGallery } from 'modules/home-slides';
+import { SearchLayout } from 'modules/home-search';
 
 export const Main = React.memo(() => {
   const activePanel = useSelector(getMainView);
@@ -25,6 +26,7 @@ export const Main = React.memo(() => {
         <Panel id={MainView.Home}>
           <PanelHeader separator={false} />
           <DictGallery />
+          <SearchLayout />
         </Panel>
         <Panel id={MainView.Offline}>
           <Offline />

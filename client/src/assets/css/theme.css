@@ -1,8 +1,19 @@
 body[scheme='space_gray'] {
-  --background_content: #202125;
-  --header_alternate_background: #28292d;
-  --header_background: #202125;
+  --background_content: #2F2F2F;
+  --header_alternate_background: #2F2F2F;
+  --header_background: #2F2F2F;
+  --search_bar_field_background: #4B4B4B;
+  --text_primary: #A6A6A6;
 }
+
+body {
+  --background_content: #FCFCFC;
+  --header_alternate_background: #FCFCFC;
+  --header_background: #FCFCFC;
+  --search_bar_field_background: #FBFBFB;
+  --text_primary: #A6A6A6;
+}
+
 .Div--android {
   padding: 12px;
 }
