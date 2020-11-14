@@ -40,34 +40,34 @@ const getUserSKeysEpic: AppEpic = (action$, state$) =>
     )
   );
 
-const setInitInfo: AppEpic = (action$, state$) =>
-  action$.pipe(
-    // ofType('SET_UPDATING_DATA'),
-    // filter(({ payload }) => payload === FetchingStateName.User),
-    mergeMap(() => {
-      const state = state$.value;
-      const hash = getHash(state$.value);
-      const q = getSearch(state$.value);
-      const hashListGUID = hash ? hash.split('#').pop() : null;
-      const actions: AppDispatch[] = [
-        {
-          type: 'SET_NOTIFICATIONS',
-          payload: !!getLocationNotificationEnabled(state),
-        },
-        {
-          type: 'SET_HASH',
-          payload: hashListGUID ?? null,
-        },
-      ];
+// const setInitInfo: AppEpic = (action$, state$) =>
+//   action$.pipe(
+//     // ofType('SET_UPDATING_DATA'),
+//     // filter(({ payload }) => payload === FetchingStateName.User),
+//     mergeMap(() => {
+//       const state = state$.value;
+//       const hash = getHash(state$.value);
+//       const q = getSearch(state$.value);
+//       const hashListGUID = hash ? hash.split('#').pop() : null;
+//       const actions: AppDispatch[] = [
+//         {
+//           type: 'SET_NOTIFICATIONS',
+//           payload: !!getLocationNotificationEnabled(state),
+//         },
+//         {
+//           type: 'SET_HASH',
+//           payload: hashListGUID ?? null,
+//         },
+//       ];
 
-      if (!!q) {
-        actions.push({
-          type: 'SET_INIT_QUERY',
-          payload: q,
-        });
-      }
-      return actions;
-    })
-  );
+//       if (!!q) {
+//         actions.push({
+//           type: 'SET_INIT_QUERY',
+//           payload: q,
+//         });
+//       }
+//       return actions;
+//     })
+//   );
 
-export const userEpics = safeCombineEpics(getUserSKeysEpic, setInitInfo);
+export const userEpics = safeCombineEpics(getUserSKeysEpic);

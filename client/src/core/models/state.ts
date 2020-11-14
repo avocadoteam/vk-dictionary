@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { LocationChangeAction, RouterState } from 'connected-react-router';
+import { CallHistoryMethodAction, LocationChangeAction, RouterState } from 'connected-react-router';
 import { FetchingStateName, FetchingStatus } from './enums';
 
 declare module 'react-redux' {
@@ -41,7 +41,8 @@ export type AppDispatch =
   | ErrorEnqueue
   | ErrorDequeue
   | ErrorQueue
-  | LocationChangeAction;
+  | LocationChangeAction
+  | CallHistoryMethodAction;
 
 export type AppDispatchActions = Dispatch<AppDispatch>;
 

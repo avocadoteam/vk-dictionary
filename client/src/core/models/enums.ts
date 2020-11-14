@@ -17,3 +17,9 @@ export enum FetchingStatus {
   Ready,
   Error,
 }
+
+export enum MainView {
+  Home = 'home',
+  Word = 'word',
+  Offline = 'offline',
+}
