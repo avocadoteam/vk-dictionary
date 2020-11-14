@@ -16,6 +16,7 @@ import 'core/vk-bridge/init';
 import '@vkontakte/vkui/dist/vkui.css';
 import 'core/global-listen';
 import 'assets/css/theme.css';
+import 'assets/fonts/style.css';
 
 const felaRenderer = configureFela();
 

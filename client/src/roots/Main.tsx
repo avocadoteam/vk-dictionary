@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Panel, Div, PanelHeader } from '@vkontakte/vkui';
+import { View, Panel, PanelHeader } from '@vkontakte/vkui';
 import { Offline } from './Offline';
 import { SnakbarsErr } from 'modules/snaks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import { getMainView } from 'core/selectors/main';
 import { useViewChange } from 'core/hooks';
 import { AppDispatchActions, MainView } from 'core/models';
 import { goBack } from 'connected-react-router';
+import { DictGallery } from 'modules/home-slides';
 
 export const Main = React.memo(() => {
   const activePanel = useSelector(getMainView);
@@ -23,7 +24,7 @@ export const Main = React.memo(() => {
       <View activePanel={activePanel} history={history} onSwipeBack={swipeBack}>
         <Panel id={MainView.Home}>
           <PanelHeader separator={false} />
-          <Div>kek</Div>
+          <DictGallery />
         </Panel>
         <Panel id={MainView.Offline}>
           <Offline />
