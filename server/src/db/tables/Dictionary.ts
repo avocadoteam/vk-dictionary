@@ -1,3 +1,4 @@
+import { languageConfig } from 'src/contracts/search';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Photo } from './Photo';
 
@@ -19,15 +20,9 @@ export class Dictionary {
   @Column({
     type: 'text',
     nullable: true,
-  })
-  name_plain_text!: string;
-
-  @Column({
-    type: 'text',
-    nullable: true,
     name: 'ts_config_name'
   })
-  TsConfigName!: string;
+  TsConfigName: string;
 
   @OneToMany(() => Photo, (photo) => photo.dictionary)
   photos!: Photo[];
@@ -35,5 +30,6 @@ export class Dictionary {
   constructor(name: string, definition: string) {
     this.name = name;
     this.definition = definition;
+    this.TsConfigName = languageConfig;
   }
 }
