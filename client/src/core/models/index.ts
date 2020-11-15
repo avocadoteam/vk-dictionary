@@ -3,3 +3,4 @@ export * from './constants';
 export * from './ads';
 export * from './epics';
 export * from './enums';
+export * from './search';

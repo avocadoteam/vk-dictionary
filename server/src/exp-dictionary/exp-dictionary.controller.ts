@@ -5,6 +5,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { SearchModel } from 'src/contracts/search';
 import { SignGuard } from 'src/guards/sign.guard';
 import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
 import { ExpDictionaryService } from './exp-dictionary.service';
@@ -17,9 +18,9 @@ export class ExpDictionaryController {
 
   @Get()
   testSearch(
-    @Query('query')
-    query: string,
+    @Query()
+    model: SearchModel,
   ) {
-    return this.expDictService.fullTextSearch(query);
+    return this.expDictService.fullTextSearch(model.query);
   }
 }

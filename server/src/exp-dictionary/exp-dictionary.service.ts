@@ -43,11 +43,11 @@ export class ExpDictionaryService {
 
       if (parsed.srs?.length) {
         const results = await this.saveNewToDictionary(parsed.srs);
-        return results?.slice(0, 4) ?? [];
+        return results?.slice(0, 5) ?? [];
       }
     }
 
-    return r?.slice(0, 4) ?? [];
+    return r?.slice(0, 5) ?? [];
   }
 
   async parsePage(query: string) {
