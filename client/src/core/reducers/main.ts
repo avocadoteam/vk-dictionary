@@ -1,14 +1,11 @@
 import * as models from 'core/models';
 import { FetchingStatus, ClientTheme } from 'core/models';
 
-const hashValue = window.location.hash ? Number(window.location.hash.split('#').pop()) : null;
-
 export const initialState: models.AppState['ui'] = {
   theme: ClientTheme.Light,
   errorsQueue: [],
   fetchingDatas: {},
   notifications: false,
-  hash: !hashValue || isNaN(hashValue) ? null : hashValue,
   online: true,
   initialQuery: '',
   isAppUser: true,
@@ -76,12 +73,6 @@ export const reducer = (
       return {
         ...state,
         notifications: dispatch.payload,
-      };
-    }
-    case 'SET_HASH': {
-      return {
-        ...state,
-        hash: dispatch.payload,
       };
     }
     case 'SET_APP_CONNECT': {

@@ -1,10 +1,11 @@
-import { getHash, getSearch } from 'connected-react-router';
-import { AppDispatch, AppEpic, AppUser, FetchingStateName, Skeys } from 'core/models';
+import { getHash, getSearch, push } from 'connected-react-router';
+import { AppDispatch, AppEpic, AppUser, FetchingStateName, MainView, Skeys } from 'core/models';
+import { getMainView } from 'core/selectors/main';
 import { getLocationNotificationEnabled } from 'core/selectors/router';
 import { getUserStorageKeys } from 'core/vk-bridge/user';
 import { ofType } from 'redux-observable';
 import { from } from 'rxjs';
-import { filter, mergeMap, switchMap } from 'rxjs/operators';
+import { filter, map, mergeMap, switchMap } from 'rxjs/operators';
 import { devTimeout } from './addons';
 import { safeCombineEpics } from './combine';
 import { captureFetchErrorMoreActions } from './errors';
@@ -40,34 +41,45 @@ const getUserSKeysEpic: AppEpic = (action$, state$) =>
     )
   );
 
-// const setInitInfo: AppEpic = (action$, state$) =>
-//   action$.pipe(
-//     // ofType('SET_UPDATING_DATA'),
-//     // filter(({ payload }) => payload === FetchingStateName.User),
-//     mergeMap(() => {
-//       const state = state$.value;
-//       const hash = getHash(state$.value);
-//       const q = getSearch(state$.value);
-//       const hashListGUID = hash ? hash.split('#').pop() : null;
-//       const actions: AppDispatch[] = [
-//         {
-//           type: 'SET_NOTIFICATIONS',
-//           payload: !!getLocationNotificationEnabled(state),
-//         },
-//         {
-//           type: 'SET_HASH',
-//           payload: hashListGUID ?? null,
-//         },
-//       ];
+const setInitInfo: AppEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('SET_UPDATING_DATA'),
+    filter(({ payload }) => payload === FetchingStateName.UserSKeys),
+    mergeMap(() => {
+      const state = state$.value;
+      const hash = getHash(state$.value);
+      const q = getSearch(state$.value);
+      const wordId = hash ? hash.split('#').pop() : null;
+      const actions: AppDispatch[] = [
+        {
+          type: 'SET_NOTIFICATIONS',
+          payload: !!getLocationNotificationEnabled(state),
+        },
+        { type: 'SET_UPDATING_DATA', payload: FetchingStateName.MostFrequentWords },
+      ];
 
-//       if (!!q) {
-//         actions.push({
-//           type: 'SET_INIT_QUERY',
-//           payload: q,
-//         });
-//       }
-//       return actions;
-//     })
-//   );
+      if (wordId) {
+        actions.push({
+          type: 'SET_SELECTED_WORD_ID',
+          payload: wordId,
+        });
+      }
 
-export const userEpics = safeCombineEpics(getUserSKeysEpic);
+      if (!!q) {
+        actions.push({
+          type: 'SET_INIT_QUERY',
+          payload: q,
+        });
+      }
+      return actions;
+    })
+  );
+
+const watchWordIdFromHashEpic: AppEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('SET_SELECTED_WORD_ID'),
+    filter(({ payload }) => !!payload && getMainView(state$.value) === MainView.Home),
+    map(({ payload }) => push(`/${MainView.Word}/${payload}`))
+  );
+
+export const userEpics = safeCombineEpics(getUserSKeysEpic, setInitInfo, watchWordIdFromHashEpic);

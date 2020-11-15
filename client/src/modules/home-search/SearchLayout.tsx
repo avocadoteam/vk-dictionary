@@ -1,6 +1,5 @@
 import { Search, Spinner } from '@vkontakte/vkui';
-import { push } from 'connected-react-router';
-import { AppDispatchActions, FetchingStateName, MainView } from 'core/models';
+import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import {
   isSearchExpDictUpdating,
@@ -20,10 +19,6 @@ export const SearchLayout = React.memo<{ goForward: () => void }>(({ goForward }
   const updating = useSelector(isSearchExpDictUpdating);
   const dispatch = useDispatch<AppDispatchActions>();
 
-  React.useEffect(() => {
-    dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.MostFrequentWords });
-  }, []);
-
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     dispatch({
@@ -40,7 +35,6 @@ export const SearchLayout = React.memo<{ goForward: () => void }>(({ goForward }
         payload,
       });
       goForward();
-      dispatch(push(`/${MainView.Word}`));
     },
     [goForward]
   );

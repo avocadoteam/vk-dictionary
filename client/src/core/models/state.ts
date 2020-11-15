@@ -17,7 +17,6 @@ export type AppState = {
       };
     };
     notifications: boolean;
-    hash: string | number | null;
     online: boolean;
     initialQuery: string;
     isAppUser: boolean;
@@ -34,7 +33,6 @@ export type AppDispatch =
   | FetchErrorAction
   | { type: 'SET_THEME'; payload: ClientTheme }
   | { type: 'SET_NOTIFICATIONS'; payload: boolean }
-  | { type: 'SET_HASH'; payload: string | number | null }
   | { type: 'SET_APP_CONNECT'; payload: boolean }
   | { type: 'SET_INIT_QUERY'; payload: string }
   | { type: 'SET_APP_USER'; payload: boolean }

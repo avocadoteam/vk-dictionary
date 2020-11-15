@@ -30,7 +30,7 @@ export const Main = React.memo(() => {
           <SearchLayout goForward={() => goForward(MainView.Word)} />
         </Panel>
         <Panel id={MainView.Word}>
-          <WordCard />
+          <WordCard swipeBack={swipeBack} />
         </Panel>
         <Panel id={MainView.Offline}>
           <Offline />
