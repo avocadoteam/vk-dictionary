@@ -27,3 +27,8 @@ export enum MainView {
   Word = 'word',
   Offline = 'offline',
 }
+
+export enum SelectedHomeSlide {
+  Favourites = 0,
+  ExpDictionary = 1,
+}

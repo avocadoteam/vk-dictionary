@@ -1,15 +1,21 @@
 import { Gallery, Group } from '@vkontakte/vkui';
 import { SmallStar } from 'assets/svg/SmallStar';
+import { AppDispatchActions, SelectedHomeSlide } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
+import { getSelectedSlide } from 'core/selectors/settings';
 import React from 'react';
 import { useFela } from 'react-fela';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GallerySlide } from './GallerySlide';
 
 export const DictGallery = React.memo(() => {
-  const [slide, setSlide] = React.useState(1);
+  const slide = useSelector(getSelectedSlide);
   const dark = useSelector(isThemeDrak);
   const { css } = useFela();
+  const dispatch = useDispatch<AppDispatchActions>();
+
+  const setSlide = (payload: number) => dispatch({ type: 'SET_HOME_SLIDE', payload });
+
   return (
     <Group className={css({ position: 'relative' })}>
       <Gallery
@@ -32,12 +38,15 @@ export const DictGallery = React.memo(() => {
           width: '100%',
         })}
       >
-        <SmallStar fill={slide === 0 ? (dark ? '#F2F2F2' : '#CFCFCF') : '#DADADA'} />
+        <SmallStar
+          fill={slide === SelectedHomeSlide.Favourites ? (dark ? '#F2F2F2' : '#CFCFCF') : '#DADADA'}
+        />
         <div
           className={css({
             width: 7,
             height: 7,
-            backgroundColor: slide === 1 ? (dark ? '#F2F2F2' : '#CFCFCF') : '#DADADA',
+            backgroundColor:
+              slide === SelectedHomeSlide.Favourites ? (dark ? '#F2F2F2' : '#CFCFCF') : '#DADADA',
             borderRadius: '50%',
             marginLeft: '11px',
           })}

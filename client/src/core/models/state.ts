@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { CallHistoryMethodAction, LocationChangeAction, RouterState } from 'connected-react-router';
-import { FetchingStateName, FetchingStatus } from './enums';
+import { FetchingStateName, FetchingStatus, SelectedHomeSlide } from './enums';
 
 declare module 'react-redux' {
   export interface DefaultRootState extends AppState {}
@@ -22,6 +22,8 @@ export type AppState = {
     errorsQueue: string[];
     snackVisible: boolean;
     selectedWordId: string;
+    selectedHomeSlide: SelectedHomeSlide;
+    favouritesSearch: string
   };
   router: RouterState;
 };
@@ -36,6 +38,8 @@ export type AppDispatch =
   | { type: 'SET_APP_USER'; payload: boolean }
   | { type: 'SET_SNACK'; payload: boolean }
   | { type: 'SET_SELECTED_WORD_ID'; payload: string }
+  | { type: 'SET_HOME_SLIDE'; payload: SelectedHomeSlide }
+  | { type: 'SET_FAVOURITES_Q'; payload: string }
   | ErrorEnqueue
   | ErrorDequeue
   | ErrorQueue

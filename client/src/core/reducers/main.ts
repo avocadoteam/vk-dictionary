@@ -1,5 +1,5 @@
 import * as models from 'core/models';
-import { FetchingStatus, ClientTheme } from 'core/models';
+import { FetchingStatus, ClientTheme, SelectedHomeSlide } from 'core/models';
 
 export const initialState: models.AppState['ui'] = {
   theme: ClientTheme.Light,
@@ -10,6 +10,8 @@ export const initialState: models.AppState['ui'] = {
   isAppUser: true,
   snackVisible: false,
   selectedWordId: '',
+  selectedHomeSlide: SelectedHomeSlide.ExpDictionary,
+  favouritesSearch: '',
 };
 
 export const reducer = (
@@ -120,6 +122,18 @@ export const reducer = (
       return {
         ...state,
         selectedWordId: dispatch.payload,
+      };
+    }
+    case 'SET_HOME_SLIDE': {
+      return {
+        ...state,
+        selectedHomeSlide: dispatch.payload,
+      };
+    }
+    case 'SET_FAVOURITES_Q': {
+      return {
+        ...state,
+        favouritesSearch: dispatch.payload,
       };
     }
 

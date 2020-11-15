@@ -6,3 +6,5 @@ import { getStateUi } from './common';
 export const getNotifications = createSelector(getStateUi, (ui) => ui.notifications);
 
 export const isPlatformIOS = defaultMemoize(() => platform() === OS.IOS);
+
+export const getSelectedSlide = createSelector(getStateUi, (ui) => ui.selectedHomeSlide);

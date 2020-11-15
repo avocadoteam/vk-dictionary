@@ -22,7 +22,7 @@ export class UserFavouriteService {
         ed.definition
       from user_favourite uf 
       inner join dictionary ed on ed.id = uf.dictionary_id
-      where uf.vk_id = ${vkUserId};
+      where uf.vk_id = ${vkUserId} and deleted is null;
     `)) as SearchResult[];
     return r;
   }

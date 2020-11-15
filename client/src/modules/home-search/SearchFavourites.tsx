@@ -1,0 +1,58 @@
+import { Search } from '@vkontakte/vkui';
+import { AppDispatchActions } from 'core/models';
+import { isThemeDrak } from 'core/selectors/common';
+import { getFavQ, getUserFavouritesList } from 'core/selectors/favourites';
+import React from 'react';
+import { useFela } from 'react-fela';
+import { useDispatch, useSelector } from 'react-redux';
+import { textPreview } from './style';
+
+export const SearchFavourites = React.memo<{ goForward: () => void }>(({ goForward }) => {
+  const dark = useSelector(isThemeDrak);
+  const { css } = useFela({ dark });
+  const query = useSelector(getFavQ);
+  const values = useSelector(getUserFavouritesList);
+  const dispatch = useDispatch<AppDispatchActions>();
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'SET_FAVOURITES_Q',
+      payload: e.target.value,
+    });
+  };
+
+  const openCard = React.useCallback(
+    (payload: string) => {
+      dispatch({
+        type: 'SET_SELECTED_WORD_ID',
+        payload,
+      });
+      goForward();
+    },
+    [goForward]
+  );
+
+  return (
+    <>
+      <Search
+        after={null}
+        className={css({ backgroundColor: 'transparent', padding: '8px 15px' })}
+        onChange={handleSearch}
+        placeholder={'Поиск'}
+        value={query}
+      />
+      {values.map((v) => (
+        <div
+          key={v.id}
+          className={css({ padding: '21px 21px 0 20px' })}
+          onClick={() => openCard(v.id)}
+        >
+          <div
+            className={`${css(textPreview)} useMonrope manropeBold`}
+            dangerouslySetInnerHTML={{ __html: v.definition }}
+          />
+        </div>
+      ))}
+    </>
+  );
+});

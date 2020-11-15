@@ -26,3 +26,12 @@ export const isWordFavourite = createSelector(
   getUserFavouritesDataState,
   (wordId, favourites) => !!favourites.data?.find((v) => v.id === wordId)
 );
+
+export const getFavQ = createSelector(getStateUi, (ui) => ui.favouritesSearch);
+
+export const getUserFavouritesList = createSelector(
+  getUserFavouritesDataState,
+  getFavQ,
+  (dataState, q) =>
+    (dataState.data ?? []).filter((d) => d.definition?.toLowerCase()?.includes(q.toLowerCase()))
+);
