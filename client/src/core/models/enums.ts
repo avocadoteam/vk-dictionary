@@ -12,6 +12,8 @@ export enum FetchingStateName {
   UserSKeys = 'user_storage_keys',
   SearchExpDict = 'search_exp_dict',
   MostFrequentWords = 'most_frequent_words',
+  ToggleFavourite = 'toggleFavourite',
+  UserFavourites = 'user_favourites',
 }
 
 export enum FetchingStatus {

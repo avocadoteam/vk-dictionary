@@ -48,7 +48,6 @@ const setInitInfo: AppEpic = (action$, state$) =>
     mergeMap(() => {
       const state = state$.value;
       const hash = getHash(state$.value);
-      const q = getSearch(state$.value);
       const wordId = hash ? hash.split('#').pop() : null;
       const actions: AppDispatch[] = [
         {
@@ -56,19 +55,13 @@ const setInitInfo: AppEpic = (action$, state$) =>
           payload: !!getLocationNotificationEnabled(state),
         },
         { type: 'SET_UPDATING_DATA', payload: FetchingStateName.MostFrequentWords },
+        { type: 'SET_UPDATING_DATA', payload: FetchingStateName.UserFavourites },
       ];
 
       if (wordId) {
         actions.push({
           type: 'SET_SELECTED_WORD_ID',
           payload: wordId,
-        });
-      }
-
-      if (!!q) {
-        actions.push({
-          type: 'SET_INIT_QUERY',
-          payload: q,
         });
       }
       return actions;
@@ -79,7 +72,7 @@ const watchWordIdFromHashEpic: AppEpic = (action$, state$) =>
   action$.pipe(
     ofType('SET_SELECTED_WORD_ID'),
     filter(({ payload }) => !!payload && getMainView(state$.value) === MainView.Home),
-    map(({ payload }) => push(`/${MainView.Word}/${payload}`))
+    map(({ payload }) => push(`/${MainView.Word}/${payload}${getSearch(state$.value)}`))
   );
 
 export const userEpics = safeCombineEpics(getUserSKeysEpic, setInitInfo, watchWordIdFromHashEpic);

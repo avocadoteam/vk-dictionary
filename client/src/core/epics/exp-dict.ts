@@ -1,3 +1,4 @@
+import { getSearch } from 'connected-react-router';
 import {
   AppDispatch,
   AppEpic,
@@ -7,7 +8,6 @@ import {
   SearchResult,
 } from 'core/models';
 import { mostExpDictWords, searchInExpDict } from 'core/operations/exp-dict';
-import { getQToQuery } from 'core/selectors/user';
 import { ofType } from 'redux-observable';
 import { from, iif, of } from 'rxjs';
 import { auditTime, filter, map, switchMap } from 'rxjs/operators';
@@ -21,7 +21,7 @@ const searchExpDictEpic: AppEpic = (action$, state$) =>
     auditTime(1500),
     map(({ params }) => ({
       searchValue: params,
-      q: getQToQuery(state$.value),
+      q: getSearch(state$.value),
     })),
     switchMap(({ searchValue, q }) =>
       iif(
@@ -35,7 +35,7 @@ const searchExpDictEpic: AppEpic = (action$, state$) =>
                     type: 'SET_READY_DATA',
                     payload: {
                       name: FetchingStateName.SearchExpDict,
-                      data: r?.data,
+                      data: r?.data ?? [],
                     },
                   } as AppDispatch);
                 })
@@ -62,7 +62,7 @@ const mostFrequentWordsEpic: AppEpic = (action$, state$) =>
     ofType('SET_UPDATING_DATA'),
     filter<FetchUpdateAction>(({ payload }) => payload === FetchingStateName.MostFrequentWords),
     map(() => ({
-      q: getQToQuery(state$.value),
+      q: getSearch(state$.value),
     })),
     switchMap(({ q }) =>
       mostExpDictWords(q).pipe(
@@ -74,7 +74,7 @@ const mostFrequentWordsEpic: AppEpic = (action$, state$) =>
                   type: 'SET_READY_DATA',
                   payload: {
                     name: FetchingStateName.MostFrequentWords,
-                    data: r?.data,
+                    data: r?.data ?? [],
                   },
                 } as AppDispatch);
               })

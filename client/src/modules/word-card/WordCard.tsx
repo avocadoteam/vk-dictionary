@@ -1,4 +1,4 @@
-import { Icon24ChevronLeft, Icon24ShareOutline, Icon20FavoriteOutline } from '@vkontakte/icons';
+import { Icon24ChevronLeft, Icon24ShareOutline } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
 import { appId } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
@@ -7,6 +7,7 @@ import { vkBridge } from 'core/vk-bridge/instance';
 import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
 import { useSelector } from 'react-redux';
+import { MakeFavourite } from './MakeFavourite';
 
 const normalizeText = (text: string) =>
   text
@@ -50,19 +51,7 @@ export const WordCard = React.memo<{ swipeBack: () => void }>(({ swipeBack }) =>
           margin: 'auto 1.5rem 2rem auto',
         })}
       >
-        <Button
-          mode="tertiary"
-          className={css({
-            padding: 0,
-            marginRight: '12px',
-          })}
-        >
-          <Icon20FavoriteOutline
-            fill={dark ? 'rgba(255, 255, 255, 0.85)' : '#717171'}
-            width={30}
-            height={30}
-          />
-        </Button>
+        <MakeFavourite />
         <Button
           mode="tertiary"
           className={css({

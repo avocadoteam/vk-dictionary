@@ -12,8 +12,6 @@ export const isUserSKeysUpdating = createSelector(
   (userData) => userData.status === FetchingStatus.Updating
 );
 
-export const getQToQuery = createSelector(getStateUi, (ui) => ui?.initialQuery ?? '');
-
 export const isUserDataUpdating = createSelector(
   isUserSKeysUpdating,
   (keysStatusUpdating) => keysStatusUpdating

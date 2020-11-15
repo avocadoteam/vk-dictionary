@@ -7,7 +7,6 @@ export const initialState: models.AppState['ui'] = {
   fetchingDatas: {},
   notifications: false,
   online: true,
-  initialQuery: '',
   isAppUser: true,
   snackVisible: false,
   selectedWordId: '',
@@ -79,12 +78,6 @@ export const reducer = (
       return {
         ...state,
         online: dispatch.payload,
-      };
-    }
-    case 'SET_INIT_QUERY': {
-      return {
-        ...state,
-        initialQuery: dispatch.payload,
       };
     }
     case 'SET_APP_USER': {

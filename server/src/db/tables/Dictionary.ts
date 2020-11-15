@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Photo } from './Photo';
+import { UserFavourite } from './UserFavourite';
 import { WordFrequency } from './WordFrequency';
 
 @Entity()
@@ -38,6 +39,9 @@ export class Dictionary {
 
   @OneToMany(() => Photo, (photo) => photo.dictionary)
   photos!: Photo[];
+
+  @OneToMany(() => UserFavourite, uf => uf.expDict)
+  favourites!: UserFavourite[];
 
   @OneToOne(() => WordFrequency, (frq) => frq.expDict)
   wordFrequency!: WordFrequency;

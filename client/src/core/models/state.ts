@@ -18,7 +18,6 @@ export type AppState = {
     };
     notifications: boolean;
     online: boolean;
-    initialQuery: string;
     isAppUser: boolean;
     errorsQueue: string[];
     snackVisible: boolean;
@@ -34,7 +33,6 @@ export type AppDispatch =
   | { type: 'SET_THEME'; payload: ClientTheme }
   | { type: 'SET_NOTIFICATIONS'; payload: boolean }
   | { type: 'SET_APP_CONNECT'; payload: boolean }
-  | { type: 'SET_INIT_QUERY'; payload: string }
   | { type: 'SET_APP_USER'; payload: boolean }
   | { type: 'SET_SNACK'; payload: boolean }
   | { type: 'SET_SELECTED_WORD_ID'; payload: string }
