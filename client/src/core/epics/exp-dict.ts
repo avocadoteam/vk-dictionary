@@ -6,13 +6,13 @@ import {
   FetchUpdateAction,
   SearchResult,
 } from 'core/models';
-import { searchInExpDict } from 'core/operations/exp-dict';
+import { mostExpDictWords, searchInExpDict } from 'core/operations/exp-dict';
 import { getQToQuery } from 'core/selectors/user';
 import { ofType } from 'redux-observable';
 import { from, iif, of } from 'rxjs';
 import { auditTime, filter, map, switchMap } from 'rxjs/operators';
 import { safeCombineEpics } from './combine';
-import { captureFetchErrorWithTaptic } from './errors';
+import { captureFetchError, captureFetchErrorWithTaptic } from './errors';
 
 const searchExpDictEpic: AppEpic = (action$, state$) =>
   action$.pipe(
@@ -57,4 +57,35 @@ const searchExpDictEpic: AppEpic = (action$, state$) =>
     )
   );
 
-export const expDict = safeCombineEpics(searchExpDictEpic);
+const mostFrequentWordsEpic: AppEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('SET_UPDATING_DATA'),
+    filter<FetchUpdateAction>(({ payload }) => payload === FetchingStateName.MostFrequentWords),
+    map(() => ({
+      q: getQToQuery(state$.value),
+    })),
+    switchMap(({ q }) =>
+      mostExpDictWords(q).pipe(
+        switchMap((response) => {
+          if (response.ok) {
+            return from<Promise<FetchResponse<SearchResult[]>>>(response.json()).pipe(
+              switchMap((r) => {
+                return of({
+                  type: 'SET_READY_DATA',
+                  payload: {
+                    name: FetchingStateName.MostFrequentWords,
+                    data: r?.data,
+                  },
+                } as AppDispatch);
+              })
+            );
+          } else {
+            throw new Error(`Http ${response.status} on ${response.url}`);
+          }
+        }),
+        captureFetchError(FetchingStateName.MostFrequentWords)
+      )
+    )
+  );
+
+export const expDict = safeCombineEpics(searchExpDictEpic, mostFrequentWordsEpic);

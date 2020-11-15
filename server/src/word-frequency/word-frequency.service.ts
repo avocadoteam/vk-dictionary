@@ -1,5 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { cacheKey, hourTTL } from 'src/contracts/cache';
+import { SearchResult } from 'src/contracts/search';
+import { CacheManager } from 'src/custom-types/cache';
 import { WordFrequency } from 'src/db/tables/WordFrequency';
 import { errMap } from 'src/utils/errors';
 import { Connection, Repository } from 'typeorm';
@@ -12,6 +15,7 @@ export class WordFrequencyService {
     @InjectRepository(WordFrequency)
     private tableFreq: Repository<WordFrequency>,
     private connection: Connection,
+    @Inject(CACHE_MANAGER) private cache: CacheManager,
   ) {}
 
   async incrementFrequency(ids: string[]) {
@@ -45,5 +49,32 @@ export class WordFrequencyService {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  async getMostFreqWords() {
+    const cacheValues = await this.cache.get<SearchResult[]>(
+      cacheKey.mostFreqWords('exp'),
+    );
+
+    if (cacheValues?.length) {
+      return cacheValues;
+    }
+
+    const list = (await this.tableFreq.query(`
+        select  
+          ed.id,
+          ed.definition
+        from word_frequency wf 
+        inner join dictionary ed on ed.id = wf.exp_dict_id
+        order by frequency desc
+        limit 5;
+    
+    `)) as SearchResult[];
+
+    await this.cache.set(cacheKey.mostFreqWords('exp'), list, {
+      ttl: hourTTL,
+    });
+
+    return list;
   }
 }

@@ -49,9 +49,10 @@ export class ExpDictionaryService {
         const results = await this.saveNewToDictionary(parsed.srs);
         response = results?.slice(0, 5) ?? [];
       }
+    } else {
+      this.silentParse(query);
+      response = r?.slice(0, 5) ?? [];
     }
-
-    response = r?.slice(0, 5) ?? [];
 
     if (response.length) {
       this.wordFreqService.incrementFrequency(response.map((r) => r.id));
@@ -101,6 +102,15 @@ export class ExpDictionaryService {
       const shapes = this.shapeScrapedValues(srcs);
 
       for (const shape of shapes) {
+        const exists =
+          (await queryRunner.manager.count<Dictionary>(Dictionary, {
+            where: { name: shape.name },
+          })) > 0;
+
+        if (exists) {
+          continue;
+        }
+
         const newDictValue = new Dictionary(
           shape.name,
           shape.defenition,
@@ -151,5 +161,12 @@ export class ExpDictionaryService {
       shapes.push(shape);
     }
     return shapes;
+  }
+
+  async silentParse(query: string) {
+    const parsed = await this.parsePage(query);
+    if (parsed.srs?.length) {
+      this.saveNewToDictionary(parsed.srs);
+    }
   }
 }

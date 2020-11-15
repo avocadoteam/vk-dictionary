@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { IsNotBlank } from 'src/interceptors/exts/isBlank';
 
-export const languageConfig = 'ru';
+export const languageConfig = 'russian';
 
 export type Shape = {
   name: string;

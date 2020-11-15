@@ -7,6 +7,13 @@ const getSearchExpDictDataState = createSelector(
   (ui) =>
     (ui.fetchingDatas[FetchingStateName.SearchExpDict] ?? {}) as FetchingDataType<SearchResult[]>
 );
+const getMostFreqExpDictDataState = createSelector(
+  getStateUi,
+  (ui) =>
+    (ui.fetchingDatas[FetchingStateName.MostFrequentWords] ?? {}) as FetchingDataType<
+      SearchResult[]
+    >
+);
 
 export const isSearchExpDictUpdating = createSelector(
   getSearchExpDictDataState,
@@ -15,5 +22,9 @@ export const isSearchExpDictUpdating = createSelector(
 
 export const searchExpDictResult = createSelector(
   getSearchExpDictDataState,
+  (dataState) => dataState.data
+);
+export const mostFreqExpDictResult = createSelector(
+  getMostFreqExpDictDataState,
   (dataState) => dataState.data
 );

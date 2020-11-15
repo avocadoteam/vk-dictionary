@@ -1,18 +1,30 @@
 import { Search, Spinner } from '@vkontakte/vkui';
 import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
-import { isSearchExpDictUpdating, searchExpDictResult } from 'core/selectors/search';
+import {
+  isSearchExpDictUpdating,
+  mostFreqExpDictResult,
+  searchExpDictResult,
+} from 'core/selectors/search';
 import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const SearchLayout = React.memo(() => {
+  const [search, setSearch] = React.useState('');
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
   const values = useSelector(searchExpDictResult);
+  const mostFreqValues = useSelector(mostFreqExpDictResult);
   const updating = useSelector(isSearchExpDictUpdating);
   const dispatch = useDispatch<AppDispatchActions>();
+
+  React.useEffect(() => {
+    dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.MostFrequentWords });
+  }, []);
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
     dispatch({
       type: 'SET_UPDATING_DATA',
       payload: FetchingStateName.SearchExpDict,
@@ -47,7 +59,7 @@ export const SearchLayout = React.memo(() => {
         icon={updating ? <Spinner /> : undefined}
         placeholder={'Поиск мин 3 символа'}
       />
-      {values?.map((v) => (
+      {search && values?.map((v) => (
         <div key={v.id} className={css({ padding: '21px 21px 0 20px' })}>
           <div
             className={`${css(textPreview)} useMonrope manropeBold`}
@@ -61,12 +73,28 @@ export const SearchLayout = React.memo(() => {
           />
         </div>
       ))}
+      {!search && !!mostFreqValues
+        ? mostFreqValues.map((v) => (
+            <div key={v.id} className={css({ padding: '21px 21px 0 20px' })}>
+              <div
+                className={`${css(textPreview)} useMonrope manropeBold`}
+                dangerouslySetInnerHTML={{ __html: v.definition }}
+              />
+              <div
+                className={css({
+                  background:
+                    'linear-gradient(90deg, rgba(0, 0, 0, 0.35) 89.07%, rgba(0, 0, 0, 0) 100%)',
+                })}
+              />
+            </div>
+          ))
+        : null}
     </div>
   );
 });
 
 const textPreview: StyleFunction<{}, { dark: boolean }> = ({ dark }) => ({
-  height: 50,
+  height: 48,
   overflow: 'hidden',
   '>dfn': {
     display: 'block',
