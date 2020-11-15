@@ -9,6 +9,7 @@ import { FetchLimiter } from './interceptors/rate-limiter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ExpDictionaryModule } from './exp-dictionary/exp-dictionary.module';
+import { WordFrequencyModule } from './word-frequency/word-frequency.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ExpDictionaryModule } from './exp-dictionary/exp-dictionary.module';
       inject: [ConfigService],
     }),
     ExpDictionaryModule,
+    WordFrequencyModule,
   ],
   controllers: [AppController],
 })

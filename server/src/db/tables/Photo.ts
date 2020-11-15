@@ -10,7 +10,7 @@ import { Dictionary } from './Dictionary';
 
 @Entity()
 export class Photo {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment')
   id!: number;
 
   @Column({

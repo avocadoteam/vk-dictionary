@@ -1,6 +1,13 @@
 import { languageConfig } from 'src/contracts/search';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Photo } from './Photo';
+import { WordFrequency } from './WordFrequency';
 
 @Entity()
 export class Dictionary {
@@ -16,7 +23,7 @@ export class Dictionary {
     type: 'text',
   })
   definition: string;
-  
+
   @Column({
     type: 'text',
   })
@@ -25,12 +32,15 @@ export class Dictionary {
   @Column({
     type: 'text',
     nullable: true,
-    name: 'ts_config_name'
+    name: 'ts_config_name',
   })
   TsConfigName: string;
 
   @OneToMany(() => Photo, (photo) => photo.dictionary)
   photos!: Photo[];
+
+  @OneToOne(() => WordFrequency, (frq) => frq.expDict)
+  wordFrequency!: WordFrequency;
 
   constructor(name: string, definition: string, definition_plain_text: string) {
     this.name = name;

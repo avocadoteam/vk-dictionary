@@ -6,6 +6,7 @@ import * as puppeteer from 'puppeteer';
 import * as stripHtml from 'string-strip-html';
 import { errMap } from 'src/utils/errors';
 import { SearchResult, Shape } from 'src/contracts/search';
+import { WordFrequencyService } from 'src/word-frequency/word-frequency.service';
 
 @Injectable()
 export class ExpDictionaryService {
@@ -15,6 +16,7 @@ export class ExpDictionaryService {
     @InjectRepository(Dictionary)
     private tableDict: Repository<Dictionary>,
     private connection: Connection,
+    private wordFreqService: WordFrequencyService,
   ) {}
 
   async fullTextSearch(query: string) {
@@ -38,16 +40,24 @@ export class ExpDictionaryService {
         ps.document @@ to_tsquery('${query}:*');
     `)) as SearchResult[];
 
+    let response: SearchResult[] = [];
+
     if (!r?.length) {
       const parsed = await this.parsePage(query);
 
       if (parsed.srs?.length) {
         const results = await this.saveNewToDictionary(parsed.srs);
-        return results?.slice(0, 5) ?? [];
+        response = results?.slice(0, 5) ?? [];
       }
     }
 
-    return r?.slice(0, 5) ?? [];
+    response = r?.slice(0, 5) ?? [];
+
+    if (response.length) {
+      this.wordFreqService.incrementFrequency(response.map((r) => r.id));
+    }
+
+    return response;
   }
 
   async parsePage(query: string) {
