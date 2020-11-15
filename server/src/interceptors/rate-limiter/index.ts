@@ -26,7 +26,7 @@ export class FetchLimiter implements NestMiddleware {
         enable_offline_queue: false,
         ...connection,
       }),
-      points: 4, // Number of points
+      points: 2, // Number of points
       duration: 1, // Per second(s)
       keyPrefix: 'rlflx', // must be unique for limiters with different purpose
     });

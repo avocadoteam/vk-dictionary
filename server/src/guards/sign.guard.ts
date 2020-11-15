@@ -1,16 +1,15 @@
 import {
-  Injectable,
   CanActivate,
   ExecutionContext,
   Inject,
-  Logger,
+  Injectable,
+  Logger
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { Request } from 'express';
-import * as qs from 'querystring';
-import * as crypto from 'crypto';
-import integrationConfig from '../config/integration.config';
 import { ConfigType } from '@nestjs/config';
+import { Observable } from 'rxjs';
+import coreConfig from 'src/config/core.config';
+import integrationConfig from '../config/integration.config';
+import { isSignValid } from './operations';
 
 @Injectable()
 export class SignGuard implements CanActivate {
@@ -19,35 +18,18 @@ export class SignGuard implements CanActivate {
   constructor(
     @Inject(integrationConfig.KEY)
     private config: ConfigType<typeof integrationConfig>,
+    @Inject(coreConfig.KEY)
+    private common: ConfigType<typeof coreConfig>,
   ) {}
 
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const request = context.switchToHttp().getRequest<Request>();
+    const request = context.switchToHttp().getRequest();
 
-    const ordered: { [key: string]: any } = {};
-    Object.keys(request.query)
-      .sort()
-      .forEach((key) => {
-        if (key.slice(0, 3) === 'vk_') {
-          ordered[key] = request.query[key];
-        }
-      });
-
-    const stringParams = qs.stringify(ordered);
-    const paramsHash = crypto
-      .createHmac('sha256', this.config.vkSecretKey ?? '')
-      .update(stringParams)
-      .digest()
-      .toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=$/, '');
-
-    const signed = paramsHash === request.query.sign;
+    const signed = isSignValid(request.query, this.config.vkSecretKey ?? '');
     this.logger.log(`controller ${request.path} result ${signed}`);
 
-    return signed;
+    return this.common.devMode || signed;
   }
 }

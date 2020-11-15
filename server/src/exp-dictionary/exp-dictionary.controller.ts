@@ -20,6 +20,6 @@ export class ExpDictionaryController {
     @Query('query')
     query: string,
   ) {
-    this.expDictService.fullTextSearch(query);
+    return this.expDictService.fullTextSearch(query);
   }
 }

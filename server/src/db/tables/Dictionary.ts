@@ -16,6 +16,11 @@ export class Dictionary {
     type: 'text',
   })
   definition: string;
+  
+  @Column({
+    type: 'text',
+  })
+  definition_plain_text: string;
 
   @Column({
     type: 'text',
@@ -27,9 +32,10 @@ export class Dictionary {
   @OneToMany(() => Photo, (photo) => photo.dictionary)
   photos!: Photo[];
 
-  constructor(name: string, definition: string) {
+  constructor(name: string, definition: string, definition_plain_text: string) {
     this.name = name;
     this.definition = definition;
     this.TsConfigName = languageConfig;
+    this.definition_plain_text = definition_plain_text;
   }
 }
