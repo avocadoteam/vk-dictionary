@@ -5,17 +5,7 @@ import { Connection, Repository } from 'typeorm';
 import * as puppeteer from 'puppeteer';
 import * as stripHtml from 'string-strip-html';
 import { errMap } from 'src/utils/errors';
-
-type Shape = {
-  name: string;
-  defenition: string;
-  plainDefenition: string;
-};
-
-type SearchResult = {
-  id: string;
-  definition: string;
-};
+import { SearchResult, Shape } from 'src/contracts/search';
 
 @Injectable()
 export class ExpDictionaryService {
