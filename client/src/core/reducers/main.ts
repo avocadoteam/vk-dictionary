@@ -13,6 +13,7 @@ export const initialState: models.AppState['ui'] = {
   initialQuery: '',
   isAppUser: true,
   snackVisible: false,
+  selectedWordId: '',
 };
 
 export const reducer = (
@@ -129,6 +130,12 @@ export const reducer = (
       return {
         ...state,
         snackVisible: dispatch.payload,
+      };
+    }
+    case 'SET_SELECTED_WORD_ID': {
+      return {
+        ...state,
+        selectedWordId: dispatch.payload,
       };
     }
 

@@ -9,6 +9,7 @@ import { AppDispatchActions, MainView } from 'core/models';
 import { goBack } from 'connected-react-router';
 import { DictGallery } from 'modules/home-slides';
 import { SearchLayout } from 'modules/home-search';
+import { WordCard } from 'modules/word-card';
 
 export const Main = React.memo(() => {
   const activePanel = useSelector(getMainView);
@@ -26,7 +27,10 @@ export const Main = React.memo(() => {
         <Panel id={MainView.Home}>
           <PanelHeader separator={false} />
           <DictGallery />
-          <SearchLayout />
+          <SearchLayout goForward={() => goForward(MainView.Word)} />
+        </Panel>
+        <Panel id={MainView.Word}>
+          <WordCard />
         </Panel>
         <Panel id={MainView.Offline}>
           <Offline />

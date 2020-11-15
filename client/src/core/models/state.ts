@@ -23,6 +23,7 @@ export type AppState = {
     isAppUser: boolean;
     errorsQueue: string[];
     snackVisible: boolean;
+    selectedWordId: string;
   };
   router: RouterState;
 };
@@ -38,6 +39,7 @@ export type AppDispatch =
   | { type: 'SET_INIT_QUERY'; payload: string }
   | { type: 'SET_APP_USER'; payload: boolean }
   | { type: 'SET_SNACK'; payload: boolean }
+  | { type: 'SET_SELECTED_WORD_ID'; payload: string }
   | ErrorEnqueue
   | ErrorDequeue
   | ErrorQueue

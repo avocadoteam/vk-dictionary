@@ -1,5 +1,6 @@
 import { Search, Spinner } from '@vkontakte/vkui';
-import { AppDispatchActions, FetchingStateName } from 'core/models';
+import { push } from 'connected-react-router';
+import { AppDispatchActions, FetchingStateName, MainView } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import {
   isSearchExpDictUpdating,
@@ -10,7 +11,7 @@ import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const SearchLayout = React.memo(() => {
+export const SearchLayout = React.memo<{ goForward: () => void }>(({ goForward }) => {
   const [search, setSearch] = React.useState('');
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
@@ -31,6 +32,18 @@ export const SearchLayout = React.memo(() => {
       params: e.target.value,
     });
   };
+
+  const openCard = React.useCallback(
+    (payload: string) => {
+      dispatch({
+        type: 'SET_SELECTED_WORD_ID',
+        payload,
+      });
+      goForward();
+      dispatch(push(`/${MainView.Word}`));
+    },
+    [goForward]
+  );
 
   return (
     <div
@@ -59,32 +72,29 @@ export const SearchLayout = React.memo(() => {
         icon={updating ? <Spinner /> : undefined}
         placeholder={'Поиск мин 3 символа'}
       />
-      {search && values?.map((v) => (
-        <div key={v.id} className={css({ padding: '21px 21px 0 20px' })}>
+      {search &&
+        values?.map((v) => (
           <div
-            className={`${css(textPreview)} useMonrope manropeBold`}
-            dangerouslySetInnerHTML={{ __html: v.definition }}
-          />
-          <div
-            className={css({
-              background:
-                'linear-gradient(90deg, rgba(0, 0, 0, 0.35) 89.07%, rgba(0, 0, 0, 0) 100%)',
-            })}
-          />
-        </div>
-      ))}
+            key={v.id}
+            className={css({ padding: '21px 21px 0 20px' })}
+            onClick={() => openCard(v.id)}
+          >
+            <div
+              className={`${css(textPreview)} useMonrope manropeBold`}
+              dangerouslySetInnerHTML={{ __html: v.definition }}
+            />
+          </div>
+        ))}
       {!search && !!mostFreqValues
         ? mostFreqValues.map((v) => (
-            <div key={v.id} className={css({ padding: '21px 21px 0 20px' })}>
+            <div
+              key={v.id}
+              className={css({ padding: '21px 21px 0 20px' })}
+              onClick={() => openCard(v.id)}
+            >
               <div
                 className={`${css(textPreview)} useMonrope manropeBold`}
                 dangerouslySetInnerHTML={{ __html: v.definition }}
-              />
-              <div
-                className={css({
-                  background:
-                    'linear-gradient(90deg, rgba(0, 0, 0, 0.35) 89.07%, rgba(0, 0, 0, 0) 100%)',
-                })}
               />
             </div>
           ))
@@ -116,4 +126,7 @@ const textPreview: StyleFunction<{}, { dark: boolean }> = ({ dark }) => ({
   color: dark ? 'rgba(255, 255, 255, 0.35)' : 'rgba(0, 0, 0, 0.35)',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
+  ':active': {
+    background: 'linear-gradient(90deg, rgba(0, 0, 0, 0.1) 89.07%, rgba(0, 0, 0, 0) 100%)',
+  },
 });
