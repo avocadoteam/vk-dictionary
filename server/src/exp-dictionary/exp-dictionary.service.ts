@@ -149,6 +149,7 @@ export class ExpDictionaryService {
         const cleanName =
           stripHtml(nameMatches[0] ?? '')
             .result?.replace(/\s/g, '')
+            .replace(',', '')
             .toLowerCase() ?? '';
 
         if (!cleanName) continue;
