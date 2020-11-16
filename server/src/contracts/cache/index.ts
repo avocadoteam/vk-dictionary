@@ -1,6 +1,7 @@
 export const cacheKey = {
   hasPremium: (userId: number) => `${userId}_premium`,
   mostFreqWords: (dict: string) => `mostFreqWords_${dict}`,
+  splashAttemptsToFetchPhotos: 'splashAttemptsToFetchPhotos',
 };
 
 export const minuteTTL = 60;

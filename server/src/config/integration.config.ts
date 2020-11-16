@@ -6,4 +6,6 @@ export default registerAs('integration', () => ({
   sentryDNS: process.env.SENTRY_DNS,
   vkConfirmCode: process.env.VK_CONFIRM_CODE,
   vkCbSecret: process.env.VK_CB_SECRET,
+  splashAccessKey: process.env.SPLASH_ACCESS_KEY,
+  splashSecretKey: process.env.SPLASH_SECRET_KEY,
 }));

@@ -5,10 +5,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { WordPhotoModel } from 'src/contracts/photos';
 import { SearchModel } from 'src/contracts/search';
 import { SignGuard } from 'src/guards/sign.guard';
 import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
 import { WordFrequencyService } from 'src/word-frequency/word-frequency.service';
+import { WordPhotoService } from 'src/word-photo/word-photo.service';
 import { ExpDictionaryService } from './exp-dictionary.service';
 
 @Controller('api/exp-dictionary')
@@ -18,6 +20,7 @@ export class ExpDictionaryController {
   constructor(
     private readonly expDictService: ExpDictionaryService,
     private readonly wordFreqService: WordFrequencyService,
+    private readonly wordPhotoService: WordPhotoService,
   ) {}
 
   @Get()
@@ -33,5 +36,10 @@ export class ExpDictionaryController {
   @Get('/freq-words')
   getMostFrequentWords() {
     return this.wordFreqService.getMostFreqWords();
+  }
+
+  @Get('/photos')
+  getPhotosForWord(@Query() model: WordPhotoModel) {
+    return this.wordPhotoService.getWordPhoto(model.wordId);
   }
 }

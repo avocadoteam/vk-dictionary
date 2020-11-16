@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ExpDictionaryModule } from './exp-dictionary/exp-dictionary.module';
 import { WordFrequencyModule } from './word-frequency/word-frequency.module';
 import { UserFavouriteModule } from './user-favourite/user-favourite.module';
+import { WordPhotoModule } from './word-photo/word-photo.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { UserFavouriteModule } from './user-favourite/user-favourite.module';
     ExpDictionaryModule,
     WordFrequencyModule,
     UserFavouriteModule,
+    WordPhotoModule,
   ],
   controllers: [AppController],
 })
