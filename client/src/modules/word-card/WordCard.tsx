@@ -20,7 +20,9 @@ export const WordCard = React.memo(() => {
   const dispatch = useDispatch<AppDispatchActions>();
 
   React.useEffect(() => {
-    dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordPhotos });
+    if (!data.definition) {
+      dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordInfo });
+    }
   }, []);
 
   const shareWord = React.useCallback(() => {

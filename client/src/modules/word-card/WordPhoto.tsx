@@ -1,26 +1,22 @@
 import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { getWordPhotos } from 'core/selectors/photos';
-import { getSelectedCardData } from 'core/selectors/word';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const WordPhoto = React.memo(({ children }) => {
-  const data = useSelector(getSelectedCardData);
   const photos = useSelector(getWordPhotos);
   const hasPhotos = !!photos?.length;
   const { css } = useFela();
   const dispatch = useDispatch<AppDispatchActions>();
   React.useEffect(() => {
-    if (!data.definition) {
-      dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordInfo });
-    }
+    dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordPhotos });
 
     return () => {
       dispatch({
         type: 'SET_READY_DATA',
-        payload: { data: [], name: FetchingStateName.WordInfo },
+        payload: { data: [], name: FetchingStateName.WordPhotos },
       });
     };
   }, []);
