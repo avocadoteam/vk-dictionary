@@ -57,3 +57,9 @@ body {
   font-size: 21px !important;
   line-height: 52px !important;
 }
+
+.Panel__in {
+  position: relative;
+  max-height: 100%;
+  touch-action: none;
+}
