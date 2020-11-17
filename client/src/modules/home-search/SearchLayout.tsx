@@ -21,7 +21,7 @@ export const SearchLayout = React.memo(() => {
         marginTop: '1rem',
         backgroundColor: dark ? '#2F2F2F' : '#FFFFFF',
         paddingTop: '11px',
-        minHeight: 'calc(63vh - 12px - 56px - 27px)',
+        minHeight: 'calc(63vh - 27px - 56px - 27px)',
       })}
     >
       <div

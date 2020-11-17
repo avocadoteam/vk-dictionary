@@ -34,7 +34,7 @@ export const WordCard = React.memo(() => {
         flexDirection: 'column',
         position: 'absolute',
         width: '100vw',
-        maxHeight: 'calc(100vh - 56px)',
+        maxHeight: 'calc(100vh - 71px)',
         zIndex: 2,
         overflow: 'hidden',
       })}
