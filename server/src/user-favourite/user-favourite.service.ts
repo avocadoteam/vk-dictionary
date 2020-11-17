@@ -46,8 +46,9 @@ export class UserFavouriteService {
         active = !uF.deleted;
         await queryRunner.manager.save(uF);
       } else {
-        const neUF = new UserFavourite(wordId, vkUserId, null);
-        await queryRunner.manager.save(neUF);
+        await queryRunner.manager.query(`
+          insert into user_favourite (vk_id, dictionary_id) values (${vkUserId}, ${wordId});
+        `);
       }
 
       await queryRunner.commitTransaction();
