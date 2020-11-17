@@ -5,6 +5,7 @@ import { isThemeDrak } from 'core/selectors/common';
 import { getWordPhotos } from 'core/selectors/photos';
 import { getSelectedCardData } from 'core/selectors/word';
 import { vkBridge } from 'core/vk-bridge/instance';
+import { If } from 'modules/atoms';
 import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
@@ -122,28 +123,30 @@ export const WordCard = React.memo<{ swipeBack: () => void }>(({ swipeBack }) =>
             </Button>
           </div>
         </div>
-        <animated.div
-          className={css({
-            position: 'absolute',
-            width: '100vw',
-            height: '100vh',
-            willChange: 'transform',
-          })}
-        >
-          <animated.img
-            src={photos[0]?.url}
-            style={{ scale: 1 }}
+        <If is={hasPhotos}>
+          <animated.div
             className={css({
-              touchAction: 'none',
-              objectFit: 'cover',
-              width: '100%',
-              height: '100%',
+              position: 'absolute',
+              width: '100vw',
+              height: '100vh',
               willChange: 'transform',
-              // boxShadow:
-              //   '0 62.5px 125px -25px rgba(50, 50, 73, 0.5), 0 37.5px 75px -37.5px rgba(0, 0, 0, 0.6)',
             })}
-          />
-        </animated.div>
+          >
+            <animated.img
+              src={photos[0]?.url}
+              style={{ scale: 1 }}
+              className={css({
+                touchAction: 'none',
+                objectFit: 'cover',
+                width: '100%',
+                height: '100%',
+                willChange: 'transform',
+                // boxShadow:
+                //   '0 62.5px 125px -25px rgba(50, 50, 73, 0.5), 0 37.5px 75px -37.5px rgba(0, 0, 0, 0.6)',
+              })}
+            />
+          </animated.div>
+        </If>
       </div>
     </>
   );
