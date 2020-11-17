@@ -15,6 +15,8 @@ const getMostFreqExpDictDataState = createSelector(
     >
 );
 
+export const getExpDictQ = createSelector(getStateUi, (ui) => ui.expDictSearch);
+
 export const isSearchExpDictUpdating = createSelector(
   getSearchExpDictDataState,
   (dataState) => dataState.status === FetchingStatus.Updating

@@ -1,7 +1,8 @@
 import { Search, Spinner } from '@vkontakte/vkui';
-import { AppDispatchActions, FetchingStateName } from 'core/models';
+import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import {
+  getExpDictQ,
   isSearchExpDictUpdating,
   mostFreqExpDictResult,
   searchExpDictResult,
@@ -13,22 +14,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { textPreview } from './style';
 
 export const SearchDict = React.memo(() => {
-  const [search, setSearch] = React.useState('');
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
+  const q = useSelector(getExpDictQ);
   const values = useSelector(searchExpDictResult);
   const mostFreqValues = useSelector(mostFreqExpDictResult);
   const updating = useSelector(isSearchExpDictUpdating);
   const dispatch = useDispatch<AppDispatchActions>();
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+  const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
-      type: 'SET_UPDATING_DATA',
-      payload: FetchingStateName.SearchExpDict,
-      params: e.target.value,
+      type: 'SET_EXP_DICT_Q',
+      payload: e.target.value,
     });
-  };
+  }, []);
 
   const openCard = React.useCallback((payload: string) => {
     dispatch({
@@ -45,6 +44,7 @@ export const SearchDict = React.memo(() => {
         onChange={handleSearch}
         icon={updating ? <Spinner /> : undefined}
         placeholder={'Поиск мин 3 символа'}
+        value={q}
       />
       <div
         className={css({
@@ -54,7 +54,7 @@ export const SearchDict = React.memo(() => {
           '-webkit-mask-image': 'linear-gradient(to bottom, black 95%, transparent 100%)',
         } as any)}
       >
-        <If is={!!search}>
+        <If is={!!q}>
           {values?.map((v) => (
             <div
               key={v.id}
@@ -68,7 +68,7 @@ export const SearchDict = React.memo(() => {
             </div>
           ))}
         </If>
-        <If is={!search && !!mostFreqValues}>
+        <If is={!q && !!mostFreqValues}>
           {mostFreqValues?.map((v) => (
             <div
               key={v.id}

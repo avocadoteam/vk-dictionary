@@ -12,6 +12,7 @@ export const initialState: models.AppState['ui'] = {
   selectedWordId: '',
   selectedHomeSlide: SelectedHomeSlide.ExpDictionary,
   favouritesSearch: '',
+  expDictSearch: '',
 };
 
 export const reducer = (
@@ -134,6 +135,12 @@ export const reducer = (
       return {
         ...state,
         favouritesSearch: dispatch.payload,
+      };
+    }
+    case 'SET_EXP_DICT_Q': {
+      return {
+        ...state,
+        expDictSearch: dispatch.payload,
       };
     }
 

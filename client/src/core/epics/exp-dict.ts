@@ -23,11 +23,24 @@ import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
 import { safeCombineEpics } from './combine';
 import { captureFetchError, captureFetchErrorWithTaptic } from './errors';
 
+const watchExpDictSearchEpic: AppEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('SET_EXP_DICT_Q'),
+    debounceTime(1500),
+    map(
+      ({ payload }) =>
+        ({
+          type: 'SET_UPDATING_DATA',
+          payload: FetchingStateName.SearchExpDict,
+          params: payload,
+        } as AppDispatch)
+    )
+  );
+
 const searchExpDictEpic: AppEpic = (action$, state$) =>
   action$.pipe(
     ofType('SET_UPDATING_DATA'),
     filter<FetchUpdateAction>(({ payload }) => payload === FetchingStateName.SearchExpDict),
-    debounceTime(1500),
     map(({ params }) => ({
       searchValue: params,
       q: getSearch(state$.value),
@@ -199,5 +212,6 @@ export const expDict = safeCombineEpics(
   mostFrequentWordsEpic,
   getWordPhotoEpic,
   getWordInfoEpic,
-  getWordOfTheDayEpic
+  getWordOfTheDayEpic,
+  watchExpDictSearchEpic
 );

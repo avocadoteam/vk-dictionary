@@ -24,6 +24,7 @@ export type AppState = {
     selectedWordId: string;
     selectedHomeSlide: SelectedHomeSlide;
     favouritesSearch: string
+    expDictSearch: string
   };
   router: RouterState;
 };
@@ -40,6 +41,7 @@ export type AppDispatch =
   | { type: 'SET_SELECTED_WORD_ID'; payload: string }
   | { type: 'SET_HOME_SLIDE'; payload: SelectedHomeSlide }
   | { type: 'SET_FAVOURITES_Q'; payload: string }
+  | { type: 'SET_EXP_DICT_Q'; payload: string }
   | ErrorEnqueue
   | ErrorDequeue
   | ErrorQueue
