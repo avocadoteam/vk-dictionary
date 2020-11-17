@@ -20,7 +20,7 @@ export const WordPhoto = React.memo(({ children }) => {
     return () => {
       dispatch({
         type: 'SET_READY_DATA',
-        payload: { data: undefined, name: FetchingStateName.WordInfo },
+        payload: { data: [], name: FetchingStateName.WordInfo },
       });
     };
   }, []);

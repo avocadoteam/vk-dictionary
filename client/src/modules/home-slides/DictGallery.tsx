@@ -21,7 +21,7 @@ export const DictGallery = React.memo(() => {
       <Gallery
         slideWidth="100%"
         align="center"
-        style={{ height: '37vh' }}
+        style={{ height: '33vh' }}
         slideIndex={slide}
         onChange={setSlide}
       >
