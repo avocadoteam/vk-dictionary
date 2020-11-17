@@ -4,3 +4,9 @@ export const safeTrim = (value: string) => {
   }
   return value;
 };
+
+export const normalizeText = (text: string) =>
+  text
+    .replaceAll('<br>', '<div style="margin: 1rem;"></div>')
+    .replaceAll('◊', '')
+    .replaceAll('&nbsp;', '');

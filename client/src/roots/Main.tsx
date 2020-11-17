@@ -1,33 +1,31 @@
 import { Panel, PanelHeader, View } from '@vkontakte/vkui';
-import { goBack } from 'connected-react-router';
-import { AppDispatchActions, MainView } from 'core/models';
+import { MainView } from 'core/models';
 import { getMainView } from 'core/selectors/main';
 import { SearchLayout } from 'modules/home-search';
 import { DictGallery } from 'modules/home-slides';
 import { SnakbarsErr } from 'modules/snaks';
-import { WordCard } from 'modules/word-card';
+import { BtnBack, WordCard, WordPhoto } from 'modules/word-card';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useFela } from 'react-fela';
+import { useSelector } from 'react-redux';
 import { Offline } from './Offline';
 
 export const Main = React.memo(() => {
   const activePanel = useSelector(getMainView);
-  const dispatch = useDispatch<AppDispatchActions>();
-
-  const swipeBack = React.useCallback(() => {
-    dispatch(goBack());
-  }, [dispatch]);
-
+  const { css } = useFela();
   return (
     <>
-      <View activePanel={activePanel} >
+      <View activePanel={activePanel}>
         <Panel id={MainView.Home}>
           <PanelHeader separator={false} />
           <DictGallery />
           <SearchLayout />
         </Panel>
-        <Panel id={MainView.Word}>
-          <WordCard swipeBack={swipeBack} />
+        <Panel id={MainView.Word} className={css({ position: 'relative' })}>
+          <WordPhoto>
+            <PanelHeader separator={false} left={<BtnBack />} />
+            <WordCard />
+          </WordPhoto>
         </Panel>
         <Panel id={MainView.Offline}>
           <Offline />

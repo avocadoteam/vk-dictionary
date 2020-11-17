@@ -26,4 +26,8 @@ function iOS() {
 
 export const platform = () => (iOS() ? OS.IOS : OS.ANDROID);
 
-export const sortByCreated = <T extends { created: string }>(f: T, n: T) => new Date(n.created).getTime() - new Date(f.created).getTime();
+export const sortByCreated = <T extends { created: string }>(f: T, n: T) =>
+  new Date(n.created).getTime() - new Date(f.created).getTime();
+
+export const clamp = (num: number, clamp: number, higher: number) =>
+  higher ? Math.min(Math.max(num, clamp), higher) : Math.min(num, clamp);
