@@ -12,7 +12,7 @@ import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
 import { textPreview } from './style';
 
-export const SearchDict = React.memo<{ goForward: () => void }>(({ goForward }) => {
+export const SearchDict = React.memo(() => {
   const [search, setSearch] = React.useState('');
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
@@ -30,16 +30,12 @@ export const SearchDict = React.memo<{ goForward: () => void }>(({ goForward }) 
     });
   };
 
-  const openCard = React.useCallback(
-    (payload: string) => {
-      dispatch({
-        type: 'SET_SELECTED_WORD_ID',
-        payload,
-      });
-      goForward();
-    },
-    [goForward]
-  );
+  const openCard = React.useCallback((payload: string) => {
+    dispatch({
+      type: 'SET_SELECTED_WORD_ID',
+      payload,
+    });
+  }, []);
 
   return (
     <>

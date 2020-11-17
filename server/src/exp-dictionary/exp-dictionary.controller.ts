@@ -42,4 +42,9 @@ export class ExpDictionaryController {
   getPhotosForWord(@Query() model: WordPhotoModel) {
     return this.wordPhotoService.getWordPhoto(model.wordId);
   }
+
+  @Get('/word')
+  getWord(@Query() model: WordPhotoModel) {
+    return this.expDictService.getWordInfo(model.wordId);
+  }
 }

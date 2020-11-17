@@ -1,4 +1,4 @@
-import { SearchResult } from 'core/models';
+import { FetchingDataType, FetchingStateName, FetchingStatus, SearchResult } from 'core/models';
 import { createSelector } from 'reselect';
 import { getStateUi } from './common';
 import { getLocationSubPath } from './router';
@@ -10,12 +10,25 @@ export const getSelectedWordId = createSelector(
   ({ selectedWordId }, subPath) => selectedWordId || subPath
 );
 
+const getWordInfoDataState = createSelector(
+  getStateUi,
+  (ui) => (ui.fetchingDatas[FetchingStateName.WordInfo] ?? {}) as FetchingDataType<SearchResult>
+);
+
+const isWordInfoUpdating = createSelector(
+  getWordInfoDataState,
+  (dataState) => dataState.status === FetchingStatus.Updating
+);
+const getWordInfoData = createSelector(getWordInfoDataState, (dataState) => dataState.data);
+
 export const getSelectedCardData = createSelector(
   getSelectedWordId,
   searchExpDictResult,
   mostFreqExpDictResult,
-  (selectedWordId, sData, mfData) =>
-    sData?.find((d) => d.id === selectedWordId) ??
-    mfData?.find((d) => d.id === selectedWordId) ??
+  getWordInfoData,
+  (selectedWordId, sData, mfData, wordInfo) =>
+    sData?.find((d) => d.id === selectedWordId) ||
+    mfData?.find((d) => d.id === selectedWordId) ||
+    wordInfo ||
     ({} as SearchResult)
 );

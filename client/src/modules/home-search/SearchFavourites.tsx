@@ -7,7 +7,7 @@ import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
 import { textPreview } from './style';
 
-export const SearchFavourites = React.memo<{ goForward: () => void }>(({ goForward }) => {
+export const SearchFavourites = React.memo(() => {
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
   const query = useSelector(getFavQ);
@@ -21,16 +21,12 @@ export const SearchFavourites = React.memo<{ goForward: () => void }>(({ goForwa
     });
   };
 
-  const openCard = React.useCallback(
-    (payload: string) => {
-      dispatch({
-        type: 'SET_SELECTED_WORD_ID',
-        payload,
-      });
-      goForward();
-    },
-    [goForward]
-  );
+  const openCard = React.useCallback((payload: string) => {
+    dispatch({
+      type: 'SET_SELECTED_WORD_ID',
+      payload,
+    });
+  }, []);
 
   return (
     <>

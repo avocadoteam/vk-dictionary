@@ -1,33 +1,30 @@
-import React from 'react';
-import { View, Panel, PanelHeader } from '@vkontakte/vkui';
-import { Offline } from './Offline';
-import { SnakbarsErr } from 'modules/snaks';
-import { useDispatch, useSelector } from 'react-redux';
-import { getMainView } from 'core/selectors/main';
-import { useViewChange } from 'core/hooks';
-import { AppDispatchActions, MainView } from 'core/models';
+import { Panel, PanelHeader, View } from '@vkontakte/vkui';
 import { goBack } from 'connected-react-router';
-import { DictGallery } from 'modules/home-slides';
+import { AppDispatchActions, MainView } from 'core/models';
+import { getMainView } from 'core/selectors/main';
 import { SearchLayout } from 'modules/home-search';
+import { DictGallery } from 'modules/home-slides';
+import { SnakbarsErr } from 'modules/snaks';
 import { WordCard } from 'modules/word-card';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Offline } from './Offline';
 
 export const Main = React.memo(() => {
   const activePanel = useSelector(getMainView);
   const dispatch = useDispatch<AppDispatchActions>();
-  const { goBack: handleBack, goForward, history } = useViewChange(MainView, 'Home', true);
 
   const swipeBack = React.useCallback(() => {
-    handleBack();
     dispatch(goBack());
-  }, [handleBack, dispatch]);
+  }, [dispatch]);
 
   return (
     <>
-      <View activePanel={activePanel} history={history} onSwipeBack={swipeBack}>
+      <View activePanel={activePanel} >
         <Panel id={MainView.Home}>
           <PanelHeader separator={false} />
           <DictGallery />
-          <SearchLayout goForward={() => goForward(MainView.Word)} />
+          <SearchLayout />
         </Panel>
         <Panel id={MainView.Word}>
           <WordCard swipeBack={swipeBack} />

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { SearchDict } from './SearchDict';
 import { SearchFavourites } from './SearchFavourites';
 
-export const SearchLayout = React.memo<{ goForward: () => void }>(({ goForward }) => {
+export const SearchLayout = React.memo(() => {
   const dark = useSelector(isThemeDrak);
   const slide = useSelector(getSelectedSlide);
   const { css } = useFela({ dark });
@@ -33,11 +33,8 @@ export const SearchLayout = React.memo<{ goForward: () => void }>(({ goForward }
           margin: '0 auto',
         })}
       />
-      <If
-        is={slide === SelectedHomeSlide.ExpDictionary}
-        fallback={<SearchFavourites goForward={goForward} />}
-      >
-        <SearchDict goForward={goForward} />
+      <If is={slide === SelectedHomeSlide.ExpDictionary} fallback={<SearchFavourites />}>
+        <SearchDict />
       </If>
     </div>
   );

@@ -47,11 +47,11 @@ export class ExpDictionaryService {
 
       if (parsed.srs?.length) {
         const results = await this.saveNewToDictionary(parsed.srs);
-        response = results?.slice(0, 5) ?? [];
+        response = results ?? [];
       }
     } else {
       this.silentParse(query);
-      response = r?.slice(0, 5) ?? [];
+      response = r ?? [];
     }
 
     if (response.length) {
@@ -169,5 +169,12 @@ export class ExpDictionaryService {
     if (parsed.srs?.length) {
       this.saveNewToDictionary(parsed.srs);
     }
+  }
+
+  async getWordInfo(wordId: string) {
+    const word = await this.tableDict.findOne(wordId, {
+      select: ['id', 'definition'],
+    });
+    return word;
   }
 }
