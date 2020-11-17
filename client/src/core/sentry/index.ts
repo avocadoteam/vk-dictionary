@@ -33,7 +33,7 @@ const beforeSend: sentry.BrowserOptions['beforeSend'] = (event) => {
 
 export async function initSentry() {
   return sentry.init({
-    dsn: '',
+    dsn: 'https://cf0ca4db8c8a4cffbb39cd5924a0209c@sr.testfriendship.special.vk-apps.com/6',
     release: appV.toString(),
     beforeSend,
     enabled: process.env.NODE_ENV === 'production',
