@@ -15,7 +15,8 @@ export enum FetchingStateName {
   ToggleFavourite = 'toggleFavourite',
   UserFavourites = 'user_favourites',
   WordPhotos = 'word_photos',
-  WordInfo = 'word_info'
+  WordInfo = 'word_info',
+  WordOfDay = 'word_of_day',
 }
 
 export enum FetchingStatus {

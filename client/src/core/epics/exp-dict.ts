@@ -7,9 +7,11 @@ import {
   FetchUpdateAction,
   SearchResult,
   WordPhoto,
+  WordPhotoOfTheDay,
 } from 'core/models';
 import {
   getWordInfo,
+  getWordOfTheDay,
   getWordPhotos,
   mostExpDictWords,
   searchInExpDict,
@@ -161,9 +163,41 @@ const getWordInfoEpic: AppEpic = (action$, state$) =>
     )
   );
 
+const getWordOfTheDayEpic: AppEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('SET_UPDATING_DATA'),
+    filter<FetchUpdateAction>(({ payload }) => payload === FetchingStateName.WordOfDay),
+    map(() => ({
+      q: getSearch(state$.value),
+    })),
+    switchMap(({ q }) =>
+      getWordOfTheDay(q).pipe(
+        switchMap((response) => {
+          if (response.ok) {
+            return from<Promise<FetchResponse<WordPhotoOfTheDay>>>(response.json()).pipe(
+              switchMap((r) => {
+                return of({
+                  type: 'SET_READY_DATA',
+                  payload: {
+                    name: FetchingStateName.WordOfDay,
+                    data: r?.data,
+                  },
+                } as AppDispatch);
+              })
+            );
+          } else {
+            throw new Error(`Http ${response.status} on ${response.url}`);
+          }
+        }),
+        captureFetchError(FetchingStateName.WordOfDay)
+      )
+    )
+  );
+
 export const expDict = safeCombineEpics(
   searchExpDictEpic,
   mostFrequentWordsEpic,
   getWordPhotoEpic,
-  getWordInfoEpic
+  getWordInfoEpic,
+  getWordOfTheDayEpic
 );

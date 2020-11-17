@@ -35,6 +35,11 @@ export type WordPhoto = {
   userName: string;
   userLink: string;
 };
+export type WordPhotoOfTheDay = {
+  photo: WordPhoto;
+  name: string;
+  wordId: string;
+};
 
 export class WordPhotoModel {
   @IsString()

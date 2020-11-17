@@ -11,3 +11,6 @@ export const getWordPhotos = (q: string, wordId: string) =>
   
 export const getWordInfo = (q: string, wordId: string) =>
   request(`/exp-dictionary/word${q}&wordId=${wordId}`, Method.Get);
+
+export const getWordOfTheDay = (q: string) =>
+  request(`/exp-dictionary/word-day${q}`, Method.Get);

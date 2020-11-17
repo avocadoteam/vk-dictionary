@@ -47,4 +47,9 @@ export class ExpDictionaryController {
   getWord(@Query() model: WordPhotoModel) {
     return this.expDictService.getWordInfo(model.wordId);
   }
+
+  @Get('/word-day')
+  getWordOfTheDay() {
+    return this.wordPhotoService.getRandomWordWithPhoto();
+  }
 }

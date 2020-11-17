@@ -8,11 +8,12 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import integrationConfig from 'src/config/integration.config';
-import { cacheKey } from 'src/contracts/cache';
+import { cacheKey, dayTTL } from 'src/contracts/cache';
 import {
   SplashPhoto,
   SplashPhotoResult,
   WordPhoto,
+  WordPhotoOfTheDay,
 } from 'src/contracts/photos';
 import { CacheManager } from 'src/custom-types/cache';
 import { Dictionary } from 'src/db/tables/Dictionary';
@@ -152,5 +153,41 @@ export class WordPhotoService {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  async getRandomWordWithPhoto() {
+    const randomWordWithPhoto = await this.cache.get<WordPhotoOfTheDay>(
+      cacheKey.wordPhotoOfTheDay,
+    );
+
+    if (randomWordWithPhoto) return randomWordWithPhoto;
+
+    const data = (await this.tablePhoto.query(`
+      select 
+        json_build_object(
+          'color', p.color,
+          'blurHash', p.blur_hash,
+          'url', p.url_regular,
+          'userName', p.user_name,
+          'userLink', p.user_link
+        ) as photo,
+        exd.name,
+        exd.id
+      from photo p
+        inner join dictionary exd on exd.id = p.dictionary_id
+      order by random() limit 1;
+    `)) as (Omit<WordPhotoOfTheDay, 'wordId'> & { id: string })[];
+
+    const first = data[0];
+
+    if (!first) {
+      return null;
+    }
+
+    const remaped = { ...first, wordId: first.id };
+
+    await this.cache.set(cacheKey.wordPhotoOfTheDay, remaped, { ttl: dayTTL });
+
+    return remaped;
   }
 }
