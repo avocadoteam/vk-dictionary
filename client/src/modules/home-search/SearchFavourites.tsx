@@ -37,18 +37,27 @@ export const SearchFavourites = React.memo(() => {
         placeholder={'Поиск'}
         value={query}
       />
-      {values.map((v) => (
-        <div
-          key={v.id}
-          className={css({ padding: '21px 21px 0 20px' })}
-          onClick={() => openCard(v.id)}
-        >
+      <div
+        className={css({
+          height: 'calc(54vh - 52px)',
+          overflowY: 'scroll',
+          maskImage: 'linear-gradient(to bottom, black 95%, transparent 100%)',
+          '-webkit-mask-image': 'linear-gradient(to bottom, black 95%, transparent 100%)',
+        } as any)}
+      >
+        {values.map((v) => (
           <div
-            className={`${css(textPreview)} useMonrope manropeBold`}
-            dangerouslySetInnerHTML={{ __html: v.definition }}
-          />
-        </div>
-      ))}
+            key={v.id}
+            className={css({ padding: '21px 21px 0 20px' })}
+            onClick={() => openCard(v.id)}
+          >
+            <div
+              className={`${css(textPreview)} useMonrope manropeBold`}
+              dangerouslySetInnerHTML={{ __html: v.definition }}
+            />
+          </div>
+        ))}
+      </div>
     </>
   );
 });

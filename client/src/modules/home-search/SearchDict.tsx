@@ -46,34 +46,43 @@ export const SearchDict = React.memo(() => {
         icon={updating ? <Spinner /> : undefined}
         placeholder={'Поиск мин 3 символа'}
       />
-      <If is={!!search}>
-        {values?.map((v) => (
-          <div
-            key={v.id}
-            className={css({ padding: '21px 21px 0 20px' })}
-            onClick={() => openCard(v.id)}
-          >
+      <div
+        className={css({
+          height: 'calc(54vh - 52px)',
+          overflowY: 'scroll',
+          maskImage: 'linear-gradient(to bottom, black 95%, transparent 100%)',
+          '-webkit-mask-image': 'linear-gradient(to bottom, black 95%, transparent 100%)',
+        } as any)}
+      >
+        <If is={!!search}>
+          {values?.map((v) => (
             <div
-              className={`${css(textPreview)} useMonrope manropeBold`}
-              dangerouslySetInnerHTML={{ __html: v.definition }}
-            />
-          </div>
-        ))}
-      </If>
-      <If is={!search && !!mostFreqValues}>
-        {mostFreqValues?.map((v) => (
-          <div
-            key={v.id}
-            className={css({ padding: '21px 21px 0 20px' })}
-            onClick={() => openCard(v.id)}
-          >
+              key={v.id}
+              className={css({ padding: '21px 21px 0 20px' })}
+              onClick={() => openCard(v.id)}
+            >
+              <div
+                className={`${css(textPreview)} useMonrope manropeBold`}
+                dangerouslySetInnerHTML={{ __html: v.definition }}
+              />
+            </div>
+          ))}
+        </If>
+        <If is={!search && !!mostFreqValues}>
+          {mostFreqValues?.map((v) => (
             <div
-              className={`${css(textPreview)} useMonrope manropeBold`}
-              dangerouslySetInnerHTML={{ __html: v.definition }}
-            />
-          </div>
-        ))}
-      </If>
+              key={v.id}
+              className={css({ padding: '21px 21px 0 20px' })}
+              onClick={() => openCard(v.id)}
+            >
+              <div
+                className={`${css(textPreview)} useMonrope manropeBold`}
+                dangerouslySetInnerHTML={{ __html: v.definition }}
+              />
+            </div>
+          ))}
+        </If>
+      </div>
     </>
   );
 });
