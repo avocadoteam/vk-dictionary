@@ -16,6 +16,13 @@ export const WordPhoto = React.memo(({ children }) => {
     if (!data.definition) {
       dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordInfo });
     }
+
+    return () => {
+      dispatch({
+        type: 'SET_READY_DATA',
+        payload: { data: undefined, name: FetchingStateName.WordInfo },
+      });
+    };
   }, []);
 
   return (
