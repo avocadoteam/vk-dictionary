@@ -29,7 +29,7 @@ export class ExpDictionaryController {
     model: SearchModel,
   ) {
     return this.expDictService.fullTextSearch(
-      model.query?.replace(/\s/g, '') ?? '',
+      model.query?.replace(/\s/g, '').toLowerCase() ?? '',
     );
   }
 

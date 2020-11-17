@@ -49,6 +49,7 @@ export const DictGallery = React.memo(() => {
               slide === SelectedHomeSlide.Favourites ? (dark ? '#F2F2F2' : '#CFCFCF') : '#DADADA',
             borderRadius: '50%',
             marginLeft: '11px',
+            marginTop: '1px'
           })}
         />
       </div>
