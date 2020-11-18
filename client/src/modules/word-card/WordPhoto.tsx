@@ -25,8 +25,7 @@ export const WordPhoto = React.memo(({ children }) => {
     <>
       {children}
       <If is={hasPhotos}>
-        <img
-          src={photos[0]?.url}
+        <div
           className={css({
             touchAction: 'none',
             objectFit: 'cover',
@@ -34,6 +33,13 @@ export const WordPhoto = React.memo(({ children }) => {
             height: '100vh',
             position: 'absolute',
             top: 0,
+            borderRadius: '15px',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center',
+            backgroundImage: `
+              linear-gradient(180deg, rgba(0, 0, 0, 0.65) 36.46%, rgba(0, 0, 0, 0) 57.29%, rgba(0, 0, 0, 0) 90.62%, rgba(0, 0, 0, 0.5) 100%), url(${photos[0]?.url})
+            `,
           })}
         />
       </If>
