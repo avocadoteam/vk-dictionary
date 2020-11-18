@@ -1,6 +1,7 @@
 import { vkBridge } from './instance';
 import { store } from 'core/store';
 import { ClientTheme } from 'core/models';
+import { manualChangeStatusBar } from './theme';
 
 // set client theme
 vkBridge.subscribe(({ detail: { type, data } }) => {
@@ -13,13 +14,7 @@ vkBridge.subscribe(({ detail: { type, data } }) => {
 
     store.dispatch({ type: 'SET_THEME', payload: theme });
 
-    if (vkBridge.supports('VKWebAppSetViewSettings')) {
-      const isLight = theme !== ClientTheme.Dark;
-      vkBridge.send('VKWebAppSetViewSettings', {
-        status_bar_style: isLight ? 'dark' : 'light',
-        action_bar_color: isLight ? '#ffffff' : '#191919',
-      });
-    }
+    manualChangeStatusBar(theme !== ClientTheme.Dark);
   }
 
   if (type === 'VKWebAppViewRestore') {

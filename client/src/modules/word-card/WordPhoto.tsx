@@ -1,5 +1,7 @@
 import { AppDispatchActions, FetchingStateName } from 'core/models';
+import { isThemeDrak } from 'core/selectors/common';
 import { getWordPhotos } from 'core/selectors/photos';
+import { manualChangeStatusBar } from 'core/vk-bridge/theme';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
@@ -7,9 +9,23 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const WordPhoto = React.memo(({ children }) => {
   const photos = useSelector(getWordPhotos);
+  const dark = useSelector(isThemeDrak);
   const hasPhotos = !!photos?.length;
   const { css } = useFela();
   const dispatch = useDispatch<AppDispatchActions>();
+
+  React.useEffect(() => {
+    if (!dark && hasPhotos) {
+      manualChangeStatusBar(!dark);
+    }
+
+    return () => {
+      if (!dark) {
+        manualChangeStatusBar(!dark);
+      }
+    };
+  }, []);
+
   React.useEffect(() => {
     dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordPhotos });
 
