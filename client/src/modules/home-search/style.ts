@@ -12,6 +12,7 @@ export const textPreview: StyleFunction<{}, { dark: boolean }> = ({ dark }) => (
     marginBottom: '8px',
     color: dark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
     textTransform: 'lowercase',
+    textDecoration: 'none !important',
     '>b::after': {
       fontWeight: 600,
       content: '"\\0301"',

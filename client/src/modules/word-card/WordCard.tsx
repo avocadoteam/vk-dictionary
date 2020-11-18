@@ -78,6 +78,7 @@ type StyleProps = { dark: boolean; hasPhotos: boolean };
 
 const textPreview: StyleFunction<{}, StyleProps> = ({ dark, hasPhotos }) => ({
   '>dfn': {
+    textDecoration: 'none !important',
     display: 'block',
     fontSize: '19px',
     lineHeight: '28px',
