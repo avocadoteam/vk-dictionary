@@ -3,7 +3,7 @@ import { Button } from '@vkontakte/vkui';
 import { AppDispatchActions, appId, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { getWordPhotos } from 'core/selectors/photos';
-import { getSelectedCardData } from 'core/selectors/word';
+import { getSelectedCardData, getSelectedWordId } from 'core/selectors/word';
 import { normalizeText } from 'core/utils/formats';
 import { vkBridge } from 'core/vk-bridge/instance';
 import React from 'react';
@@ -13,6 +13,7 @@ import { MakeFavourite } from './MakeFavourite';
 
 export const WordCard = React.memo(() => {
   const data = useSelector(getSelectedCardData);
+  const id = useSelector(getSelectedWordId);
   const dark = useSelector(isThemeDrak);
   const photos = useSelector(getWordPhotos);
   const hasPhotos = !!photos?.length;
@@ -26,8 +27,8 @@ export const WordCard = React.memo(() => {
   }, []);
 
   const shareWord = React.useCallback(() => {
-    vkBridge.send('VKWebAppShare', { link: `https://vk.com/app${appId}#${data.id}` });
-  }, [data.id]);
+    vkBridge.send('VKWebAppShare', { link: `https://vk.com/app${appId}#${id}` });
+  }, [id]);
 
   return (
     <div
