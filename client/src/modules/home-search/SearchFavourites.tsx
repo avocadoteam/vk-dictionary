@@ -5,6 +5,7 @@ import { getFavQ, getUserFavouritesList } from 'core/selectors/favourites';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
+import { animated, useChain, useTransition } from 'react-spring';
 import { textPreview } from './style';
 
 export const SearchFavourites = React.memo(() => {
@@ -13,20 +14,49 @@ export const SearchFavourites = React.memo(() => {
   const query = useSelector(getFavQ);
   const values = useSelector(getUserFavouritesList);
   const dispatch = useDispatch<AppDispatchActions>();
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: 'SET_FAVOURITES_Q',
-      payload: e.target.value,
-    });
-  };
-
   const openCard = React.useCallback((payload: string) => {
     dispatch({
       type: 'SET_SELECTED_WORD_ID',
       payload,
     });
   }, []);
+
+  const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'SET_FAVOURITES_Q',
+      payload: e.target.value,
+    });
+  }, []);
+
+  const transRef = React.useRef<any>();
+  const transition = useTransition(values, {
+    from: {
+      transform: 'scale(0)',
+    },
+    enter: {
+      transform: 'scale(1)',
+    },
+    leave: {
+      transform: 'scale(0)',
+    },
+    ref: transRef,
+    unique: true,
+    trail: 200 / values.length,
+    key: (v) => v.id,
+  });
+
+  useChain([transRef], [0, 0.6]);
+  const resultsRender = transition((style, v) => {
+    return (
+      <animated.div
+        style={style}
+        className={css({ paddingTop: '20px' })}
+        onClick={() => openCard(v.id)}
+      >
+        <div className={css(textPreview)} dangerouslySetInnerHTML={{ __html: v.definition }} />
+      </animated.div>
+    );
+  });
 
   return (
     <>
@@ -45,11 +75,7 @@ export const SearchFavourites = React.memo(() => {
           '-webkit-mask-image': 'linear-gradient(to bottom, black 95%, transparent 100%)',
         } as any)}
       >
-        {values.map((v) => (
-          <div key={v.id} className={css({ paddingTop: '20px' })} onClick={() => openCard(v.id)}>
-            <div className={css(textPreview)} dangerouslySetInnerHTML={{ __html: v.definition }} />
-          </div>
-        ))}
+        {resultsRender}
       </div>
     </>
   );

@@ -11,6 +11,7 @@ import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
+import { animated, useChain, useTransition } from 'react-spring';
 import { textPreview } from './style';
 import { WordDay } from './WordDay';
 
@@ -37,6 +38,36 @@ export const SearchDict = React.memo(() => {
     });
   }, []);
 
+  const transRef = React.useRef<any>();
+  const transition = useTransition(values, {
+    from: {
+      transform: 'scale(0)',
+    },
+    enter: {
+      transform: 'scale(1)',
+    },
+    leave: {
+      transform: 'scale(0)',
+    },
+    ref: transRef,
+    unique: true,
+    trail: 100 / values?.length ?? 0,
+    key: (v) => v.id,
+  });
+
+  useChain([transRef], [0, 0.6]);
+  const resultsRender = transition((style, v) => {
+    return (
+      <animated.div
+        style={style}
+        className={css({ padding: '9px 0' })}
+        onClick={() => openCard(v.id)}
+      >
+        <div className={css(textPreview)} dangerouslySetInnerHTML={{ __html: v.definition }} />
+      </animated.div>
+    );
+  });
+
   return (
     <>
       <Search
@@ -56,16 +87,7 @@ export const SearchDict = React.memo(() => {
           '-webkit-mask-image': 'linear-gradient(to bottom, black 95%, transparent 100%)',
         } as any)}
       >
-        <If is={!!q}>
-          {values?.map((v) => (
-            <div key={v.id} className={css({ padding: '9px 0' })} onClick={() => openCard(v.id)}>
-              <div
-                className={css(textPreview)}
-                dangerouslySetInnerHTML={{ __html: v.definition }}
-              />
-            </div>
-          ))}
-        </If>
+        <If is={!!q}>{resultsRender}</If>
         <If is={!q && !!mostFreqValues}>
           {mostFreqValues?.map((v) => (
             <div key={v.id} className={css({ padding: '9px 0' })} onClick={() => openCard(v.id)}>
