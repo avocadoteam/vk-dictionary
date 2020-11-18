@@ -63,7 +63,7 @@ export const WordCard = React.memo(() => {
           onClick={shareWord}
         >
           <Icon24ShareOutline
-            fill={dark ? 'rgba(255, 255, 255, 0.85)' : '#717171'}
+            fill={hasPhotos || dark ? 'rgba(255, 255, 255, 0.85)' : '#717171'}
             width={30}
             height={30}
           />

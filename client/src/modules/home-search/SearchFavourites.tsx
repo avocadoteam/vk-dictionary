@@ -48,7 +48,7 @@ export const SearchFavourites = React.memo(() => {
         {values.map((v) => (
           <div
             key={v.id}
-            className={css({ padding: '21px 21px 0 20px' })}
+            className={css({ paddingTop: '20px' })}
             onClick={() => openCard(v.id)}
           >
             <div

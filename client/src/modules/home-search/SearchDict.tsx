@@ -56,11 +56,7 @@ export const SearchDict = React.memo(() => {
       >
         <If is={!!q}>
           {values?.map((v) => (
-            <div
-              key={v.id}
-              className={css({ padding: '21px 21px 0 20px' })}
-              onClick={() => openCard(v.id)}
-            >
+            <div key={v.id} className={css({ paddingTop: '20px' })} onClick={() => openCard(v.id)}>
               <div
                 className={`${css(textPreview)} useMonrope manropeBold`}
                 dangerouslySetInnerHTML={{ __html: v.definition }}
@@ -70,11 +66,7 @@ export const SearchDict = React.memo(() => {
         </If>
         <If is={!q && !!mostFreqValues}>
           {mostFreqValues?.map((v) => (
-            <div
-              key={v.id}
-              className={css({ padding: '21px 21px 0 20px' })}
-              onClick={() => openCard(v.id)}
-            >
+            <div key={v.id} className={css({ paddingTop: '20px' })} onClick={() => openCard(v.id)}>
               <div
                 className={`${css(textPreview)} useMonrope manropeBold`}
                 dangerouslySetInnerHTML={{ __html: v.definition }}
