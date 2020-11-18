@@ -29,6 +29,7 @@ export const BtnBack = React.memo(() => {
         padding: 0,
         marginLeft: '.5rem',
         backdropFilter: hasPhotos ? 'blur(32px)' : undefined,
+        borderRadius: '12px',
       })}
       onClick={swipeBack}
     >
