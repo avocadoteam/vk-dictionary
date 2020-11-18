@@ -44,7 +44,7 @@ export const WordCard = React.memo(() => {
     >
       <div className={css(textBlur)}>
         <div
-          className={`${css(textPreview)} useMonrope manropeBold`}
+          className={css(textPreview)}
           dangerouslySetInnerHTML={{
             __html: normalizeText(data.definition ?? ''),
           }}
@@ -77,8 +77,20 @@ export const WordCard = React.memo(() => {
 type StyleProps = { dark: boolean; hasPhotos: boolean };
 
 const textPreview: StyleFunction<{}, StyleProps> = ({ dark, hasPhotos }) => ({
+  fontFamily: 'Inter',
+  fontSize: '15px',
+  fontWeight: 'normal',
+  lineHeight: '20px',
+  letterSpacing: '-0.24px',
+  color: hasPhotos
+    ? 'rgba(255, 255, 255, 0.75)'
+    : dark
+    ? 'rgba(255, 255, 255, 0.85)'
+    : 'rgba(0, 0, 0, 0.85)',
   '>dfn': {
+    fontFamily: '"Manrope"',
     fontStyle: 'normal !important',
+    fontWeight: 'bold',
     display: 'block',
     fontSize: '19px',
     lineHeight: '28px',
@@ -94,12 +106,12 @@ const textPreview: StyleFunction<{}, StyleProps> = ({ dark, hasPhotos }) => ({
   '>b::after': {
     fontWeight: 600,
     content: '"\\0301"',
-    color: hasPhotos || dark ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.85)',
+    color: hasPhotos
+      ? 'rgba(255, 255, 255, 0.75)'
+      : dark
+      ? 'rgba(255, 255, 255, 0.85)'
+      : 'rgba(0, 0, 0, 0.85)',
   },
-  fontSize: '15px',
-  lineHeight: '20px',
-  letterSpacing: '-0.24px',
-  color: hasPhotos || dark ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.85)',
 });
 
 const textBlur: StyleFunction<{}, StyleProps> = ({ hasPhotos }) => ({

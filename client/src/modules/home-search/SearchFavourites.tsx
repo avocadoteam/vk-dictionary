@@ -46,15 +46,8 @@ export const SearchFavourites = React.memo(() => {
         } as any)}
       >
         {values.map((v) => (
-          <div
-            key={v.id}
-            className={css({ paddingTop: '20px' })}
-            onClick={() => openCard(v.id)}
-          >
-            <div
-              className={`${css(textPreview)} useMonrope manropeBold`}
-              dangerouslySetInnerHTML={{ __html: v.definition }}
-            />
+          <div key={v.id} className={css({ paddingTop: '20px' })} onClick={() => openCard(v.id)}>
+            <div className={css(textPreview)} dangerouslySetInnerHTML={{ __html: v.definition }} />
           </div>
         ))}
       </div>
