@@ -67,7 +67,7 @@ export class WordFrequencyService {
         from word_frequency wf 
         inner join dictionary ed on ed.id = wf.exp_dict_id
         order by frequency desc
-        limit 5;
+        limit 4;
     
     `)) as SearchResult[];
 

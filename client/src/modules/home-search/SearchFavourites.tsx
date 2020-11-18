@@ -32,7 +32,7 @@ export const SearchFavourites = React.memo(() => {
     <>
       <Search
         after={null}
-        className={css({ backgroundColor: 'transparent', padding: '8px 15px' })}
+        className={css({ backgroundColor: 'transparent', padding: '8px 15px 1px' })}
         onChange={handleSearch}
         placeholder={'Поиск'}
         value={query}

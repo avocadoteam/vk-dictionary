@@ -12,6 +12,7 @@ import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
 import { textPreview } from './style';
+import { WordDay } from './WordDay';
 
 export const SearchDict = React.memo(() => {
   const dark = useSelector(isThemeDrak);
@@ -40,15 +41,16 @@ export const SearchDict = React.memo(() => {
     <>
       <Search
         after={null}
-        className={css({ backgroundColor: 'transparent', padding: '8px 15px' })}
+        className={css({ backgroundColor: 'transparent', padding: '8px 15px 1px' })}
         onChange={handleSearch}
         icon={updating ? <Spinner /> : undefined}
         placeholder={'Поиск мин 3 символа'}
         value={q}
       />
+      <WordDay />
       <div
         className={css({
-          height: 'calc(54vh - 52px)',
+          height: 'calc(54vh - 52px - 90px)',
           overflowY: 'scroll',
           maskImage: 'linear-gradient(to bottom, black 95%, transparent 100%)',
           '-webkit-mask-image': 'linear-gradient(to bottom, black 95%, transparent 100%)',
@@ -56,7 +58,7 @@ export const SearchDict = React.memo(() => {
       >
         <If is={!!q}>
           {values?.map((v) => (
-            <div key={v.id} className={css({ paddingTop: '20px' })} onClick={() => openCard(v.id)}>
+            <div key={v.id} className={css({ padding: '9px 0' })} onClick={() => openCard(v.id)}>
               <div
                 className={`${css(textPreview)} useMonrope manropeBold`}
                 dangerouslySetInnerHTML={{ __html: v.definition }}
@@ -66,7 +68,7 @@ export const SearchDict = React.memo(() => {
         </If>
         <If is={!q && !!mostFreqValues}>
           {mostFreqValues?.map((v) => (
-            <div key={v.id} className={css({ paddingTop: '20px' })} onClick={() => openCard(v.id)}>
+            <div key={v.id} className={css({ padding: '9px 0' })} onClick={() => openCard(v.id)}>
               <div
                 className={`${css(textPreview)} useMonrope manropeBold`}
                 dangerouslySetInnerHTML={{ __html: v.definition }}
