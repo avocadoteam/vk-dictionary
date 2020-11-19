@@ -66,7 +66,11 @@ export const SearchDict = React.memo(() => {
     <>
       <Search
         after={null}
-        className={css({ backgroundColor: 'transparent', padding: '0 15px 1px' })}
+        className={css({
+          backgroundColor: 'transparent',
+          padding: '0 15px 1px',
+          borderRadius: '18px',
+        })}
         onChange={handleSearch}
         icon={updating ? <Spinner /> : undefined}
         placeholder={'Поиск мин 3 символа'}

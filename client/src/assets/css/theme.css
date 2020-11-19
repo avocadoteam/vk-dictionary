@@ -4,6 +4,7 @@ body[scheme='space_gray'] {
   --search_bar_field_background: #4B4B4B;
   --text_primary: #A6A6A6;
   --header_background: transparent;
+  --search_default_height: 48px;
 }
 
 body {
@@ -11,7 +12,8 @@ body {
   --header_alternate_background: #FCFCFC;
   --search_bar_field_background: #FBFBFB;
   --text_primary: #A6A6A6;
-  --header_background: transparent; 
+  --header_background: transparent;
+  --search_default_height: 48px;
 }
 
 .Div--android {
