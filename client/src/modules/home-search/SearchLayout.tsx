@@ -1,27 +1,28 @@
-import { SelectedHomeSlide } from 'core/models';
+import { AppDispatchActions, defaultSearchLayoutHeight, SelectedHomeSlide } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { getSelectedSlide } from 'core/selectors/settings';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { a, useSpring } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
 import { SearchDict } from './SearchDict';
 import { SearchFavourites } from './SearchFavourites';
 
-const defaultParentHeight = '56vh';
-
 export const SearchLayout = React.memo(() => {
-  const [parentHeight, setHeight] = React.useState(defaultParentHeight);
   const dark = useSelector(isThemeDrak);
   const slide = useSelector(getSelectedSlide);
   const { css } = useFela({ dark });
-  const sLaRef = React.useRef<HTMLDivElement | null>(null);
+  const dispatch = useDispatch<AppDispatchActions>();
+
+  const changeHeight = React.useCallback((payload: string) => {
+    dispatch({ type: 'TRIGGER_SEARCH_HEIGHT', payload });
+  }, []);
 
   const [{ y, height }, set] = useSpring(() => ({
     y: 0,
-    height: defaultParentHeight,
+    height: defaultSearchLayoutHeight,
   }));
 
   const bind = useDrag(
@@ -32,15 +33,15 @@ export const SearchLayout = React.memo(() => {
 
       set({
         y: my,
-        onChange: (v) => setHeight(v.height),
+        onChange: (v) => changeHeight(v.height),
         immediate: true,
-        height: `calc(${defaultParentHeight} - ${my}px)`,
+        height: `calc(${defaultSearchLayoutHeight} - ${my}px)`,
       });
     },
     {
       initial: () => [0, y.get()],
       filterTaps: true,
-      delay: 1000
+      delay: 1000,
     }
   );
 
@@ -54,7 +55,6 @@ export const SearchLayout = React.memo(() => {
         overflow: 'hidden',
       })}
       style={{ display: 'block', height, y } as any}
-      ref={sLaRef}
     >
       <div className={css({ padding: '11px 0 8px', height: 'auto', width: '100%' })} {...bind()}>
         <div
@@ -68,11 +68,8 @@ export const SearchLayout = React.memo(() => {
           {...bind()}
         />
       </div>
-      <If
-        is={slide === SelectedHomeSlide.ExpDictionary}
-        fallback={<SearchFavourites parentHeight={parentHeight} />}
-      >
-        <SearchDict parentHeight={parentHeight} />
+      <If is={slide === SelectedHomeSlide.ExpDictionary} fallback={<SearchFavourites />}>
+        <SearchDict />
       </If>
     </a.div>
   );

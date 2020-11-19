@@ -1,5 +1,10 @@
 import * as models from 'core/models';
-import { FetchingStatus, ClientTheme, SelectedHomeSlide } from 'core/models';
+import {
+  FetchingStatus,
+  ClientTheme,
+  SelectedHomeSlide,
+  defaultSearchLayoutHeight,
+} from 'core/models';
 
 export const initialState: models.AppState['ui'] = {
   theme: ClientTheme.Light,
@@ -13,6 +18,7 @@ export const initialState: models.AppState['ui'] = {
   selectedHomeSlide: SelectedHomeSlide.ExpDictionary,
   favouritesSearch: '',
   expDictSearch: '',
+  searchHeight: defaultSearchLayoutHeight,
 };
 
 export const reducer = (
@@ -141,6 +147,12 @@ export const reducer = (
       return {
         ...state,
         expDictSearch: dispatch.payload,
+      };
+    }
+    case 'SET_SEARCH_HEIGHT': {
+      return {
+        ...state,
+        searchHeight: dispatch.payload,
       };
     }
 

@@ -1,12 +1,7 @@
 import { Search, Spinner } from '@vkontakte/vkui';
 import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
-import {
-  getExpDictQ,
-  isSearchExpDictUpdating,
-  mostFreqExpDictResult,
-  searchExpDictResult,
-} from 'core/selectors/search';
+import * as sSel from 'core/selectors/search';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
@@ -15,13 +10,14 @@ import { animated, useChain, useTransition } from 'react-spring';
 import { textPreview } from './style';
 import { WordDay } from './WordDay';
 
-export const SearchDict = React.memo<{ parentHeight: string }>(({ parentHeight }) => {
+export const SearchDict = React.memo(() => {
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
-  const q = useSelector(getExpDictQ);
-  const values = useSelector(searchExpDictResult);
-  const mostFreqValues = useSelector(mostFreqExpDictResult);
-  const updating = useSelector(isSearchExpDictUpdating);
+  const q = useSelector(sSel.getExpDictQ);
+  const values = useSelector(sSel.searchExpDictResult);
+  const mostFreqValues = useSelector(sSel.mostFreqExpDictResult);
+  const updating = useSelector(sSel.isSearchExpDictUpdating);
+  const parentHeight = useSelector(sSel.getSearchHeight);
   const dispatch = useDispatch<AppDispatchActions>();
 
   const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

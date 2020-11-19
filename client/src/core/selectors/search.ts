@@ -16,6 +16,7 @@ const getMostFreqExpDictDataState = createSelector(
 );
 
 export const getExpDictQ = createSelector(getStateUi, (ui) => ui.expDictSearch);
+export const getSearchHeight = createSelector(getStateUi, (ui) => ui.searchHeight);
 
 export const isSearchExpDictUpdating = createSelector(
   getSearchExpDictDataState,

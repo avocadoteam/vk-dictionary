@@ -5,7 +5,7 @@ import { getLocationNotificationEnabled } from 'core/selectors/router';
 import { getUserStorageKeys } from 'core/vk-bridge/user';
 import { ofType } from 'redux-observable';
 import { from } from 'rxjs';
-import { filter, map, mergeMap, switchMap } from 'rxjs/operators';
+import { auditTime, filter, map, mergeMap, switchMap } from 'rxjs/operators';
 import { devTimeout } from './addons';
 import { safeCombineEpics } from './combine';
 import { captureFetchErrorMoreActions } from './errors';
@@ -75,5 +75,17 @@ const watchWordIdFromHashEpic: AppEpic = (action$, state$) =>
     filter(({ payload }) => !!payload && getMainView(state$.value) === MainView.Home),
     map(({ payload }) => push(`/${MainView.Word}/${payload}${getSearch(state$.value)}`))
   );
+const watchSearchHeightChangeEpic: AppEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('TRIGGER_SEARCH_HEIGHT'),
+    filter(({ payload }) => !!payload),
+    auditTime(200),
+    map(({ payload }) => ({ type: 'SET_SEARCH_HEIGHT', payload } as AppDispatch))
+  );
 
-export const userEpics = safeCombineEpics(getUserSKeysEpic, setInitInfo, watchWordIdFromHashEpic);
+export const userEpics = safeCombineEpics(
+  getUserSKeysEpic,
+  setInitInfo,
+  watchWordIdFromHashEpic,
+  watchSearchHeightChangeEpic
+);

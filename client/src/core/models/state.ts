@@ -25,6 +25,7 @@ export type AppState = {
     selectedHomeSlide: SelectedHomeSlide;
     favouritesSearch: string
     expDictSearch: string
+    searchHeight: string;
   };
   router: RouterState;
 };
@@ -42,6 +43,8 @@ export type AppDispatch =
   | { type: 'SET_HOME_SLIDE'; payload: SelectedHomeSlide }
   | { type: 'SET_FAVOURITES_Q'; payload: string }
   | { type: 'SET_EXP_DICT_Q'; payload: string }
+  | { type: 'SET_SEARCH_HEIGHT'; payload: string }
+  | { type: 'TRIGGER_SEARCH_HEIGHT'; payload: string }
   | ErrorEnqueue
   | ErrorDequeue
   | ErrorQueue
