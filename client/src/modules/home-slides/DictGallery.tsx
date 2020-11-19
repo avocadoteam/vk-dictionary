@@ -43,7 +43,7 @@ export const DictGallery = React.memo(() => {
           className={css({
             width: 7,
             height: 7,
-            backgroundColor: slide === SelectedHomeSlide.Favourites ? '#CFCFCF' : '#DADADA',
+            backgroundColor: slide === SelectedHomeSlide.ExpDictionary ? '#CFCFCF' : '#DADADA',
             borderRadius: '50%',
             marginLeft: '11px',
             marginTop: '1px',
