@@ -38,7 +38,12 @@ export const DictGallery = React.memo(() => {
           width: '100%',
         })}
       >
-        <SmallStar fill={slide === SelectedHomeSlide.Favourites ? '#CFCFCF' : '#DADADA'} />
+        <SmallStar
+          fill={slide === SelectedHomeSlide.Favourites ? '#CFCFCF' : '#DADADA'}
+          className={css({
+            opacity: slide === SelectedHomeSlide.Favourites ? undefined : .4,
+          })}
+        />
         <div
           className={css({
             width: 7,
@@ -47,6 +52,7 @@ export const DictGallery = React.memo(() => {
             borderRadius: '50%',
             marginLeft: '11px',
             marginTop: '1px',
+            opacity: slide === SelectedHomeSlide.ExpDictionary ? undefined : .4,
           })}
         />
       </div>

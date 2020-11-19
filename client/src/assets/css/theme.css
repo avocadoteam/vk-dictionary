@@ -1,17 +1,17 @@
 body[scheme='space_gray'] {
-  --background_content: #2B2B2B;
-  --header_alternate_background: #2B2B2B;
-  --search_bar_field_background: #4B4B4B;
-  --text_primary: #A6A6A6;
+  --background_content: #2b2b2b;
+  --header_alternate_background: #2b2b2b;
+  --search_bar_field_background: #4b4b4b;
+  --text_primary: #a6a6a6;
   --header_background: transparent;
   --search_default_height: 48px;
 }
 
 body {
-  --background_content: #FCFCFC;
-  --header_alternate_background: #FCFCFC;
-  --search_bar_field_background: #FBFBFB;
-  --text_primary: #A6A6A6;
+  --background_content: #fcfcfc;
+  --header_alternate_background: #fcfcfc;
+  --search_bar_field_background: #fbfbfb;
+  --text_primary: #a6a6a6;
   --header_background: transparent;
   --search_default_height: 48px;
 }
@@ -63,4 +63,8 @@ body {
   max-height: 100%;
   overflow-y: hidden;
   touch-action: none;
+}
+
+.Search__control {
+  border-radius: 18px;
 }
