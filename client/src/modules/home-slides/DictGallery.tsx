@@ -38,18 +38,15 @@ export const DictGallery = React.memo(() => {
           width: '100%',
         })}
       >
-        <SmallStar
-          fill={slide === SelectedHomeSlide.Favourites ? (dark ? '#F2F2F2' : '#CFCFCF') : '#DADADA'}
-        />
+        <SmallStar fill={slide === SelectedHomeSlide.Favourites ? '#CFCFCF' : '#DADADA'} />
         <div
           className={css({
             width: 7,
             height: 7,
-            backgroundColor:
-              slide === SelectedHomeSlide.Favourites ? (dark ? '#F2F2F2' : '#CFCFCF') : '#DADADA',
+            backgroundColor: slide === SelectedHomeSlide.Favourites ? '#CFCFCF' : '#DADADA',
             borderRadius: '50%',
             marginLeft: '11px',
-            marginTop: '1px'
+            marginTop: '1px',
           })}
         />
       </div>
