@@ -34,7 +34,7 @@ export const MakeFavourite = React.memo(() => {
       mode="tertiary"
       className={css({
         padding: 0,
-        marginRight: '12px',
+        marginRight: '20px',
       })}
       onClick={handleToggle}
       disabled={updating}
