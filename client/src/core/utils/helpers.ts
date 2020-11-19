@@ -15,7 +15,7 @@ export const errMap = (error: any) =>
     'stack',
   ]);
 
-function iOS() {
+export function iOS() {
   return (
     ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(
       navigator.platform

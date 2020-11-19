@@ -4,6 +4,7 @@ import { AppDispatchActions, appId, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { getSelectedCardData, getSelectedWordId } from 'core/selectors/word';
+import { iOS } from 'core/utils';
 import { normalizeText } from 'core/utils/formats';
 import { vkBridge } from 'core/vk-bridge/instance';
 import React from 'react';
@@ -51,7 +52,7 @@ export const WordCard = React.memo(() => {
       </div>
       <div
         className={css({
-          margin: 'auto 1.5rem 2rem auto',
+          margin: `auto 1.5rem ${iOS() ? '2rem' : 0} auto`,
         })}
       >
         <MakeFavourite />
