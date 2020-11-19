@@ -25,20 +25,22 @@ export const SearchLayout = React.memo(() => {
   }));
 
   const bind = useDrag(
-    ({ movement: [, my], direction: [, dy] }) => {
+    ({ movement: [, my] }) => {
       if (my >= 0.1 || my <= -265) {
         return;
       }
 
-      set({ y: my, onChange: (v) => setHeight(v.height) });
       set({
+        y: my,
+        onChange: (v) => setHeight(v.height),
+        immediate: true,
         height: `calc(${defaultParentHeight} - ${my}px)`,
-        immediate: dy < 0,
       });
     },
     {
       initial: () => [0, y.get()],
       filterTaps: true,
+      delay: 1000
     }
   );
 
