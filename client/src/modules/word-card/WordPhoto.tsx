@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const WordPhoto = React.memo(({ children }) => {
   const photos = useSelector(getWordPhotos);
+  const [url, setUrl] = React.useState<string | undefined>(undefined);
   const hasPhotos = !!photos?.length;
   const { css } = useFela();
   const dispatch = useDispatch<AppDispatchActions>();
@@ -21,6 +22,16 @@ export const WordPhoto = React.memo(({ children }) => {
       });
     };
   }, []);
+
+  React.useEffect(() => {
+    if (hasPhotos) {
+      setUrl(photos[~~(photos.length * Math.random())].url);
+    }
+
+    return () => {
+      setUrl(undefined);
+    };
+  }, [hasPhotos, photos]);
 
   return (
     <>
@@ -39,7 +50,7 @@ export const WordPhoto = React.memo(({ children }) => {
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
             backgroundImage: `
-              linear-gradient(180deg, rgba(0, 0, 0, 0.65) 36.46%, rgba(0, 0, 0, 0) 57.29%, rgba(0, 0, 0, 0) 90.62%, rgba(0, 0, 0, 0.5) 100%), url(${photos[0]?.url})
+              linear-gradient(180deg, rgba(0, 0, 0, 0.65) 36.46%, rgba(0, 0, 0, 0) 57.29%, rgba(0, 0, 0, 0) 90.62%, rgba(0, 0, 0, 0.5) 100%), url(${url})
             `,
           })}
         />

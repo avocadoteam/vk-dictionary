@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { animated, useChain, useTransition } from 'react-spring';
 import { textPreview } from './style';
 
-export const SearchFavourites = React.memo(() => {
+export const SearchFavourites = React.memo<{ parentHeight: string }>(({ parentHeight }) => {
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
   const query = useSelector(getFavQ);
@@ -36,9 +36,6 @@ export const SearchFavourites = React.memo(() => {
     enter: {
       transform: 'scale(1)',
     },
-    leave: {
-      transform: 'scale(0)',
-    },
     ref: transRef,
     unique: true,
     trail: 200 / values.length,
@@ -62,17 +59,17 @@ export const SearchFavourites = React.memo(() => {
     <>
       <Search
         after={null}
-        className={css({ backgroundColor: 'transparent', padding: '8px 15px 1px' })}
+        className={css({ backgroundColor: 'transparent', padding: '0 15px 1px' })}
         onChange={handleSearch}
         placeholder={'Поиск'}
         value={query}
       />
       <div
         className={css({
-          height: 'calc(54vh - 52px)',
+          height: `calc(${parentHeight} - 76px)`,
           overflowY: 'scroll',
-          maskImage: 'linear-gradient(to bottom, black 95%, transparent 100%)',
-          '-webkit-mask-image': 'linear-gradient(to bottom, black 95%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+          '-webkit-mask-image': 'linear-gradient(to bottom, black 80%, transparent 100%)',
         } as any)}
       >
         {resultsRender}

@@ -5,38 +5,73 @@ import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useSelector } from 'react-redux';
+import { a, useSpring } from 'react-spring';
+import { useDrag } from 'react-use-gesture';
 import { SearchDict } from './SearchDict';
 import { SearchFavourites } from './SearchFavourites';
 
+const defaultParentHeight = '53vh';
+
 export const SearchLayout = React.memo(() => {
+  const [parentHeight, setHeight] = React.useState(defaultParentHeight);
   const dark = useSelector(isThemeDrak);
   const slide = useSelector(getSelectedSlide);
   const { css } = useFela({ dark });
+  const sLaRef = React.useRef<HTMLDivElement | null>(null);
+
+  const [{ y, height }, set] = useSpring(() => ({
+    y: 0,
+    height: defaultParentHeight,
+  }));
+
+  const bind = useDrag(
+    ({ movement: [, my], direction: [, dy] }) => {
+      if (my >= 0.1 || my <= -265) {
+        return;
+      }
+
+      set({ y: my, onChange: (v) => setHeight(v.height) });
+      set({
+        height: `calc(53vh - ${my}px)`,
+        immediate: dy < 0,
+      });
+    },
+    {
+      initial: () => [0, y.get()],
+      filterTaps: true,
+    }
+  );
 
   return (
-    <div
+    <a.div
       className={css({
-        boxShadow: '0px 0px 30px -11px rgba(0, 0, 0, 0.03)',
+        boxShadow: '0px 0px 30px -11px rgba(0, 0, 0, 0.3)',
         borderRadius: '35px 35px 0px 0px',
         marginTop: '1rem',
         backgroundColor: dark ? '#2F2F2F' : '#FFFFFF',
-        paddingTop: '11px',
-        minHeight: 'calc(63vh - 27px - 56px - 27px)',
         overflow: 'hidden',
       })}
+      style={{ display: 'block', height, y } as any}
+      ref={sLaRef}
     >
-      <div
-        className={css({
-          width: '59px',
-          height: '4px',
-          background: dark ? '#4B4B4B' : '#F8F8F8',
-          borderRadius: '23px',
-          margin: '0 auto',
-        })}
-      />
-      <If is={slide === SelectedHomeSlide.ExpDictionary} fallback={<SearchFavourites />}>
-        <SearchDict />
+      <div className={css({ padding: '11px 0 8px', height: 'auto', width: '100%' })} {...bind()}>
+        <div
+          className={css({
+            width: '59px',
+            height: '6px',
+            background: dark ? '#4B4B4B' : '#F8F8F8',
+            borderRadius: '23px',
+            margin: '0 auto',
+          })}
+          {...bind()}
+        />
+      </div>
+      <If
+        is={slide === SelectedHomeSlide.ExpDictionary}
+        fallback={<SearchFavourites parentHeight={parentHeight} />}
+      >
+        <SearchDict parentHeight={parentHeight} />
       </If>
-    </div>
+    </a.div>
   );
 });

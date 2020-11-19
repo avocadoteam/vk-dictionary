@@ -15,7 +15,7 @@ import { animated, useChain, useTransition } from 'react-spring';
 import { textPreview } from './style';
 import { WordDay } from './WordDay';
 
-export const SearchDict = React.memo(() => {
+export const SearchDict = React.memo<{ parentHeight: string }>(({ parentHeight }) => {
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
   const q = useSelector(getExpDictQ);
@@ -46,9 +46,6 @@ export const SearchDict = React.memo(() => {
     enter: {
       transform: 'scale(1)',
     },
-    leave: {
-      transform: 'scale(0)',
-    },
     ref: transRef,
     unique: true,
     trail: 100 / values?.length ?? 0,
@@ -72,7 +69,7 @@ export const SearchDict = React.memo(() => {
     <>
       <Search
         after={null}
-        className={css({ backgroundColor: 'transparent', padding: '8px 15px 1px' })}
+        className={css({ backgroundColor: 'transparent', padding: '0 15px 1px' })}
         onChange={handleSearch}
         icon={updating ? <Spinner /> : undefined}
         placeholder={'Поиск мин 3 символа'}
@@ -81,10 +78,10 @@ export const SearchDict = React.memo(() => {
       <WordDay />
       <div
         className={css({
-          height: 'calc(54vh - 52px - 90px)',
+          height: `calc(${parentHeight} - 76px - 90px)`,
           overflowY: 'scroll',
-          maskImage: 'linear-gradient(to bottom, black 95%, transparent 100%)',
-          '-webkit-mask-image': 'linear-gradient(to bottom, black 95%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+          '-webkit-mask-image': 'linear-gradient(to bottom, black 85%, transparent 100%)',
         } as any)}
       >
         <If is={!!q}>{resultsRender}</If>
