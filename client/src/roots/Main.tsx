@@ -1,18 +1,22 @@
 import { Panel, PanelHeader, View } from '@vkontakte/vkui';
 import { MainView } from 'core/models';
+import { isThemeDrak } from 'core/selectors/common';
 import { getMainView } from 'core/selectors/main';
+import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { SearchLayout } from 'modules/home-search';
 import { DictGallery } from 'modules/home-slides';
 import { SnakbarsErr } from 'modules/snaks';
 import { BtnBack, WordCard, WordPhoto } from 'modules/word-card';
 import React from 'react';
-import { useFela } from 'react-fela';
+import { StyleFunction, useFela } from 'react-fela';
 import { useSelector } from 'react-redux';
 import { Offline } from './Offline';
 
 export const Main = React.memo(() => {
   const activePanel = useSelector(getMainView);
-  const { css } = useFela();
+  const hasPhotos = useSelector(hasAtLeastOnePhoto);
+  const dark = useSelector(isThemeDrak);
+  const { css } = useFela({ hasPhotos, dark });
   return (
     <>
       <View activePanel={activePanel}>
@@ -21,7 +25,7 @@ export const Main = React.memo(() => {
           <DictGallery />
           <SearchLayout />
         </Panel>
-        <Panel id={MainView.Word} className={css({ position: 'relative' })}>
+        <Panel id={MainView.Word} className={css(panelStyle)}>
           <WordPhoto>
             <PanelHeader separator={false} left={<BtnBack />} />
             <WordCard />
@@ -34,4 +38,14 @@ export const Main = React.memo(() => {
       <SnakbarsErr />
     </>
   );
+});
+
+export const panelStyle: StyleFunction<{}, { dark: boolean; hasPhotos: boolean }> = ({
+  hasPhotos,
+  dark,
+}) => ({
+  position: 'relative',
+  '>.Panel__in': {
+    backgroundColor: !hasPhotos ? undefined : dark ? '#000' : '#fff',
+  },
 });

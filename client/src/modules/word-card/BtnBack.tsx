@@ -3,7 +3,7 @@ import { Button } from '@vkontakte/vkui';
 import { goBack } from 'connected-react-router';
 import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
-import { getWordPhotos } from 'core/selectors/photos';
+import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,8 +12,7 @@ export const BtnBack = React.memo(() => {
   const dispatch = useDispatch<AppDispatchActions>();
   const { css } = useFela();
   const dark = useSelector(isThemeDrak);
-  const photos = useSelector(getWordPhotos);
-  const hasPhotos = !!photos?.length;
+  const hasPhotos = useSelector(hasAtLeastOnePhoto);
 
   const swipeBack = React.useCallback(() => {
     dispatch(goBack());

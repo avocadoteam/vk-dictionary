@@ -3,7 +3,7 @@ import { Button } from '@vkontakte/vkui';
 import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { isUserFavouritesUpdating, isWordFavourite } from 'core/selectors/favourites';
-import { getWordPhotos } from 'core/selectors/photos';
+import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { getSelectedWordId } from 'core/selectors/word';
 import { If } from 'modules/atoms';
 import React from 'react';
@@ -17,8 +17,7 @@ export const MakeFavourite = React.memo(() => {
   const isSelected = useSelector(isWordFavourite);
   const updating = useSelector(isUserFavouritesUpdating);
   const wordId = useSelector(getSelectedWordId);
-  const photos = useSelector(getWordPhotos);
-  const hasPhotos = !!photos?.length;
+  const hasPhotos = useSelector(hasAtLeastOnePhoto);
 
   const handleToggle = () => {
     dispatch({

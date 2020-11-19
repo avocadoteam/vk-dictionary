@@ -2,7 +2,7 @@ import { Icon24ShareOutline } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
 import { AppDispatchActions, appId, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
-import { getWordPhotos } from 'core/selectors/photos';
+import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { getSelectedCardData, getSelectedWordId } from 'core/selectors/word';
 import { normalizeText } from 'core/utils/formats';
 import { vkBridge } from 'core/vk-bridge/instance';
@@ -15,8 +15,7 @@ export const WordCard = React.memo(() => {
   const data = useSelector(getSelectedCardData);
   const id = useSelector(getSelectedWordId);
   const dark = useSelector(isThemeDrak);
-  const photos = useSelector(getWordPhotos);
-  const hasPhotos = !!photos?.length;
+  const hasPhotos = useSelector(hasAtLeastOnePhoto);
   const { css } = useFela({ dark, hasPhotos });
   const dispatch = useDispatch<AppDispatchActions>();
 
