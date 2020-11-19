@@ -7,5 +7,3 @@ export const payToGroupId = 6666666;
 export const premiumPrice = 228;
 
 export const isDev = process.env.NODE_ENV !== 'production';
-
-export const defaultSearchLayoutHeight = '56vh';

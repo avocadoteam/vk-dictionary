@@ -1,6 +1,7 @@
-import { AppDispatchActions, defaultSearchLayoutHeight, SelectedHomeSlide } from 'core/models';
+import { AppDispatchActions, SelectedHomeSlide } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { getSelectedSlide } from 'core/selectors/settings';
+import { defaultSearchLayoutHeight } from 'core/utils';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
@@ -40,7 +41,6 @@ export const SearchLayout = React.memo(() => {
     },
     {
       initial: () => [0, y.get()],
-      filterTaps: true,
       delay: 1000,
     }
   );
@@ -55,8 +55,9 @@ export const SearchLayout = React.memo(() => {
         overflow: 'hidden',
       })}
       style={{ display: 'block', height, y } as any}
+      {...bind()}
     >
-      <div className={css({ padding: '11px 0 8px', height: 'auto', width: '100%' })} {...bind()}>
+      <div className={css({ padding: '11px 0 8px', height: 'auto', width: '100%' })}>
         <div
           className={css({
             width: '59px',
@@ -65,7 +66,6 @@ export const SearchLayout = React.memo(() => {
             borderRadius: '23px',
             margin: '0 auto',
           })}
-          {...bind()}
         />
       </div>
       <If is={slide === SelectedHomeSlide.ExpDictionary} fallback={<SearchFavourites />}>

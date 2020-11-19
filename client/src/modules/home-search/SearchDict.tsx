@@ -2,6 +2,7 @@ import { Search, Spinner } from '@vkontakte/vkui';
 import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import * as sSel from 'core/selectors/search';
+import { stopEvents } from 'core/utils';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
@@ -79,6 +80,7 @@ export const SearchDict = React.memo(() => {
           maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
           '-webkit-mask-image': 'linear-gradient(to bottom, black 85%, transparent 100%)',
         } as any)}
+        onPointerDown={stopEvents}
       >
         <If is={!!q}>{resultsRender}</If>
         <If is={!q && !!mostFreqValues}>

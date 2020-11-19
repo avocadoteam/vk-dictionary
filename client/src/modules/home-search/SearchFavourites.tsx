@@ -3,6 +3,7 @@ import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { getFavQ, getUserFavouritesList } from 'core/selectors/favourites';
 import { getSearchHeight } from 'core/selectors/search';
+import { stopEvents } from 'core/utils';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
@@ -73,6 +74,7 @@ export const SearchFavourites = React.memo(() => {
           maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
           '-webkit-mask-image': 'linear-gradient(to bottom, black 80%, transparent 100%)',
         } as any)}
+        onPointerDown={stopEvents}
       >
         {resultsRender}
       </div>

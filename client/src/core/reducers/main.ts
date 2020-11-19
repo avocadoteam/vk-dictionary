@@ -1,10 +1,6 @@
 import * as models from 'core/models';
-import {
-  FetchingStatus,
-  ClientTheme,
-  SelectedHomeSlide,
-  defaultSearchLayoutHeight,
-} from 'core/models';
+import { FetchingStatus, ClientTheme, SelectedHomeSlide } from 'core/models';
+import { defaultSearchLayoutHeight } from 'core/utils';
 
 export const initialState: models.AppState['ui'] = {
   theme: ClientTheme.Light,
