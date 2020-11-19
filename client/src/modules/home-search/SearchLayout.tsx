@@ -10,7 +10,7 @@ import { useDrag } from 'react-use-gesture';
 import { SearchDict } from './SearchDict';
 import { SearchFavourites } from './SearchFavourites';
 
-const defaultParentHeight = '57vh';
+const defaultParentHeight = '56vh';
 
 export const SearchLayout = React.memo(() => {
   const [parentHeight, setHeight] = React.useState(defaultParentHeight);

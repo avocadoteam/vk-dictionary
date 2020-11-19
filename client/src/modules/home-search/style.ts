@@ -29,6 +29,4 @@ export const textPreview: StyleFunction<{}, { dark: boolean }> = ({ dark }) => (
   ':active': {
     background: 'linear-gradient(90deg, rgba(0, 0, 0, 0.1) 89.07%, rgba(0, 0, 0, 0) 100%)',
   },
-  touchAction: 'none'
-
 });
