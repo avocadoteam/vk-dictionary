@@ -1,9 +1,11 @@
-import { Search } from '@vkontakte/vkui';
+import { Icon20FavoriteOutline } from '@vkontakte/icons';
+import { Placeholder, Search, Text } from '@vkontakte/vkui';
 import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { getFavQ, getUserFavouritesList } from 'core/selectors/favourites';
 import { getSearchHeight } from 'core/selectors/search';
 import { stopEvents } from 'core/utils';
+import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
@@ -71,17 +73,51 @@ export const SearchFavourites = React.memo(() => {
         placeholder={'Поиск'}
         value={query}
       />
-      <div
-        className={css({
-          height: `calc(${parentHeight} - 76px)`,
-          overflowY: 'scroll',
-          maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
-          '-webkit-mask-image': 'linear-gradient(to bottom, black 80%, transparent 100%)',
-        } as any)}
-        onPointerDown={stopEvents}
-      >
-        {resultsRender}
-      </div>
+      <If is={!!values?.length}>
+        <div
+          className={css({
+            height: `calc(${parentHeight} - 76px)`,
+            overflowY: 'scroll',
+            maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+            '-webkit-mask-image': 'linear-gradient(to bottom, black 80%, transparent 100%)',
+          } as any)}
+          onPointerDown={stopEvents}
+        >
+          {resultsRender}
+        </div>
+      </If>
+      <If is={!values?.length}>
+        <Placeholder
+          icon={<Icon20FavoriteOutline fill={'rgba(0, 0, 0, 0.75)'} width={26} height={26} />}
+          header={
+            <Text
+              weight="medium"
+              className={`${css({
+                color: dark ? '#FFFFFF' : 'rgba(0, 0, 0, 0.75)',
+                fontSize: '19px',
+                lineHeight: '24px',
+                letterSpacing: '0.38px',
+              })} useMonrope manropeBold`}
+            >
+              Закладок нет
+            </Text>
+          }
+        >
+          <Text
+            weight="medium"
+            className={`${css({
+              color: dark ? '#FFFFFF' : '#818C99',
+              fontSize: '16px',
+              lineHeight: '20px',
+              letterSpacing: '-0.32px',
+              fontStyle: 'normal',
+              fontWeight: 'normal',
+            })}`}
+          >
+            Добавьте любое слово в закладки, чтобы оно появилось тут.
+          </Text>
+        </Placeholder>
+      </If>
     </>
   );
 });

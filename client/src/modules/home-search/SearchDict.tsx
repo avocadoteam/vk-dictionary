@@ -1,4 +1,4 @@
-import { Search, Spinner } from '@vkontakte/vkui';
+import { Placeholder, Search, Spinner, Text } from '@vkontakte/vkui';
 import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import * as sSel from 'core/selectors/search';
@@ -18,8 +18,10 @@ export const SearchDict = React.memo(() => {
   const values = useSelector(sSel.searchExpDictResult);
   const mostFreqValues = useSelector(sSel.mostFreqExpDictResult);
   const updating = useSelector(sSel.isSearchExpDictUpdating);
+  const ready = useSelector(sSel.isSearchExpDictReady);
   const parentHeight = useSelector(sSel.getSearchHeight);
   const dispatch = useDispatch<AppDispatchActions>();
+  const showEmpty = (!!q && !updating && ready && !values?.length) || (!!q && q.length < 3);
 
   const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -96,6 +98,23 @@ export const SearchDict = React.memo(() => {
               />
             </div>
           ))}
+        </If>
+        <If is={showEmpty}>
+          <Placeholder>
+            <Text
+              weight="medium"
+              className={`${css({
+                color: dark ? '#FFFFFF' : '#818C99',
+                fontSize: '16px',
+                lineHeight: '20px',
+                letterSpacing: '-0.32px',
+                fontStyle: 'normal',
+                fontWeight: 'normal',
+              })}`}
+            >
+              Кажется, Вы ввели неправильный запрос.
+            </Text>
+          </Placeholder>
         </If>
       </div>
     </>

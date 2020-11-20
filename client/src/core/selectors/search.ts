@@ -22,6 +22,10 @@ export const isSearchExpDictUpdating = createSelector(
   getSearchExpDictDataState,
   (dataState) => dataState.status === FetchingStatus.Updating
 );
+export const isSearchExpDictReady = createSelector(
+  getSearchExpDictDataState,
+  (dataState) => dataState.status === FetchingStatus.Ready
+);
 
 export const searchExpDictResult = createSelector(
   getSearchExpDictDataState,
