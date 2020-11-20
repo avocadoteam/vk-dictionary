@@ -195,8 +195,8 @@ export class WordPhotoService {
             newUnsplashPhoto.urls.full ?? newUnsplashPhoto.urls.raw,
             newUnsplashPhoto.user.name,
             newUnsplashPhoto.user.links.html,
-            newUnsplashPhoto.color,
-            newUnsplashPhoto.blur_hash,
+            newUnsplashPhoto.color || '#000000',
+            newUnsplashPhoto.blur_hash || 'llllllll',
             newUnsplashPhoto.id,
           );
           await queryRunner.manager.save(newPhoto);
