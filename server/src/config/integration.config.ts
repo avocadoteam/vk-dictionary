@@ -8,4 +8,5 @@ export default registerAs('integration', () => ({
   vkCbSecret: process.env.VK_CB_SECRET,
   splashAccessKey: process.env.SPLASH_ACCESS_KEY,
   splashSecretKey: process.env.SPLASH_SECRET_KEY,
+  ibmSecretKey: process.env.IBM_SECRET_KEY,
 }));

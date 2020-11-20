@@ -8,10 +8,12 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import integrationConfig from 'src/config/integration.config';
-import { cacheKey, dayTTL } from 'src/contracts/cache';
+import { oneMillion } from 'src/constants';
+import { cacheKey, dayTTL, monthTTL } from 'src/contracts/cache';
 import {
   SplashPhoto,
   SplashPhotoResult,
+  Translation,
   WordPhoto,
   WordPhotoOfTheDay,
 } from 'src/contracts/photos';
@@ -87,11 +89,13 @@ export class WordPhotoService {
       return [];
     }
 
+    const word = await this.translateWord(query);
+
     const result = await this.httpService
       .get<SplashPhoto>(
         `https://api.unsplash.com/search/photos${buildQueryString([
           { client_id: this.config.splashAccessKey ?? '' },
-          { query },
+          { query: word || query },
           { orientation: 'portrait' },
           { lang: 'ru' },
           { per_page: '5' },
@@ -112,6 +116,58 @@ export class WordPhotoService {
     );
 
     return result.data.results;
+  }
+
+  private async translateWord(query: string) {
+    try {
+      const amountOfChars = await this.cache.get<number>(
+        cacheKey.charTranslatesInMonth,
+      );
+
+      if (amountOfChars !== null && amountOfChars === oneMillion) {
+        this.logger.log(`translateWord failed no remaining chars left`);
+        return null;
+      }
+
+      const result = await this.httpService
+        .post<Translation>(
+          `https://api.eu-de.language-translator.watson.cloud.ibm.com/instances/e77cd159-9899-48d2-a74d-e119a112f744/v3/translate${buildQueryString(
+            [{ version: '2018-05-01' }],
+          )}`,
+          {
+            text: [query],
+            model_id: 'ru-en',
+          },
+          {
+            headers: {
+              Authorization: `Basic ${this.config.ibmSecretKey}`,
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .toPromise();
+
+      if (result.data.error) {
+        this.logger.log(`translateWord failed ${result.data.error?.error_msg}`);
+        return null;
+      }
+
+      await this.cache.set(
+        cacheKey.charTranslatesInMonth,
+        amountOfChars
+          ? amountOfChars + result.data.character_count
+          : result.data.character_count,
+        {
+          ttl: monthTTL,
+        },
+      );
+
+      return result.data?.translations[0]?.translation ?? null;
+    } catch (error) {
+      this.logger.log(`translateWord error`);
+      this.logger.error(errMap(error));
+      return null;
+    }
   }
 
   private async saveNewSplashPhotos(

@@ -7,6 +7,16 @@ export interface SplashPhoto {
   results: SplashPhotoResult[];
   error?: any;
 }
+export interface Translation {
+  translations: [
+    {
+      translation: string;
+    },
+  ];
+  word_count: number;
+  character_count: number;
+  error?: any;
+}
 
 export type SplashPhotoResult = {
   id: string;
