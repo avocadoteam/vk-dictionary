@@ -9,7 +9,7 @@ import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import integrationConfig from 'src/config/integration.config';
 import { oneMillion } from 'src/constants';
-import { cacheKey, dayTTL, monthTTL } from 'src/contracts/cache';
+import { cacheKey, dayTTL, hourTTL, monthTTL } from 'src/contracts/cache';
 import {
   SplashPhoto,
   SplashPhotoResult,
@@ -111,8 +111,10 @@ export class WordPhotoService {
 
     await this.cache.set(
       cacheKey.splashAttemptsToFetchPhotos,
-      remainingAttempts,
-      {},
+      Number(remainingAttempts),
+      {
+        ttl: hourTTL,
+      },
     );
 
     return result.data.results;

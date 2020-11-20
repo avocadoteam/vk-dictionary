@@ -50,7 +50,7 @@ export const WordPhoto = React.memo(({ children }) => {
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
             backgroundImage: `
-              linear-gradient(180deg, rgba(0, 0, 0, 0.65) 36.46%, rgba(0, 0, 0, 0) 57.29%, rgba(0, 0, 0, 0) 90.62%, rgba(0, 0, 0, 0.5) 100%), url(${url})
+              linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${url})
             `,
           })}
         />
