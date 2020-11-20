@@ -38,4 +38,4 @@ export const stopEvents = <T>(e: PointerEvent<T>) => {
   e.stopPropagation();
 };
 
-export const defaultSearchLayoutHeight = iOS() ? '56vh' : '58vh';
+export const defaultSearchLayoutHeight = iOS() ? '56vh' : '60vh';
