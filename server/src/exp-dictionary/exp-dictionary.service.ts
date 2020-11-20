@@ -31,8 +31,8 @@ export class ExpDictionaryService {
           id,
           name,
           definition,
-          to_tsvector(ts_config_name, name) as document,
-          ts_rank(to_tsvector(ts_config_name, name), to_tsquery('${query}:*')) as rank
+          to_tsvector('english', name) as document,
+          ts_rank(to_tsvector('english', name), to_tsquery('${query}:*')) as rank
         from
           dictionary ) ps
       where
