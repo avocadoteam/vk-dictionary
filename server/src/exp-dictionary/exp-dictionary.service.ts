@@ -23,21 +23,21 @@ export class ExpDictionaryService {
     const r = (await this.tableDict.query(`
       select
         id,
-        definition
+        definition,
+        ps.rank
       from
         (
         select
           id,
           name,
           definition,
-          (
-            setweight(to_tsvector(ts_config_name, name), 'A') || 
-            setweight(to_tsvector(ts_config_name, definition_plain_text), 'B')
-          ) as document
+          to_tsvector(ts_config_name, name) as document,
+          ts_rank(to_tsvector(ts_config_name, name), to_tsquery('${query}:*')) as rank
         from
           dictionary ) ps
       where
-        ps.document @@ to_tsquery('${query}:*');
+        ps.document @@ to_tsquery('${query}:*')
+      order by ps.rank desc;
     `)) as SearchResult[];
 
     let response: SearchResult[] = [];
