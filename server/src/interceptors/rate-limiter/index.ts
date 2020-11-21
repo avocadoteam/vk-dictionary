@@ -34,7 +34,7 @@ export class FetchLimiter implements NestMiddleware {
 
   async use(req: Request, res: Response, next: () => void) {
     try {
-      await this.limiter.consume(req.ip);
+      await this.limiter.consume(`${req.ip}_${req.path}`);
       next();
     } catch (rateLimiterRes) {
       const error = `You've made too many attempts in a short period of time, please try again at ${moment()
