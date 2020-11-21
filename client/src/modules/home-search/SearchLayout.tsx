@@ -1,5 +1,6 @@
 import { AppDispatchActions, SelectedHomeSlide } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
+import { getSearchHeight, getSearchY } from 'core/selectors/search';
 import { getSelectedSlide } from 'core/selectors/settings';
 import { defaultSearchLayoutHeight } from 'core/utils';
 import { If } from 'modules/atoms';
@@ -14,16 +15,19 @@ import { SearchFavourites } from './SearchFavourites';
 export const SearchLayout = React.memo(() => {
   const dark = useSelector(isThemeDrak);
   const slide = useSelector(getSelectedSlide);
+  const parentHeight = useSelector(getSearchHeight);
+  const searchY = useSelector(getSearchY);
   const { css } = useFela({ dark });
   const dispatch = useDispatch<AppDispatchActions>();
 
-  const changeHeight = React.useCallback((payload: string) => {
-    dispatch({ type: 'TRIGGER_SEARCH_HEIGHT', payload });
+  const saveSettings = React.useCallback((v: { y: number; height: string }) => {
+    dispatch({ type: 'TRIGGER_SEARCH_HEIGHT', payload: v.height });
+    dispatch({ type: 'SET_SEARCH_Y', payload: v.y });
   }, []);
 
   const [{ y, height }, set] = useSpring(() => ({
-    y: 0,
-    height: defaultSearchLayoutHeight,
+    y: searchY,
+    height: parentHeight,
   }));
 
   const bind = useDrag(
@@ -34,7 +38,7 @@ export const SearchLayout = React.memo(() => {
 
       set({
         y: my,
-        onChange: (v) => changeHeight(v.height),
+        onChange: saveSettings,
         immediate: true,
         height: `calc(${defaultSearchLayoutHeight} - ${my}px)`,
       });

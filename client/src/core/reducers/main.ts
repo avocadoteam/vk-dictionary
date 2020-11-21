@@ -15,6 +15,7 @@ export const initialState: models.AppState['ui'] = {
   favouritesSearch: '',
   expDictSearch: '',
   searchHeight: defaultSearchLayoutHeight,
+  searchY: 0,
 };
 
 export const reducer = (
@@ -149,6 +150,12 @@ export const reducer = (
       return {
         ...state,
         searchHeight: dispatch.payload,
+      };
+    }
+    case 'SET_SEARCH_Y': {
+      return {
+        ...state,
+        searchY: dispatch.payload,
       };
     }
 

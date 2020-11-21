@@ -26,6 +26,7 @@ export type AppState = {
     favouritesSearch: string
     expDictSearch: string
     searchHeight: string;
+    searchY: number;
   };
   router: RouterState;
 };
@@ -44,6 +45,7 @@ export type AppDispatch =
   | { type: 'SET_FAVOURITES_Q'; payload: string }
   | { type: 'SET_EXP_DICT_Q'; payload: string }
   | { type: 'SET_SEARCH_HEIGHT'; payload: string }
+  | { type: 'SET_SEARCH_Y'; payload: number }
   | { type: 'TRIGGER_SEARCH_HEIGHT'; payload: string }
   | ErrorEnqueue
   | ErrorDequeue
