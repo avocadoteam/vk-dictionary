@@ -88,7 +88,13 @@ export const SearchFavourites = React.memo(() => {
       </If>
       <If is={!values?.length}>
         <Placeholder
-          icon={<Icon20FavoriteOutline fill={'rgba(0, 0, 0, 0.75)'} width={26} height={26} />}
+          icon={
+            <Icon20FavoriteOutline
+              fill={dark ? '#FFFFFF' : 'rgba(0, 0, 0, 0.75)'}
+              width={26}
+              height={26}
+            />
+          }
           header={
             <Text
               weight="medium"
