@@ -62,7 +62,7 @@ export class ExpDictionaryService {
       this.logger.log('fullTextSearch failed with error');
       this.logger.error(errMap(error));
     } finally {
-      return [];
+      return response;
     }
   }
 
