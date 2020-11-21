@@ -12,6 +12,8 @@ import { ExpDictionaryModule } from './exp-dictionary/exp-dictionary.module';
 import { WordFrequencyModule } from './word-frequency/word-frequency.module';
 import { UserFavouriteModule } from './user-favourite/user-favourite.module';
 import { WordPhotoModule } from './word-photo/word-photo.module';
+import { ExpDictionaryController } from './exp-dictionary/exp-dictionary.controller';
+import { UserFavouriteController } from './user-favourite/user-favourite.controller';
 
 @Module({
   imports: [
@@ -50,6 +52,12 @@ import { WordPhotoModule } from './word-photo/word-photo.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(FetchLimiter).forRoutes(AppController);
+    consumer
+      .apply(FetchLimiter)
+      .forRoutes(
+        AppController,
+        ExpDictionaryController,
+        UserFavouriteController,
+      );
   }
 }
