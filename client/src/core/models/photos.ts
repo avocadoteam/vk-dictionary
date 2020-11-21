@@ -1,5 +1,5 @@
 export type WordPhoto = {
-  color: string | null;
+  color: string;
   blurHash: string;
   url: string;
   userName: string;

@@ -18,10 +18,8 @@ export const getWordPhotos = createSelector(
   (dataState) => dataState.data ?? []
 );
 
-export const hasAtLeastOnePhoto = createSelector(
-  getWordPhotos,
-  photos => !!photos?.length
-)
+export const hasAtLeastOnePhoto = createSelector(getWordPhotos, (photos) => !!photos?.length);
+export const getFirstPhoto = createSelector(getWordPhotos, (photos) => photos[0] ?? {});
 
 export const getWordOfTheDay = createSelector(
   getWordOfTheDayDataState,

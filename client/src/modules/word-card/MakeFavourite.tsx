@@ -39,7 +39,7 @@ export const MakeFavourite = React.memo(() => {
       onClick={handleToggle}
       disabled={updating}
     >
-      <If is={isSelected} fallback={<Icon20FavoriteOutline fill={color} width={30} height={30} />}>
+      <If is={isSelected} else={<Icon20FavoriteOutline fill={color} width={30} height={30} />}>
         <Icon24Favorite fill={color} width={30} height={30} />
       </If>
     </Button>

@@ -68,7 +68,7 @@ export const SearchLayout = React.memo(() => {
           })}
         />
       </div>
-      <If is={slide === SelectedHomeSlide.ExpDictionary} fallback={<SearchFavourites />}>
+      <If is={slide === SelectedHomeSlide.ExpDictionary} else={<SearchFavourites />}>
         <SearchDict />
       </If>
     </a.div>
