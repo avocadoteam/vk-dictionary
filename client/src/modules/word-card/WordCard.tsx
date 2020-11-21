@@ -58,7 +58,7 @@ export const WordCard = React.memo(() => {
         className={css({
           margin: `auto 1.5rem ${iOS() ? '2rem' : 0} auto`,
         })}
-        onClick={() => setShow(!show)}
+        // onClick={() => setShow(!show)}
       >
         <MakeFavourite />
         <Button
@@ -75,9 +75,9 @@ export const WordCard = React.memo(() => {
           />
         </Button>
       </div>
-      <If is={show}>
+      {/* <If is={show}>
         <div className={css({ backgroundColor: photo.color, height: '100px' })}>hui</div>
-      </If>
+      </If> */}
     </div>
   );
 });
