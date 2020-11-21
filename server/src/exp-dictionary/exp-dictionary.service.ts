@@ -20,45 +20,50 @@ export class ExpDictionaryService {
   ) {}
 
   async fullTextSearch(query: string) {
-    const r = (await this.tableDict.query(`
-      select
-        id,
-        definition,
-        ps.rank
-      from
-        (
-        select
-          id,
-          name,
-          definition,
-          to_tsvector(ts_config_name, name) as document,
-          ts_rank(to_tsvector(ts_config_name, name), to_tsquery('${query}:*')) as rank
-        from
-          dictionary ) ps
-      where
-        ps.document @@ to_tsquery('${query}:*')
-      order by ps.rank desc;
-    `)) as SearchResult[];
-
     let response: SearchResult[] = [];
 
-    if (!r?.length) {
-      const parsed = await this.parsePage(query);
+    try {
+      const r = (await this.tableDict.query(`
+        select
+          id,
+          definition,
+          ps.rank
+        from
+          (
+          select
+            id,
+            name,
+            definition,
+            to_tsvector(ts_config_name, name) as document,
+            ts_rank(to_tsvector(ts_config_name, name), to_tsquery('${query}:*')) as rank
+          from
+            dictionary ) ps
+        where
+          ps.document @@ to_tsquery('${query}:*')
+        order by ps.rank desc;
+      `)) as SearchResult[];
 
-      if (parsed.srs?.length) {
-        const results = await this.saveNewToDictionary(parsed.srs);
-        response = results ?? [];
+      if (!r?.length) {
+        const parsed = await this.parsePage(query);
+
+        if (parsed.srs?.length) {
+          const results = await this.saveNewToDictionary(parsed.srs);
+          response = results ?? [];
+        }
+      } else {
+        this.silentParse(query);
+        response = r ?? [];
       }
-    } else {
-      this.silentParse(query);
-      response = r ?? [];
-    }
 
-    if (response.length) {
-      this.wordFreqService.incrementFrequency(response.map((r) => r.id));
+      if (response.length) {
+        this.wordFreqService.incrementFrequency(response.map((r) => r.id));
+      }
+    } catch (error) {
+      this.logger.log('fullTextSearch failed with error');
+      this.logger.error(errMap(error));
+    } finally {
+      return [];
     }
-
-    return response;
   }
 
   async parsePage(query: string) {
