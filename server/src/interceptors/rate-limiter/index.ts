@@ -28,7 +28,7 @@ export class FetchLimiter implements NestMiddleware {
       }),
       points: 2, // Number of points
       duration: 1, // Per second(s)
-      keyPrefix: 'rlflx', // must be unique for limiters with different purpose
+      keyPrefix: 'vk-dictionary', // must be unique for limiters with different purpose
     });
   }
 
