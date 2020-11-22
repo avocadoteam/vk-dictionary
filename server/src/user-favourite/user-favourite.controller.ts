@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpStatus,
+  NotFoundException,
   ParseIntPipe,
   Put,
   Query,
@@ -32,7 +33,7 @@ export class UserFavouriteController {
   }
 
   @Put()
-  toggleFavourite(
+  async toggleFavourite(
     @Query(
       'vk_user_id',
       new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST }),
@@ -41,6 +42,10 @@ export class UserFavouriteController {
     @Body()
     model: FavouriteModel,
   ) {
+    if (!(await this.ufService.wordExists(model.wordId))) {
+      throw new NotFoundException();
+    }
+
     return this.ufService.setUserFavourite(`${vkUserId}`, model.wordId);
   }
 }

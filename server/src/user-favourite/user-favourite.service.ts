@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SearchResult } from 'src/contracts/search';
+import { Dictionary } from 'src/db/tables/Dictionary';
 import { UserFavourite } from 'src/db/tables/UserFavourite';
 import { errMap } from 'src/utils/errors';
 import { Repository, Connection } from 'typeorm';
@@ -12,6 +13,8 @@ export class UserFavouriteService {
   constructor(
     @InjectRepository(UserFavourite)
     private tableUserFav: Repository<UserFavourite>,
+    @InjectRepository(Dictionary)
+    private tableDict: Repository<Dictionary>,
     private connection: Connection,
   ) {}
 
@@ -60,5 +63,9 @@ export class UserFavouriteService {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  async wordExists(wordId: string) {
+    return (await this.tableDict.count({ where: { id: wordId } })) > 0;
   }
 }
