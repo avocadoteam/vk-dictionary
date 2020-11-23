@@ -1,8 +1,10 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
   HttpStatus,
+  Logger,
   NotFoundException,
   ParseIntPipe,
   Put,
@@ -13,12 +15,14 @@ import {
 import { FavouriteModel } from 'src/contracts/favourite';
 import { SignGuard } from 'src/guards/sign.guard';
 import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
+import { errMap } from 'src/utils/errors';
 import { UserFavouriteService } from './user-favourite.service';
 
 @Controller('api/user-favourite')
 @UseGuards(SignGuard)
 @UseInterceptors(TransformInterceptor)
 export class UserFavouriteController {
+  private readonly logger = new Logger(UserFavouriteController.name);
   constructor(private readonly ufService: UserFavouriteService) {}
 
   @Get()
@@ -42,10 +46,15 @@ export class UserFavouriteController {
     @Body()
     model: FavouriteModel,
   ) {
-    if (!(await this.ufService.wordExists(model.wordId))) {
-      throw new NotFoundException();
-    }
+    try {
+      if (!(await this.ufService.wordExists(model.wordId))) {
+        throw new NotFoundException();
+      }
 
-    return this.ufService.setUserFavourite(`${vkUserId}`, model.wordId);
+      return this.ufService.setUserFavourite(`${vkUserId}`, model.wordId);
+    } catch (error) {
+      this.logger.error(errMap(error));
+      throw new BadRequestException();
+    }
   }
 }
