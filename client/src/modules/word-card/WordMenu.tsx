@@ -76,7 +76,6 @@ export const WordMenu = React.memo(() => {
           borderRadius: '0px 0px 15px 15px',
           justifyContent: 'space-between',
           alignItems: 'center',
-
           display: 'flex',
         })}
       >

@@ -2,7 +2,7 @@ import { StyleFunction } from 'react-fela';
 
 export const textPreview: StyleFunction<{}, { dark: boolean }> = ({ dark }) => ({
   padding: '1px 15px',
-  height: 46,
+  height: 44,
   overflow: 'hidden',
   fontFamily: 'Inter',
   '>dfn': {
