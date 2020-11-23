@@ -2,6 +2,7 @@ import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { getSelectedCardData } from 'core/selectors/word';
+import { iOS } from 'core/utils';
 import { normalizeText } from 'core/utils/formats';
 import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
@@ -28,7 +29,7 @@ export const WordCard = React.memo(() => {
         flexDirection: 'column',
         position: 'absolute',
         width: '100vw',
-        height: 'calc(100vh - 79px)',
+        height: iOS() ? 'calc(100vh - 96px)' : 'calc(100vh - 56px)',
         zIndex: 2,
         overflow: 'hidden',
       })}
