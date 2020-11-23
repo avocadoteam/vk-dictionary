@@ -28,9 +28,9 @@ export const WordMenu = React.memo(() => {
     setShow((v) => !v);
   }, []);
 
-  const [{ height, padding }] = useSpring(
+  const [{ minHeight, padding }] = useSpring(
     () => ({
-      height: show ? 65 : 0,
+      minHeight: show ? 65 : 0,
       padding: show ? '8px 21px' : 0,
     }),
     [show]
@@ -40,7 +40,7 @@ export const WordMenu = React.memo(() => {
     <>
       <div
         className={css({
-          margin: `auto 1.5rem ${iOS() ? '2rem' : 0} auto`,
+          margin: `auto 1.5rem ${iOS() && !show ? '2rem' : 0} auto`,
         })}
       >
         <If is={hasPhotos} else={<MenuActions />}>
@@ -67,7 +67,7 @@ export const WordMenu = React.memo(() => {
         </If>
       </div>
       <animated.div
-        style={{ height, padding } as any}
+        style={{ minHeight, padding, height: minHeight }}
         className={css({
           background: `linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), ${hexToRgba(
             photo.color ?? '',
