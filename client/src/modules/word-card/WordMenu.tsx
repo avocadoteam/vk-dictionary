@@ -94,7 +94,7 @@ export const WordMenu = React.memo(() => {
           >
             Фото:{' '}
             <a
-              href={`${photo.userLink}?utm_source=ExpDict&utm_medium=referral`}
+              href={`${photo.userLink}?utm_source=ExplanatoryDictionary&utm_medium=referral`}
               target="_blank"
               rel="noopener noreferrer"
               className={css({
