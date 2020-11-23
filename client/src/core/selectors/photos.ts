@@ -13,13 +13,12 @@ const getWordOfTheDayDataState = createSelector(
     (ui.fetchingDatas[FetchingStateName.WordOfDay] ?? {}) as FetchingDataType<WordPhotoOfTheDay>
 );
 
-export const getWordPhotos = createSelector(
-  getWordPhotosDataState,
-  (dataState) => dataState.data ?? []
-);
+const getWordPhotos = createSelector(getWordPhotosDataState, (dataState) => dataState.data ?? []);
 
 export const hasAtLeastOnePhoto = createSelector(getWordPhotos, (photos) => !!photos?.length);
-export const getFirstPhoto = createSelector(getWordPhotos, (photos) => photos[0] ?? {});
+export const getFirstPhoto = createSelector(getWordPhotos, (photos) =>
+  photos?.length ? photos[~~(photos.length * Math.random())] ?? {} : ({} as WordPhoto)
+);
 
 export const getWordOfTheDay = createSelector(
   getWordOfTheDayDataState,

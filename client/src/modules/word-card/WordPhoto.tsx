@@ -1,14 +1,14 @@
 import { AppDispatchActions, FetchingStateName } from 'core/models';
-import { getWordPhotos } from 'core/selectors/photos';
+import { getFirstPhoto, hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const WordPhoto = React.memo(({ children }) => {
-  const photos = useSelector(getWordPhotos);
+  const photo = useSelector(getFirstPhoto);
+  const hasPhotos = useSelector(hasAtLeastOnePhoto);
   const [url, setUrl] = React.useState<string | undefined>(undefined);
-  const hasPhotos = !!photos?.length;
   const { css } = useFela();
   const dispatch = useDispatch<AppDispatchActions>();
 
@@ -25,13 +25,13 @@ export const WordPhoto = React.memo(({ children }) => {
 
   React.useEffect(() => {
     if (hasPhotos) {
-      setUrl(photos[~~(photos.length * Math.random())].url);
+      setUrl(photo.url);
     }
 
     return () => {
       setUrl(undefined);
     };
-  }, [hasPhotos, photos]);
+  }, [hasPhotos, photo.url]);
 
   return (
     <>

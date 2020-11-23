@@ -1,24 +1,16 @@
-import { Icon24ShareOutline } from '@vkontakte/icons';
-import { Button } from '@vkontakte/vkui';
-import { AppDispatchActions, appId, FetchingStateName } from 'core/models';
+import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
-import { getFirstPhoto, hasAtLeastOnePhoto } from 'core/selectors/photos';
-import { getSelectedCardData, getSelectedWordId } from 'core/selectors/word';
-import { iOS } from 'core/utils';
+import { hasAtLeastOnePhoto } from 'core/selectors/photos';
+import { getSelectedCardData } from 'core/selectors/word';
 import { normalizeText } from 'core/utils/formats';
-import { vkBridge } from 'core/vk-bridge/instance';
-import { If } from 'modules/atoms';
 import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
-import { MakeFavourite } from './MakeFavourite';
+import { WordMenu } from './WordMenu';
 
 export const WordCard = React.memo(() => {
-  const [show, setShow] = React.useState(false);
   const data = useSelector(getSelectedCardData);
-  const id = useSelector(getSelectedWordId);
   const dark = useSelector(isThemeDrak);
-  const photo = useSelector(getFirstPhoto);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
   const { css } = useFela({ dark, hasPhotos });
   const dispatch = useDispatch<AppDispatchActions>();
@@ -28,10 +20,6 @@ export const WordCard = React.memo(() => {
       dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordInfo });
     }
   }, []);
-
-  const shareWord = React.useCallback(() => {
-    vkBridge.send('VKWebAppShare', { link: `https://vk.com/app${appId}#${id}` });
-  }, [id]);
 
   return (
     <div
@@ -54,30 +42,7 @@ export const WordCard = React.memo(() => {
         />
       </div>
 
-      <div
-        className={css({
-          margin: `auto 1.5rem ${iOS() ? '2rem' : 0} auto`,
-        })}
-        // onClick={() => setShow(!show)}
-      >
-        <MakeFavourite />
-        <Button
-          mode="tertiary"
-          className={css({
-            padding: 0,
-          })}
-          onClick={shareWord}
-        >
-          <Icon24ShareOutline
-            fill={hasPhotos || dark ? 'rgba(255, 255, 255, 0.85)' : '#717171'}
-            width={30}
-            height={30}
-          />
-        </Button>
-      </div>
-      {/* <If is={show}>
-        <div className={css({ backgroundColor: photo.color, height: '100px' })}>hui</div>
-      </If> */}
+      <WordMenu />
     </div>
   );
 });
