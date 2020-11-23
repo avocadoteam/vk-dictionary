@@ -81,10 +81,11 @@ export const SearchDict = React.memo(() => {
       <WordDay />
       <div
         className={css({
-          height: `calc(${parentHeight} - 76px - 90px)`,
+          paddingBottom: '4px',
+          height: `calc(${parentHeight} - 90px - 90px)`,
           overflowY: 'scroll',
-          maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
-          '-webkit-mask-image': 'linear-gradient(to bottom, black 85%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, black 90%, transparent 100%)',
+          '-webkit-mask-image': 'linear-gradient(to bottom, black 90%, transparent 100%)',
         } as any)}
         onPointerDown={stopEvents}
       >

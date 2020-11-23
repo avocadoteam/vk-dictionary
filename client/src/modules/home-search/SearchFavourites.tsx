@@ -76,10 +76,11 @@ export const SearchFavourites = React.memo(() => {
       <If is={!!values?.length}>
         <div
           className={css({
-            height: `calc(${parentHeight} - 76px)`,
+            paddingBottom: '4px',
+            height: `calc(${parentHeight} - 90px)`,
             overflowY: 'scroll',
-            maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
-            '-webkit-mask-image': 'linear-gradient(to bottom, black 80%, transparent 100%)',
+            maskImage: 'linear-gradient(to bottom, black 97%, transparent 100%)',
+            '-webkit-mask-image': 'linear-gradient(to bottom, black 97%, transparent 100%)',
           } as any)}
           onPointerDown={stopEvents}
         >
