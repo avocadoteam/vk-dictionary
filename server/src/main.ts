@@ -22,6 +22,7 @@ async function bootstrap() {
     dsn: configService.get<string>('integration.sentryDNS', ''),
     enabled: !configService.get<boolean>('core.devMode', true),
     release: appV,
+    environment: 'dictionary'
   });
 
   app.use(
