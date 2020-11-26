@@ -48,6 +48,7 @@ async function bootstrap() {
   await app.listen(port, () => {
     console.log(moment().format('DD MM YYYY hh:mm:ss'));
     console.log('Server listen on port', port);
+    console.log('App version is', appV);
   });
 }
 bootstrap();

@@ -4,7 +4,7 @@ import { ConfigProvider } from '@vkontakte/vkui';
 import { Router } from 'modules/routes';
 import { initSentry } from 'core/sentry';
 import { useSelector, useDispatch } from 'react-redux';
-import { FetchingStateName } from 'core/models';
+import { appV, FetchingStateName } from 'core/models';
 
 const App = React.memo(() => {
   const scheme = useSelector((state) => state.ui.theme);
@@ -16,6 +16,8 @@ const App = React.memo(() => {
       type: 'SET_UPDATING_DATA',
       payload: FetchingStateName.UserSKeys,
     });
+    dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.Ads });
+    console.log('App version is', appV);
   }, []);
 
   return (
