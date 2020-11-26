@@ -1,8 +1,9 @@
 import { Placeholder, Search, Spinner, Text } from '@vkontakte/vkui';
-import { AppDispatchActions } from 'core/models';
+import { AppDispatchActions, SearchResult } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import * as sSel from 'core/selectors/search';
 import { stopEvents } from 'core/utils';
+import { AdsBanner } from 'modules/ads';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
@@ -10,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { animated, useChain, useTransition } from 'react-spring';
 import { textPreview } from './style';
 import { WordDay } from './WordDay';
+
+const adsArr: (SearchResult | { t: 'ads' })[] = [{ t: 'ads' }];
 
 export const SearchDict = React.memo(() => {
   const dark = useSelector(isThemeDrak);
@@ -91,14 +94,18 @@ export const SearchDict = React.memo(() => {
       >
         <If is={!!q}>{resultsRender}</If>
         <If is={!q && !!mostFreqValues}>
-          {mostFreqValues?.map((v) => (
-            <div key={v.id} className={css({ padding: '9px 0' })} onClick={() => openCard(v.id)}>
-              <div
-                className={css(textPreview)}
-                dangerouslySetInnerHTML={{ __html: v.definition }}
-              />
-            </div>
-          ))}
+          {adsArr.concat(mostFreqValues ?? []).map((v) =>
+            't' in v && v.t === 'ads' ? (
+              <AdsBanner key="ads" />
+            ) : 'id' in v ? (
+              <div key={v.id} className={css({ padding: '9px 0' })} onClick={() => openCard(v.id)}>
+                <div
+                  className={css(textPreview)}
+                  dangerouslySetInnerHTML={{ __html: v.definition }}
+                />
+              </div>
+            ) : null
+          )}
         </If>
         <If is={showEmpty}>
           <Placeholder>

@@ -1,5 +1,5 @@
 import * as models from 'core/models';
-import { FetchingStatus, ClientTheme, SelectedHomeSlide } from 'core/models';
+import { FetchingStatus, ClientTheme, SelectedHomeSlide, ATTEMPTS_BEFORE_NEXT } from 'core/models';
 import { defaultSearchLayoutHeight } from 'core/utils';
 
 export const initialState: models.AppState['ui'] = {
@@ -16,6 +16,10 @@ export const initialState: models.AppState['ui'] = {
   expDictSearch: '',
   searchHeight: defaultSearchLayoutHeight,
   searchY: 0,
+  ads: {
+    show: true,
+    beforeNext: ATTEMPTS_BEFORE_NEXT,
+  },
 };
 
 export const reducer = (
@@ -156,6 +160,24 @@ export const reducer = (
       return {
         ...state,
         searchY: dispatch.payload,
+      };
+    }
+    case 'SET_ADS': {
+      return {
+        ...state,
+        ads: {
+          ...state.ads,
+          show: dispatch.payload,
+        },
+      };
+    }
+    case 'SET_ADS_ATTEMPTS': {
+      return {
+        ...state,
+        ads: {
+          ...state.ads,
+          beforeNext: dispatch.payload,
+        },
       };
     }
 

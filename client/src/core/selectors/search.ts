@@ -11,7 +11,7 @@ const getMostFreqExpDictDataState = createSelector(
   getStateUi,
   (ui) =>
     (ui.fetchingDatas[FetchingStateName.MostFrequentWords] ?? {}) as FetchingDataType<
-      SearchResult[]
+      (SearchResult | { t: 'ads' })[]
     >
 );
 

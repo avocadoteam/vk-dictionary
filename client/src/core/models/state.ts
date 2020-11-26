@@ -27,6 +27,10 @@ export type AppState = {
     expDictSearch: string
     searchHeight: string;
     searchY: number;
+    ads: {
+      show: boolean;
+      beforeNext: number;
+    }
   };
   router: RouterState;
 };
@@ -47,6 +51,8 @@ export type AppDispatch =
   | { type: 'SET_SEARCH_HEIGHT'; payload: string }
   | { type: 'SET_SEARCH_Y'; payload: number }
   | { type: 'TRIGGER_SEARCH_HEIGHT'; payload: string }
+  | { type: 'SET_ADS'; payload: boolean }
+  | { type: 'SET_ADS_ATTEMPTS'; payload: number }
   | ErrorEnqueue
   | ErrorDequeue
   | ErrorQueue

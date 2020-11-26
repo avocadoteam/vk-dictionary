@@ -8,3 +8,9 @@ const getAdsDataState = createSelector(
 );
 
 export const getAdsData = createSelector(getAdsDataState, (adsState) => adsState.data);
+
+const getAdsState = createSelector(getStateUi, (ui) => ui.ads);
+
+export const isAdsVisible = createSelector(getAdsState, (ads) => ads.show);
+
+export const getAdsAttemptsBeforeNext = createSelector(getAdsState, (ads) => ads.beforeNext);

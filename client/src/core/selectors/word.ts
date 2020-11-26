@@ -28,7 +28,7 @@ export const getSelectedCardData = createSelector(
   getWordInfoData,
   (selectedWordId, sData, mfData, wordInfo) =>
     sData?.find((d) => d.id === selectedWordId) ||
-    mfData?.find((d) => d.id === selectedWordId) ||
+    mfData?.find((d) => ('id' in d) && d.id === selectedWordId) ||
     (wordInfo?.id === selectedWordId && wordInfo) ||
     ({} as SearchResult)
 );

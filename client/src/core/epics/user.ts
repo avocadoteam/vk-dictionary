@@ -1,5 +1,6 @@
 import { getHash, getSearch, push } from 'connected-react-router';
 import { AppDispatch, AppEpic, AppUser, FetchingStateName, MainView, Skeys } from 'core/models';
+import { getAdsAttemptsBeforeNext } from 'core/selectors/ads';
 import { getMainView } from 'core/selectors/main';
 import { getLocationNotificationEnabled } from 'core/selectors/router';
 import { getUserStorageKeys } from 'core/vk-bridge/user';
@@ -75,6 +76,20 @@ const watchWordIdFromHashEpic: AppEpic = (action$, state$) =>
     filter(({ payload }) => !!payload && getMainView(state$.value) === MainView.Home),
     map(({ payload }) => push(`/${MainView.Word}/${payload}${getSearch(state$.value)}`))
   );
+
+const watchSelectWordIdForAdsEpic: AppEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('SET_SELECTED_WORD_ID'),
+    filter(({ payload }) => !!payload),
+    map(
+      () =>
+        ({
+          type: 'SET_ADS_ATTEMPTS',
+          payload: getAdsAttemptsBeforeNext(state$.value) - 1,
+        } as AppDispatch)
+    )
+  );
+
 const watchSearchHeightChangeEpic: AppEpic = (action$, state$) =>
   action$.pipe(
     ofType('TRIGGER_SEARCH_HEIGHT'),
@@ -87,5 +102,6 @@ export const userEpics = safeCombineEpics(
   getUserSKeysEpic,
   setInitInfo,
   watchWordIdFromHashEpic,
-  watchSearchHeightChangeEpic
+  watchSearchHeightChangeEpic,
+  watchSelectWordIdForAdsEpic
 );
