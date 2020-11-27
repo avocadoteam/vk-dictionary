@@ -7,6 +7,7 @@ import * as stripHtml from 'string-strip-html';
 import { errMap } from 'src/utils/errors';
 import { SearchResult, Shape } from 'src/contracts/search';
 import { WordFrequencyService } from 'src/word-frequency/word-frequency.service';
+import { oneMinute } from 'src/constants';
 
 @Injectable()
 export class ExpDictionaryService {
@@ -76,6 +77,9 @@ export class ExpDictionaryService {
       `https://povto.ru/russkie/slovari/tolkovie/ozhegova/search_ozhegov.php?q_tolk_ozh=${encodeURIComponent(
         query,
       )}`,
+      { 
+        timeout: oneMinute * 2
+      }
     );
 
     let data = await page.evaluate((q) => {
