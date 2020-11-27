@@ -77,9 +77,9 @@ export class ExpDictionaryService {
       `https://povto.ru/russkie/slovari/tolkovie/ozhegova/search_ozhegov.php?q_tolk_ozh=${encodeURIComponent(
         query,
       )}`,
-      { 
-        timeout: oneMinute * 2
-      }
+      {
+        timeout: oneMinute * 2,
+      },
     );
 
     let data = await page.evaluate((q) => {
