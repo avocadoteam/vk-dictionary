@@ -27,6 +27,9 @@ export const SearchFavourites = React.memo(() => {
   }, []);
 
   const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value?.length > 35) {
+      return;
+    }
     dispatch({
       type: 'SET_FAVOURITES_Q',
       payload: e.target.value,
@@ -72,6 +75,7 @@ export const SearchFavourites = React.memo(() => {
         onChange={handleSearch}
         placeholder={'Поиск'}
         value={query}
+        maxLength={35}
       />
       <If is={!!values?.length}>
         <div
