@@ -151,6 +151,9 @@ export class ExpDictionaryService {
       };
 
       const nameMatches = src.match(/<dfn>(.*?)<\/dfn>/g);
+      const firstIndexB = src.indexOf('<b>');
+      const lastIndexB = src.lastIndexOf('</b>');
+      const definitionInsideShit = firstIndexB === 0 && lastIndexB !== -1;
 
       if (nameMatches?.length) {
         const cleanName =
@@ -164,7 +167,9 @@ export class ExpDictionaryService {
         shape.name = cleanName;
       }
 
-      shape.defenition = src;
+      shape.defenition = definitionInsideShit
+        ? src.slice(firstIndexB + 3, lastIndexB)
+        : src;
       shape.plainDefenition = stripHtml(src).result;
       shapes.push(shape);
     }
