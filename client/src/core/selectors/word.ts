@@ -32,3 +32,10 @@ export const getSelectedCardData = createSelector(
       (wordInfo?.id === selectedWordId && wordInfo) ||
       ({} as SearchResult)) as SearchResult
 );
+
+export const isWordNonExists = createSelector(
+  isWordInfoUpdating,
+  getSelectedCardData,
+  getSelectedWordId,
+  (updating, data, wordId) => !updating && !data.id && wordId
+);

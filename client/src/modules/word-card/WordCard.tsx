@@ -1,9 +1,10 @@
 import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
-import { getSelectedCardData } from 'core/selectors/word';
+import { getSelectedCardData, isWordNonExists } from 'core/selectors/word';
 import { iOS } from 'core/utils';
 import { normalizeText } from 'core/utils/formats';
+import { If } from 'modules/atoms';
 import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,11 +14,12 @@ export const WordCard = React.memo(() => {
   const data = useSelector(getSelectedCardData);
   const dark = useSelector(isThemeDrak);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
+  const isEmpty = useSelector(isWordNonExists);
   const { css } = useFela({ dark, hasPhotos });
   const dispatch = useDispatch<AppDispatchActions>();
 
   React.useEffect(() => {
-    if (!data.definition) {
+    if (isEmpty) {
       dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordInfo });
     }
   }, []);
@@ -34,16 +36,27 @@ export const WordCard = React.memo(() => {
         overflow: 'hidden',
       })}
     >
-      <div className={css(textBlur)}>
-        <div
-          className={css(textPreview)}
-          dangerouslySetInnerHTML={{
-            __html: normalizeText(data.definition ?? ''),
-          }}
-        />
-      </div>
+      <If
+        is={!isEmpty}
+        else={
+          <div className={css(textBlur)}>
+            <div className={css(textPreview)}>
+              <dfn>Такое слово не существует</dfn>
+            </div>
+          </div>
+        }
+      >
+        <div className={css(textBlur)}>
+          <div
+            className={css(textPreview)}
+            dangerouslySetInnerHTML={{
+              __html: normalizeText(data.definition ?? ''),
+            }}
+          />
+        </div>
 
-      <WordMenu />
+        <WordMenu />
+      </If>
     </div>
   );
 });
