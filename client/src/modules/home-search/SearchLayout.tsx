@@ -32,7 +32,7 @@ export const SearchLayout = React.memo(() => {
 
   const bind = useDrag(
     ({ movement: [, my] }) => {
-      if (my >= 0.1 || my <= -265) {
+      if (my >= 0.1 || my <= -200) {
         return;
       }
 
