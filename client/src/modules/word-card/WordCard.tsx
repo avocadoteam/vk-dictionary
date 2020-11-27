@@ -75,6 +75,7 @@ const textPreview: StyleFunction<{}, StyleProps> = ({ dark, hasPhotos }) => ({
     ? 'rgba(255, 255, 255, 0.85)'
     : 'rgba(0, 0, 0, 0.85)',
   '>dfn:first-child': {
+    letterSpacing: '1px',
     fontFamily: `'Manrope VF', Manrope, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;`,
     fontStyle: 'normal !important',
     fontWeight: 'bold',
