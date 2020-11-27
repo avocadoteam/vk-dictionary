@@ -1,5 +1,7 @@
-export const errMap = (error: any) =>
-  JSON.stringify(error, [
+import * as sentry from '@sentry/node';
+
+export const errMap = (error: any) => {
+  const message = JSON.stringify(error, [
     'message',
     'arguments',
     'type',
@@ -9,3 +11,11 @@ export const errMap = (error: any) =>
     'statusCode',
     'stack',
   ]);
+
+  sentry.captureEvent({
+    message,
+    level: sentry.Severity.Error,
+  });
+
+  return message;
+};
