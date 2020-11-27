@@ -21,13 +21,16 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
   const parentHeight = useSelector(getSearchHeight);
   const dispatch = useDispatch<AppDispatchActions>();
 
-  const openCard = React.useCallback((payload: string) => {
-    goForward();
-    dispatch({
-      type: 'SET_SELECTED_WORD_ID',
-      payload,
-    });
-  }, [goForward]);
+  const openCard = React.useCallback(
+    (payload: string) => {
+      goForward();
+      dispatch({
+        type: 'SET_SELECTED_WORD_ID',
+        payload,
+      });
+    },
+    [goForward]
+  );
 
   const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -88,6 +91,7 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
             overflowY: 'scroll',
             maskImage: 'linear-gradient(to bottom, black 97%, transparent 100%)',
             '-webkit-mask-image': 'linear-gradient(to bottom, black 97%, transparent 100%)',
+            '-webkit-overflow-scrolling': 'touch',
           } as any)}
           onPointerDown={stopEvents}
         >

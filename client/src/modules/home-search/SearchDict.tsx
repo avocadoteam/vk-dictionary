@@ -98,6 +98,7 @@ export const SearchDict = React.memo<{ openCard: () => void }>(({ openCard: goFo
           paddingBottom: '4px',
           height: `calc(${parentHeight} - 90px - 90px)`,
           overflowY: 'scroll',
+          '-webkit-overflow-scrolling': 'touch',
           maskImage: 'linear-gradient(to bottom, black 90%, transparent 100%)',
           '-webkit-mask-image': 'linear-gradient(to bottom, black 90%, transparent 100%)',
         } as any)}
