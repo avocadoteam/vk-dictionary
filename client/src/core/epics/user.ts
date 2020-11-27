@@ -6,7 +6,7 @@ import { getLocationNotificationEnabled } from 'core/selectors/router';
 import { getUserStorageKeys } from 'core/vk-bridge/user';
 import { ofType } from 'redux-observable';
 import { from } from 'rxjs';
-import { auditTime, filter, map, mergeMap, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, map, mergeMap, switchMap } from 'rxjs/operators';
 import { devTimeout } from './addons';
 import { safeCombineEpics } from './combine';
 import { captureFetchErrorMoreActions } from './errors';
@@ -100,7 +100,7 @@ const watchSearchHeightChangeEpic: AppEpic = (action$, state$) =>
   action$.pipe(
     ofType('TRIGGER_SEARCH_HEIGHT'),
     filter(({ payload }) => !!payload),
-    auditTime(200),
+    debounceTime(200),
     map(({ payload }) => ({ type: 'SET_SEARCH_HEIGHT', payload } as AppDispatch))
   );
 

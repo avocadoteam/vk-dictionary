@@ -41,13 +41,13 @@ export const SearchLayout = React.memo<{ openCard: () => void }>(({ openCard }) 
       set({
         y: my,
         onChange: saveSettings,
-        immediate: true,
         height: `calc(${defaultSearchLayoutHeight} - ${my}px)`,
+        immediate: true
       });
     },
     {
       initial: () => [0, y.get()],
-      delay: 1000,
+      delay: true,
     }
   );
 
