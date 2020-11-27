@@ -5,7 +5,7 @@ export const textPreview: StyleFunction<{}, { dark: boolean }> = ({ dark }) => (
   height: 44,
   overflow: 'hidden',
   fontFamily: 'Inter',
-  '>dfn': {
+  '>dfn:first-child': {
     display: 'block',
     fontSize: '16px',
     lineHeight: '20px',
@@ -21,7 +21,7 @@ export const textPreview: StyleFunction<{}, { dark: boolean }> = ({ dark }) => (
     },
   },
   fontSize: '14px',
-  lineHeight: '18px',
+  lineHeight: '1px',
   letterSpacing: '-0.154px',
   color: dark ? 'rgba(255, 255, 255, 0.35)' : 'rgba(0, 0, 0, 0.35)',
   whiteSpace: 'nowrap',
