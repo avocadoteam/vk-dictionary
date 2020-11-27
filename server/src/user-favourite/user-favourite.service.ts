@@ -38,17 +38,17 @@ export class UserFavouriteService {
     await queryRunner.startTransaction();
     let active = true;
     try {
-      const uF = await queryRunner.manager.findOne<UserFavourite>(
-        UserFavourite,
-        {
-          where: { expDict: { id: wordId }, vk_id: vkUserId },
-        },
-      );
+      const uF = (await queryRunner.manager.query(`
+        select * from user_favourite where vk_id = ${vkUserId} and dictionary_id = ${wordId};
+      `)) as UserFavourite[];
 
-      if (uF) {
-        uF.deleted = uF.deleted ? null : new Date();
-        active = !uF.deleted;
-        await queryRunner.manager.save(uF);
+      const firstUF = uF[0];
+      if (firstUF) {
+        await queryRunner.manager.query(`
+          update user_favourite set deleted = ${
+            firstUF.deleted ? null : 'now()'
+          } where vk_id = ${vkUserId} and dictionary_id = ${wordId};
+        `);
       } else {
         await queryRunner.manager.query(`
           insert into user_favourite (vk_id, dictionary_id) values (${vkUserId}, ${wordId});
