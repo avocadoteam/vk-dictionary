@@ -11,6 +11,9 @@ export const normalizeText = (text: string) =>
     .replaceAll('◊', '')
     .replaceAll('&nbsp;', '');
 
+export const normalizeTextPreview = (text: string) =>
+  text.replaceAll('<br>', '').replaceAll('◊', '').replaceAll('&nbsp;', '');
+
 export const hexToRgba = (hex: string, o = 1) => {
   const bigint = parseInt(hex.replace(/[^0-9A-F]/gi, ''), 16);
   const r = (bigint >> 16) & 255;

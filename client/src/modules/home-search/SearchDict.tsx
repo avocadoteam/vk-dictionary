@@ -3,7 +3,7 @@ import { AppDispatchActions, SearchResult } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import * as sSel from 'core/selectors/search';
 import { stopEvents } from 'core/utils';
-import { shapeTextSearch } from 'core/utils/formats';
+import { normalizeTextPreview, shapeTextSearch } from 'core/utils/formats';
 import { AdsBanner } from 'modules/ads';
 import { If } from 'modules/atoms';
 import React from 'react';
@@ -63,7 +63,10 @@ export const SearchDict = React.memo(() => {
         className={css({ padding: '9px 0' })}
         onClick={() => openCard(v.id)}
       >
-        <div className={css(textPreview)} dangerouslySetInnerHTML={{ __html: v.definition }} />
+        <div
+          className={css(textPreview)}
+          dangerouslySetInnerHTML={{ __html: normalizeTextPreview(v.definition ?? '') }}
+        />
       </animated.div>
     );
   });
@@ -103,7 +106,7 @@ export const SearchDict = React.memo(() => {
               <div key={v.id} className={css({ padding: '9px 0' })} onClick={() => openCard(v.id)}>
                 <div
                   className={css(textPreview)}
-                  dangerouslySetInnerHTML={{ __html: v.definition }}
+                  dangerouslySetInnerHTML={{ __html: normalizeTextPreview(v.definition ?? '') }}
                 />
               </div>
             ) : null

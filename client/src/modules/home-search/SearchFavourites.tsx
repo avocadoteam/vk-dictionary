@@ -5,7 +5,7 @@ import { isThemeDrak } from 'core/selectors/common';
 import { getFavQ, getUserFavouritesList } from 'core/selectors/favourites';
 import { getSearchHeight } from 'core/selectors/search';
 import { stopEvents } from 'core/utils';
-import { shapeTextSearch } from 'core/utils/formats';
+import { normalizeTextPreview, shapeTextSearch } from 'core/utils/formats';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
@@ -56,7 +56,10 @@ export const SearchFavourites = React.memo(() => {
         className={css({ paddingTop: '20px' })}
         onClick={() => openCard(v.id)}
       >
-        <div className={css(textPreview)} dangerouslySetInnerHTML={{ __html: v.definition }} />
+        <div
+          className={css(textPreview)}
+          dangerouslySetInnerHTML={{ __html: normalizeTextPreview(v.definition ?? '') }}
+        />
       </animated.div>
     );
   });
