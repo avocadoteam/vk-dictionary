@@ -4,6 +4,7 @@ import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
+import { animated, useSpring } from 'react-spring';
 
 export const WordPhoto = React.memo(({ children }) => {
   const photo = useSelector(getFirstPhoto);
@@ -33,11 +34,22 @@ export const WordPhoto = React.memo(({ children }) => {
     };
   }, [hasPhotos, photo.url]);
 
+  const [{ backgroundImage, opacity }] = useSpring(
+    () => ({
+      backgroundImage: url
+        ? `linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${url})`
+        : undefined,
+      opacity: url ? 1 : 0,
+    }),
+    [url]
+  );
+
   return (
     <>
       {children}
       <If is={hasPhotos}>
-        <div
+        <animated.div
+          style={{ backgroundImage, opacity } as any}
           className={css({
             touchAction: 'none',
             objectFit: 'cover',
@@ -49,9 +61,8 @@ export const WordPhoto = React.memo(({ children }) => {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
-            backgroundImage: `
-              linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${url})
-            `,
+            transition: 'opacity .2s ease',
+            willChange: 'backgroundImage, opacity',
           })}
         />
       </If>
