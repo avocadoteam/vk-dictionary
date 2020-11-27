@@ -51,7 +51,7 @@ const toggleUserFavouriteEpic: AppEpic = (action$, state$) =>
         }),
         captureFetchErrorWithTaptic(
           FetchingStateName.ToggleFavourite,
-          'Не получилось добавить в закладки'
+          'Не получилось изменить состояние закладки'
         )
       )
     )
