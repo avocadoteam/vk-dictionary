@@ -23,7 +23,7 @@ export const hexToRgba = (hex: string, o = 1) => {
   return `rgba(${r},${g},${b},${o})`;
 };
 
-const onlyRuLetters = /[^(а-яА-я|ёЁ) ]/g;
+const onlyRuLetters = /[^(а-яА-я|ёЁ|\-) ]/g;
 export const shapeTextSearch = (v: string) => {
   v = v.replace(onlyRuLetters, '');
   if (v.length > 35) {
