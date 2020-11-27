@@ -1,3 +1,4 @@
+import { Placeholder, Text } from '@vkontakte/vkui';
 import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
@@ -39,11 +40,36 @@ export const WordCard = React.memo(() => {
       <If
         is={!isEmpty}
         else={
-          <div className={css(textBlur)}>
-            <div className={css(textPreview)}>
-              <dfn>Такое слово не существует</dfn>
-            </div>
-          </div>
+          <Placeholder
+            className={css({ margin: '70% 0' })}
+            header={
+              <Text
+                weight="medium"
+                className={`${css({
+                  color: dark ? 'rgba(255, 255, 255, 0.75)' : 'rgba(0, 0, 0, 0.75)',
+                  fontSize: '19px',
+                  lineHeight: '24px',
+                  letterSpacing: '0.38px',
+                })} useMonrope manropeBold`}
+              >
+                Такого слова нет
+              </Text>
+            }
+          >
+            <Text
+              weight="medium"
+              className={`${css({
+                color: '#808080',
+                fontSize: '16px',
+                lineHeight: '20px',
+                letterSpacing: '-0.32px',
+                fontStyle: 'normal',
+                fontWeight: 'normal',
+              })}`}
+            >
+              Мы не смогли ничего найти.
+            </Text>
+          </Placeholder>
         }
       >
         <div className={css(textBlur)}>
