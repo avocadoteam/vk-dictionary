@@ -15,6 +15,8 @@ import { WordDay } from './WordDay';
 
 const adsArr: (SearchResult | { t: 'ads' })[] = [{ t: 'ads' }];
 
+const showFullText = window.screen.width > 320;
+
 export const SearchDict = React.memo(() => {
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
@@ -82,7 +84,7 @@ export const SearchDict = React.memo(() => {
         })}
         onChange={handleSearch}
         icon={updating ? <Spinner /> : undefined}
-        placeholder={'Поиск мин 3 символа'}
+        placeholder={`Поиск ${showFullText ? 'минимально' : 'мин'} 3 символа`}
         value={q}
         maxLength={35}
       />
