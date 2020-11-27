@@ -74,7 +74,13 @@ const watchWordIdFromHashEpic: AppEpic = (action$, state$) =>
   action$.pipe(
     ofType('SET_SELECTED_WORD_ID'),
     filter(({ payload }) => !!payload && getMainView(state$.value) === MainView.Home),
-    map(({ payload }) => push(`/${MainView.Word}/${payload}${getSearch(state$.value)}`))
+    mergeMap(
+      ({ payload }) =>
+        [
+          push(`/${MainView.Word}/${payload}${getSearch(state$.value)}`),
+          { type: 'TELL_AUTO_SET_FORWARD' },
+        ] as AppDispatch[]
+    )
   );
 
 const watchSelectWordIdForAdsEpic: AppEpic = (action$, state$) =>

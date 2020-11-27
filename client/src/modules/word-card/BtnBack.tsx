@@ -1,22 +1,16 @@
 import { Icon24ChevronLeft } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
-import { goBack } from 'connected-react-router';
-import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import React from 'react';
 import { useFela } from 'react-fela';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-export const BtnBack = React.memo(() => {
-  const dispatch = useDispatch<AppDispatchActions>();
+export const BtnBack = React.memo<{ swipeBack: () => void }>(({ swipeBack }) => {
   const { css } = useFela();
   const dark = useSelector(isThemeDrak);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
 
-  const swipeBack = React.useCallback(() => {
-    dispatch(goBack());
-  }, [dispatch]);
   return (
     <Button
       mode="secondary"

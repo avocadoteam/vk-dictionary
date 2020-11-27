@@ -7,7 +7,8 @@ export const getStateRouter = (state: AppState) => state.router ?? ({} as Router
 
 export const getTheme = createSelector(getStateUi, (ui) => ui.theme);
 
+export const isAutoSet = createSelector(getStateUi, (ui) => ui.autoSetForward);
+
 export const isThemeDrak = createSelector(getTheme, (theme) => theme === ClientTheme.Dark);
 
 export const isAppUser = createSelector(getStateUi, (ui) => ui.isAppUser);
-

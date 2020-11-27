@@ -17,7 +17,7 @@ const adsArr: (SearchResult | { t: 'ads' })[] = [{ t: 'ads' }];
 
 const showFullText = window.screen.width > 320;
 
-export const SearchDict = React.memo(() => {
+export const SearchDict = React.memo<{ openCard: () => void }>(({ openCard: goForward }) => {
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
   const q = useSelector(sSel.getExpDictQ);
@@ -36,12 +36,16 @@ export const SearchDict = React.memo(() => {
     });
   }, []);
 
-  const openCard = React.useCallback((payload: string) => {
-    dispatch({
-      type: 'SET_SELECTED_WORD_ID',
-      payload,
-    });
-  }, []);
+  const openCard = React.useCallback(
+    (payload: string) => {
+      goForward();
+      dispatch({
+        type: 'SET_SELECTED_WORD_ID',
+        payload,
+      });
+    },
+    [goForward]
+  );
 
   const transRef = React.useRef<any>();
   const transition = useTransition(values, {
@@ -88,7 +92,7 @@ export const SearchDict = React.memo(() => {
         value={q}
         maxLength={35}
       />
-      <WordDay />
+      <WordDay openCard={goForward} />
       <div
         className={css({
           paddingBottom: '4px',

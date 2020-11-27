@@ -20,6 +20,7 @@ export const initialState: models.AppState['ui'] = {
     show: true,
     beforeNext: ATTEMPTS_BEFORE_NEXT,
   },
+  autoSetForward: 0,
 };
 
 export const reducer = (
@@ -178,6 +179,12 @@ export const reducer = (
           ...state.ads,
           beforeNext: dispatch.payload,
         },
+      };
+    }
+    case 'TELL_AUTO_SET_FORWARD': {
+      return {
+        ...state,
+        autoSetForward: state.autoSetForward + 1,
       };
     }
 

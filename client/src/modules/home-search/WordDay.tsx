@@ -6,18 +6,19 @@ import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const WordDay = React.memo(() => {
+export const WordDay = React.memo<{ openCard: () => void }>(({ openCard }) => {
   const data = useSelector(getWordOfTheDay);
   const dark = useSelector(isThemeDrak);
   const { css } = useFela();
   const dispatch = useDispatch<AppDispatchActions>();
 
   const goToWord = React.useCallback(() => {
+    openCard();
     dispatch({
       type: 'SET_SELECTED_WORD_ID',
       payload: data.wordId,
     });
-  }, [data.wordId]);
+  }, [data.wordId, openCard]);
 
   if (!data.wordId) {
     return null;

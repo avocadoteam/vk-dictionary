@@ -23,14 +23,15 @@ export type AppState = {
     snackVisible: boolean;
     selectedWordId: string;
     selectedHomeSlide: SelectedHomeSlide;
-    favouritesSearch: string
-    expDictSearch: string
+    favouritesSearch: string;
+    expDictSearch: string;
     searchHeight: string;
     searchY: number;
     ads: {
       show: boolean;
       beforeNext: number;
-    }
+    };
+    autoSetForward: number;
   };
   router: RouterState;
 };
@@ -53,6 +54,7 @@ export type AppDispatch =
   | { type: 'TRIGGER_SEARCH_HEIGHT'; payload: string }
   | { type: 'SET_ADS'; payload: boolean }
   | { type: 'SET_ADS_ATTEMPTS'; payload: number }
+  | { type: 'TELL_AUTO_SET_FORWARD', payload: number }
   | ErrorEnqueue
   | ErrorDequeue
   | ErrorQueue

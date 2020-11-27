@@ -13,19 +13,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { animated, useChain, useTransition } from 'react-spring';
 import { textPreview } from './style';
 
-export const SearchFavourites = React.memo(() => {
+export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard: goForward }) => {
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
   const query = useSelector(getFavQ);
   const values = useSelector(getUserFavouritesList);
   const parentHeight = useSelector(getSearchHeight);
   const dispatch = useDispatch<AppDispatchActions>();
+
   const openCard = React.useCallback((payload: string) => {
+    goForward();
     dispatch({
       type: 'SET_SELECTED_WORD_ID',
       payload,
     });
-  }, []);
+  }, [goForward]);
 
   const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({

@@ -14,7 +14,7 @@ import { SearchFavourites } from './SearchFavourites';
 
 const maxResize = window.screen.height * 0.25;
 
-export const SearchLayout = React.memo(() => {
+export const SearchLayout = React.memo<{ openCard: () => void }>(({ openCard }) => {
   const dark = useSelector(isThemeDrak);
   const slide = useSelector(getSelectedSlide);
   const parentHeight = useSelector(getSearchHeight);
@@ -74,8 +74,11 @@ export const SearchLayout = React.memo(() => {
           })}
         />
       </div>
-      <If is={slide === SelectedHomeSlide.ExpDictionary} else={<SearchFavourites />}>
-        <SearchDict />
+      <If
+        is={slide === SelectedHomeSlide.ExpDictionary}
+        else={<SearchFavourites openCard={openCard} />}
+      >
+        <SearchDict openCard={openCard} />
       </If>
     </a.div>
   );
