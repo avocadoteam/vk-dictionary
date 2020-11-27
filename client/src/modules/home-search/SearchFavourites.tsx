@@ -5,6 +5,7 @@ import { isThemeDrak } from 'core/selectors/common';
 import { getFavQ, getUserFavouritesList } from 'core/selectors/favourites';
 import { getSearchHeight } from 'core/selectors/search';
 import { stopEvents } from 'core/utils';
+import { shapeTextSearch } from 'core/utils/formats';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
@@ -27,12 +28,9 @@ export const SearchFavourites = React.memo(() => {
   }, []);
 
   const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value?.length > 35) {
-      return;
-    }
     dispatch({
       type: 'SET_FAVOURITES_Q',
-      payload: e.target.value,
+      payload: shapeTextSearch(e.target.value ?? ''),
     });
   }, []);
 

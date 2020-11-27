@@ -3,6 +3,7 @@ import { AppDispatchActions, SearchResult } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import * as sSel from 'core/selectors/search';
 import { stopEvents } from 'core/utils';
+import { shapeTextSearch } from 'core/utils/formats';
 import { AdsBanner } from 'modules/ads';
 import { If } from 'modules/atoms';
 import React from 'react';
@@ -27,12 +28,9 @@ export const SearchDict = React.memo(() => {
   const showEmpty = (!!q && !updating && ready && !values?.length) || (!!q && q.length < 3);
 
   const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value?.length > 35) {
-      return;
-    }
     dispatch({
       type: 'SET_EXP_DICT_Q',
-      payload: e.target.value,
+      payload: shapeTextSearch(e.target.value ?? ''),
     });
   }, []);
 
