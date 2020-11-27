@@ -3,10 +3,10 @@ import {
   Icon24ShareOutline,
   Icon28ChevronDownOutline,
 } from '@vkontakte/icons';
-import { Button, Text } from '@vkontakte/vkui';
+import { Button, Spinner, Text } from '@vkontakte/vkui';
 import { appId } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
-import { getFirstPhoto, hasAtLeastOnePhoto } from 'core/selectors/photos';
+import { getFirstPhoto, hasAtLeastOnePhoto, isPhotosUpdating } from 'core/selectors/photos';
 import { getSelectedWordId } from 'core/selectors/word';
 import { iOS } from 'core/utils';
 import { hexToRgba } from 'core/utils/formats';
@@ -22,6 +22,7 @@ export const WordMenu = React.memo(() => {
   const [show, setShow] = React.useState(false);
   const photo = useSelector(getFirstPhoto);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
+  const updating = useSelector(isPhotosUpdating);
   const { css } = useFela();
 
   const toggleMenu = React.useCallback(() => {
@@ -43,27 +44,29 @@ export const WordMenu = React.memo(() => {
           margin: `auto 1.5rem ${iOS() && !show ? '2rem' : 0} auto`,
         })}
       >
-        <If is={hasPhotos} else={<MenuActions />}>
-          <Button
-            mode="tertiary"
-            className={css({
-              padding: 0,
-            })}
-            onClick={toggleMenu}
-          >
-            <If
-              is={!show}
-              else={
-                <Icon28ChevronDownOutline
-                  fill={'rgba(255, 255, 255, 0.9)'}
-                  width={30}
-                  height={30}
-                />
-              }
+        <If is={!updating} else={<Spinner />}>
+          <If is={hasPhotos} else={<MenuActions />}>
+            <Button
+              mode="tertiary"
+              className={css({
+                padding: 0,
+              })}
+              onClick={toggleMenu}
             >
-              <Icon24MoreHorizontal fill={'rgba(255, 255, 255, 0.9)'} width={30} height={30} />
-            </If>
-          </Button>
+              <If
+                is={!show}
+                else={
+                  <Icon28ChevronDownOutline
+                    fill={'rgba(255, 255, 255, 0.9)'}
+                    width={30}
+                    height={30}
+                  />
+                }
+              >
+                <Icon24MoreHorizontal fill={'rgba(255, 255, 255, 0.9)'} width={30} height={30} />
+              </If>
+            </Button>
+          </If>
         </If>
       </div>
       <animated.div

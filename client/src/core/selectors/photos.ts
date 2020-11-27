@@ -1,4 +1,10 @@
-import { FetchingStateName, FetchingDataType, WordPhoto, WordPhotoOfTheDay } from 'core/models';
+import {
+  FetchingStateName,
+  FetchingDataType,
+  WordPhoto,
+  WordPhotoOfTheDay,
+  FetchingStatus,
+} from 'core/models';
 import { createSelector } from 'reselect';
 import { getStateUi } from './common';
 
@@ -14,6 +20,11 @@ const getWordOfTheDayDataState = createSelector(
 );
 
 const getWordPhotos = createSelector(getWordPhotosDataState, (dataState) => dataState.data ?? []);
+
+export const isPhotosUpdating = createSelector(
+  getWordPhotosDataState,
+  (dataState) => dataState.status === FetchingStatus.Updating
+);
 
 export const hasAtLeastOnePhoto = createSelector(getWordPhotos, (photos) => !!photos?.length);
 export const getFirstPhoto = createSelector(getWordPhotos, (photos) =>
