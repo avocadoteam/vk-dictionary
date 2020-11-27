@@ -2,7 +2,7 @@ import { Icon20FavoriteOutline, Icon24Favorite } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
 import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
-import { isWordFavourite } from 'core/selectors/favourites';
+import { isUserFavouritesUpdating, isWordFavourite } from 'core/selectors/favourites';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { getSelectedWordId } from 'core/selectors/word';
 import { If } from 'modules/atoms';
@@ -16,16 +16,17 @@ export const MakeFavourite = React.memo(() => {
   const [selected, setSelected] = React.useState(isSelected);
   const dispatch = useDispatch<AppDispatchActions>();
   const dark = useSelector(isThemeDrak);
+  const updating = useSelector(isUserFavouritesUpdating);
   const wordId = useSelector(getSelectedWordId);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
 
   React.useEffect(() => {
-    if (isSelected && !selected) {
+    if (isSelected && !selected && !updating) {
       setSelected(true);
-    } else if (!isSelected && selected) {
+    } else if (!isSelected && selected && !updating) {
       setSelected(false);
     }
-  }, [isSelected, selected]);
+  }, [isSelected, selected, updating]);
 
   const handleToggle = () => {
     setSelected(!selected);
