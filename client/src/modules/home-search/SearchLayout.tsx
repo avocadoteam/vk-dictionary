@@ -12,6 +12,8 @@ import { useDrag } from 'react-use-gesture';
 import { SearchDict } from './SearchDict';
 import { SearchFavourites } from './SearchFavourites';
 
+const maxResize = window.screen.height * 0.25;
+
 export const SearchLayout = React.memo(() => {
   const dark = useSelector(isThemeDrak);
   const slide = useSelector(getSelectedSlide);
@@ -32,7 +34,7 @@ export const SearchLayout = React.memo(() => {
 
   const bind = useDrag(
     ({ movement: [, my] }) => {
-      if (my >= 0.1 || my <= -200) {
+      if (my >= 0.1 || my <= -maxResize) {
         return;
       }
 
