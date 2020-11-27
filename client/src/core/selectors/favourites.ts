@@ -1,4 +1,4 @@
-import { FetchingDataType, FetchingStateName, FetchingStatus, SearchResult } from 'core/models';
+import { FavSearchResult, FetchingDataType, FetchingStateName, FetchingStatus } from 'core/models';
 import { createSelector } from 'reselect';
 import { getStateUi } from './common';
 import { getSelectedWordId } from './word';
@@ -6,7 +6,9 @@ import { getSelectedWordId } from './word';
 const getUserFavouritesDataState = createSelector(
   getStateUi,
   (ui) =>
-    (ui.fetchingDatas[FetchingStateName.UserFavourites] ?? {}) as FetchingDataType<SearchResult[]>
+    (ui.fetchingDatas[FetchingStateName.UserFavourites] ?? {}) as FetchingDataType<
+      FavSearchResult[]
+    >
 );
 
 const getUserFavouriteToggleDataState = createSelector(
@@ -33,5 +35,9 @@ export const getUserFavouritesList = createSelector(
   getUserFavouritesDataState,
   getFavQ,
   (dataState, q) =>
-    (dataState.data ?? []).filter((d) => d.definition?.toLowerCase()?.includes(q.toLowerCase()))
+    (dataState.data ?? []).filter(
+      (d) =>
+        d.definition?.toLowerCase()?.includes(q.toLowerCase()) ||
+        d.name?.toLowerCase()?.includes(q.toLowerCase())
+    )
 );

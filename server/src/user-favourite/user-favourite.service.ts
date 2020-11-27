@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SearchResult } from 'src/contracts/search';
+import { FavSearchResult } from 'src/contracts/search';
 import { Dictionary } from 'src/db/tables/Dictionary';
 import { UserFavourite } from 'src/db/tables/UserFavourite';
 import { errMap } from 'src/utils/errors';
-import { Repository, Connection } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 
 @Injectable()
 export class UserFavouriteService {
@@ -22,11 +22,12 @@ export class UserFavouriteService {
     const r = (await this.tableUserFav.query(`
       select  
         ed.id,
-        ed.definition
+        ed.definition,
+        ed.name
       from user_favourite uf 
       inner join dictionary ed on ed.id = uf.dictionary_id
       where uf.vk_id = ${vkUserId} and deleted is null;
-    `)) as SearchResult[];
+    `)) as FavSearchResult[];
     return r;
   }
 

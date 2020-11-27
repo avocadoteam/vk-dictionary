@@ -2,10 +2,10 @@ import { getSearch } from 'connected-react-router';
 import {
   AppDispatch,
   AppEpic,
+  FavSearchResult,
   FetchingStateName,
   FetchResponse,
   FetchUpdateAction,
-  SearchResult,
 } from 'core/models';
 import { getUserFavourites, setUserFavourite } from 'core/operations/user-favourite';
 import { ofType } from 'redux-observable';
@@ -68,7 +68,7 @@ const getAllFavouritesEpic: AppEpic = (action$, state$) =>
       getUserFavourites(q).pipe(
         switchMap((response) => {
           if (response.ok) {
-            return from<Promise<FetchResponse<SearchResult[]>>>(response.json()).pipe(
+            return from<Promise<FetchResponse<FavSearchResult[]>>>(response.json()).pipe(
               switchMap((r) => {
                 return of({
                   type: 'SET_READY_DATA',
