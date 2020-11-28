@@ -25,24 +25,24 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
   const textRef = React.useRef<HTMLDivElement | null>(null);
 
   const copyText = React.useCallback(() => {
-    if (isPlatformIOS()) {
-      tapticSelected();
-    }
     vkBridge
-      .send('VKWebAppCopyText', { text: data.definition })
-      .then(() =>
+      .send('VKWebAppCopyText', { text: data.plainDefinition })
+      .then(() => {
+        if (isPlatformIOS()) {
+          tapticSelected();
+        }
         dispatch({
           type: 'ENQUEUE_SNACK',
           payload: { type: SnackType.Success, message: 'Текст скопирован' },
-        })
-      )
+        });
+      })
       .catch(() =>
         dispatch({
           type: 'ENQUEUE_SNACK',
           payload: { type: SnackType.Error, message: 'Не удалось скопировать текст' },
         })
       );
-  }, [data.definition]);
+  }, [data.plainDefinition]);
 
   const detections = useLongPress<HTMLDivElement>(copyText, { delay: 1000 });
 

@@ -25,20 +25,23 @@ export const CopyText = React.memo(() => {
       tapticSelected();
     }
     vkBridge
-      .send('VKWebAppCopyText', { text: data.definition })
-      .then(() =>
+      .send('VKWebAppCopyText', { text: data.plainDefinition })
+      .then(() => {
+        if (isPlatformIOS()) {
+          tapticSelected();
+        }
         dispatch({
           type: 'ENQUEUE_SNACK',
           payload: { type: SnackType.Success, message: 'Текст скопирован' },
-        })
-      )
+        });
+      })
       .catch(() =>
         dispatch({
           type: 'ENQUEUE_SNACK',
           payload: { type: SnackType.Error, message: 'Не удалось скопировать текст' },
         })
       );
-  }, [data.definition]);
+  }, [data.plainDefinition]);
 
   return (
     <Button

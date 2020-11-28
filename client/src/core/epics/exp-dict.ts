@@ -57,7 +57,10 @@ const searchExpDictEpic: AppEpic = (action$, state$) =>
                     type: 'SET_READY_DATA',
                     payload: {
                       name: FetchingStateName.SearchExpDict,
-                      data: r?.data ?? [],
+                      data: (r?.data ?? []).map((r) => ({
+                        ...r,
+                        plainDefinition: r.definition.replace(/<[^>]*>?/gm, ''),
+                      })),
                     },
                   } as AppDispatch);
                 })
@@ -96,7 +99,10 @@ const mostFrequentWordsEpic: AppEpic = (action$, state$) =>
                   type: 'SET_READY_DATA',
                   payload: {
                     name: FetchingStateName.MostFrequentWords,
-                    data: r?.data ?? [],
+                    data: (r?.data ?? []).map((r) => ({
+                      ...r,
+                      plainDefinition: r.definition.replace(/<[^>]*>?/gm, ''),
+                    })),
                   },
                 } as AppDispatch);
               })
@@ -158,11 +164,15 @@ const getWordInfoEpic: AppEpic = (action$, state$) =>
           if (response.ok) {
             return from<Promise<FetchResponse<SearchResult>>>(response.json()).pipe(
               switchMap((r) => {
+                const data = r?.data ?? {};
                 return of({
                   type: 'SET_READY_DATA',
                   payload: {
                     name: FetchingStateName.WordInfo,
-                    data: r?.data ?? [],
+                    data: {
+                      ...data,
+                      plainDefinition: data.definition.replace(/<[^>]*>?/gm, ''),
+                    } as SearchResult,
                   },
                 } as AppDispatch);
               })

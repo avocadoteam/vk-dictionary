@@ -74,7 +74,10 @@ const getAllFavouritesEpic: AppEpic = (action$, state$) =>
                   type: 'SET_READY_DATA',
                   payload: {
                     name: FetchingStateName.UserFavourites,
-                    data: r?.data ?? [],
+                    data: (r?.data ?? []).map((r) => ({
+                      ...r,
+                      plainDefinition: r.definition.replace(/<[^>]*>?/gm, ''),
+                    })),
                   },
                 } as AppDispatch);
               })
