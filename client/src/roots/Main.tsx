@@ -45,7 +45,7 @@ export const Main = React.memo(() => {
   return (
     <>
       <View activePanel={activePanel} history={history} onSwipeBack={swipeBack}>
-        <Panel id={MainView.Home}>
+        <Panel id={MainView.Home} className={css({ position: 'fixed' })}>
           <PanelHeader separator={false} />
           <DictGallery />
           <SearchLayout openCard={() => goForward(MainView.Word)} />
