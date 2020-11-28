@@ -191,6 +191,9 @@ export class ExpDictionaryService {
     const word = await this.tableDict.findOne(wordId, {
       select: ['id', 'definition'],
     });
+    if (word) {
+      this.wordFreqService.incrementFrequency([word.id])
+    }
     return word;
   }
 }
