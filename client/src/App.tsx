@@ -28,7 +28,9 @@ const App = React.memo(() => {
   const preventPop = React.useCallback(
     (e: PopStateEvent) => {
       e.preventDefault();
+      console.debug('location', location);
       dispatch(push(location));
+      vkBridge.send('VKWebAppDisableSwipeBack');
     },
     [location]
   );
@@ -36,14 +38,10 @@ const App = React.memo(() => {
   React.useEffect(() => {
     if (!online) {
       window.addEventListener('popstate', preventPop);
-      vkBridge.send('VKWebAppDisableSwipeBack');
     }
 
     return () => {
-      if (online) {
-        window.removeEventListener('popstate', preventPop);
-        vkBridge.send('VKWebAppEnableSwipeBack');
-      }
+      window.removeEventListener('popstate', preventPop);
     };
   }, [preventPop, online]);
 

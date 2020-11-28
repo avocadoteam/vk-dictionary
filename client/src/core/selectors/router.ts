@@ -20,7 +20,7 @@ export const getLocationPathName = createSelector(
 export const getFullLocation = createSelector(
   getLocationPathName,
   getStateRouter,
-  (path, q) => path + q
+  (path, r) => path + r?.location.search ?? ''
 );
 
 export const getLocationMainPath = createSelector(getLocationPathName, (pathName) => {
