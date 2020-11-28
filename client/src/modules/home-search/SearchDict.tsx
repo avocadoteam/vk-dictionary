@@ -91,6 +91,7 @@ export const SearchDict = React.memo<{ openCard: () => void }>(({ openCard: goFo
         placeholder={`Поиск ${showFullText ? 'минимально' : 'мин'} 3 символа`}
         value={q}
         maxLength={35}
+        onSubmit={handleSearch}
       />
       <WordDay openCard={goForward} />
       <div
