@@ -1,13 +1,12 @@
-import React from 'react';
-import '@vkontakte/vkui/dist/vkui.css';
 import { ConfigProvider } from '@vkontakte/vkui';
-import { Router } from 'modules/routes';
-import { initSentry } from 'core/sentry';
-import { useSelector, useDispatch } from 'react-redux';
+import '@vkontakte/vkui/dist/vkui.css';
+import { push } from 'connected-react-router';
 import { appV, FetchingStateName } from 'core/models';
 import { getFullLocation } from 'core/selectors/router';
-import { push } from 'connected-react-router';
-import { vkBridge } from 'core/vk-bridge/instance';
+import { initSentry } from 'core/sentry';
+import { Router } from 'modules/routes';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const App = React.memo(() => {
   const scheme = useSelector((state) => state.ui.theme);
@@ -26,23 +25,17 @@ const App = React.memo(() => {
   }, []);
 
   React.useEffect(() => {
-    console.log('popstate online', online, location);
     if (!online) {
-      console.log('popstate added', online, location);
-
-      window.addEventListener('popstate', kekw);
+      window.addEventListener('popstate', preventToGoBack);
     }
 
     return () => {
-      console.log('popstate removed', online, location);
-
-      window.removeEventListener('popstate', kekw);
+      window.removeEventListener('popstate', preventToGoBack);
     };
   }, [online]);
 
-  const kekw = (e: any) => {
+  const preventToGoBack = (e: PopStateEvent) => {
     e.preventDefault();
-    console.debug('location', location);
     dispatch(push(location));
   };
 
