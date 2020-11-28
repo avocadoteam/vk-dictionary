@@ -34,11 +34,8 @@ export const WordPhoto = React.memo(({ children }) => {
     };
   }, [hasPhotos, photo.url]);
 
-  const [{ backgroundImage, opacity }] = useSpring(
+  const [{ opacity }] = useSpring(
     () => ({
-      backgroundImage: url
-        ? `linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${url})`
-        : undefined,
       opacity: url ? 1 : 0,
     }),
     [url]
@@ -49,7 +46,7 @@ export const WordPhoto = React.memo(({ children }) => {
       {children}
       <If is={hasPhotos}>
         <animated.div
-          style={{ backgroundImage, opacity } as any}
+          style={{ opacity } as any}
           className={css({
             touchAction: 'none',
             objectFit: 'cover',
@@ -63,6 +60,7 @@ export const WordPhoto = React.memo(({ children }) => {
             backgroundPosition: 'center center',
             transition: 'opacity .2s ease',
             willChange: 'background-image, opacity',
+            backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${url})`,
           })}
         />
       </If>

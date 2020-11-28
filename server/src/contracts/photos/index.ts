@@ -45,6 +45,7 @@ export type WordPhoto = {
   url: string;
   userName: string;
   userLink: string;
+  id: number | null;
 };
 export type WordPhotoOfTheDay = {
   photo: WordPhoto;

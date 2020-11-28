@@ -4,6 +4,7 @@ export const cacheKey = {
   splashAttemptsToFetchPhotos: 'splashAttemptsToFetchPhotos',
   wordPhotoOfTheDay: 'wordPhotoOfTheDay',
   charTranslatesInMonth: 'charTranslatesInMonth',
+  verifiedPhotoIds: 'verifiedPhotoIds',
 };
 
 export const minuteTTL = 60;

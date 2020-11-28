@@ -23,6 +23,7 @@ import { Photo } from 'src/db/tables/Photo';
 import { buildQueryString } from 'src/utils/api';
 import { errMap } from 'src/utils/errors';
 import { Repository, Connection } from 'typeorm';
+import { PhotoCheckService } from './photo-check.service';
 
 @Injectable()
 export class WordPhotoService {
@@ -35,6 +36,7 @@ export class WordPhotoService {
     private tableDict: Repository<Dictionary>,
     private connection: Connection,
     private readonly httpService: HttpService,
+    private readonly photoCheckService: PhotoCheckService,
     @Inject(integrationConfig.KEY)
     private config: ConfigType<typeof integrationConfig>,
     @Inject(CACHE_MANAGER) private cache: CacheManager,
@@ -67,16 +69,22 @@ export class WordPhotoService {
         url: v.urls.regular ?? v.urls.small,
         userLink: v.user.links.html,
         userName: v.user.name,
+        id: null,
       }));
     }
 
-    return savedPhotos.map((f) => ({
+    const result = savedPhotos.map((f) => ({
       blurHash: f.blur_hash,
       color: f.color,
       url: f.url_regular,
       userLink: f.user_link,
       userName: f.user_name,
+      id: f.id,
     }));
+
+    this.photoCheckService.checkPhotos(result);
+
+    return result;
   }
 
   private async fetchPhotos(query: string) {
