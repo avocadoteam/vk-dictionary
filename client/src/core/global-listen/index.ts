@@ -1,6 +1,5 @@
 import { getSearch, replace } from 'connected-react-router';
 import { MainView } from 'core/models';
-import { getSelectedWordId } from 'core/selectors/word';
 import { store } from 'core/store';
 
 export const k = 'k';
@@ -16,7 +15,7 @@ window.addEventListener('online', function (e) {
   store.dispatch({ type: 'SET_APP_CONNECT', payload: true });
   store.dispatch(replace(`/${MainView.Home}${getSearch(store.getState())}`));
 
-  const wordId = getSelectedWordId(store.getState());
+  const wordId = store.getState().ui.selectedWordId;
   if (wordId) {
     store.dispatch({ type: 'SET_SELECTED_WORD_ID', payload: wordId });
   }
