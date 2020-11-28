@@ -59,9 +59,6 @@ export const SearchLayout = React.memo<{ openCard: () => void }>(({ openCard }) 
         marginTop: '1rem',
         backgroundColor: dark ? '#2F2F2F' : '#FFFFFF',
         overflow: 'hidden',
-        position: 'relative',
-        maxHeight: '100%',
-        touchAction: 'none',
       })}
       style={{ display: 'block', height, y } as any}
       {...bind()}
