@@ -1,10 +1,16 @@
 import * as models from 'core/models';
-import { FetchingStatus, ClientTheme, SelectedHomeSlide, ATTEMPTS_BEFORE_NEXT } from 'core/models';
+import {
+  FetchingStatus,
+  ClientTheme,
+  SelectedHomeSlide,
+  ATTEMPTS_BEFORE_NEXT,
+  SnackType,
+} from 'core/models';
 import { defaultSearchLayoutHeight } from 'core/utils';
 
 export const initialState: models.AppState['ui'] = {
   theme: ClientTheme.Light,
-  errorsQueue: [],
+  snacksQueue: [],
   fetchingDatas: {},
   notifications: false,
   online: true,
@@ -70,12 +76,12 @@ export const reducer = (
             error: dispatch.payload.error,
           },
         },
-        errorsQueue:
-          state.errorsQueue.includes(dispatch.payload.error) ||
+        snacksQueue:
+          state.snacksQueue.find((sn) => sn.message === dispatch.payload.error) ||
           (typeof dispatch.payload.error === 'string' &&
             dispatch.payload.error.includes('Cannot load '))
-            ? state.errorsQueue
-            : [...state.errorsQueue, dispatch.payload.error],
+            ? state.snacksQueue
+            : [...state.snacksQueue, { message: dispatch.payload.error, type: SnackType.Error }],
       };
     }
 
@@ -98,26 +104,26 @@ export const reducer = (
       };
     }
 
-    case 'ENQUEUE_ERROR': {
+    case 'ENQUEUE_SNACK': {
       return {
         ...state,
-        errorsQueue: state.errorsQueue.includes(dispatch.payload)
-          ? state.errorsQueue
-          : [...state.errorsQueue, dispatch.payload],
+        snacksQueue: state.snacksQueue.find((sn) => sn.message === dispatch.payload.message)
+          ? state.snacksQueue
+          : [...state.snacksQueue, dispatch.payload],
       };
     }
 
-    case 'DEQUEUE_ERROR': {
+    case 'DEQUEUE_SNACK': {
       return {
         ...state,
-        errorsQueue: state.errorsQueue.filter((e) => e !== dispatch.payload),
+        snacksQueue: state.snacksQueue.filter((e) => e !== dispatch.payload),
       };
     }
 
-    case 'SET_QUEUE_ERROR': {
+    case 'SET_QUEUE_SNACKS': {
       return {
         ...state,
-        errorsQueue: dispatch.payload,
+        snacksQueue: dispatch.payload,
       };
     }
 

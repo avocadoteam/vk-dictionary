@@ -7,7 +7,7 @@ import { getMainView } from 'core/selectors/main';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { SearchLayout } from 'modules/home-search';
 import { DictGallery } from 'modules/home-slides';
-import { SnakbarsErr } from 'modules/snaks';
+import { Snakbars } from 'modules/snaks';
 import { BtnBack, WordCard, WordPhoto } from 'modules/word-card';
 import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
@@ -64,7 +64,7 @@ export const Main = React.memo(() => {
           <Offline />
         </Panel>
       </View>
-      <SnakbarsErr />
+      <Snakbars />
     </>
   );
 });

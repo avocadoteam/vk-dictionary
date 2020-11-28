@@ -1,1 +1,1 @@
-export * from './SnakbarsErr';
+export * from './Snakbars';

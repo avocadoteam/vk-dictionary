@@ -44,12 +44,13 @@ export const MakeFavourite = React.memo(() => {
       mode="tertiary"
       className={css({
         padding: 0,
-        marginRight: '20px',
+        marginRight: '8px',
+        marginLeft: 'auto',
       })}
       onClick={handleToggle}
     >
-      <If is={selected} else={<Icon20FavoriteOutline fill={color} width={30} height={30} />}>
-        <Icon24Favorite fill={color} width={30} height={30} />
+      <If is={selected} else={<Icon20FavoriteOutline fill={color} width={24} height={24} />}>
+        <Icon24Favorite fill={color} width={24} height={24} />
       </If>
     </Button>
   );

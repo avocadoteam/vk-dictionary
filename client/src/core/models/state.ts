@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import { CallHistoryMethodAction, LocationChangeAction, RouterState } from 'connected-react-router';
 import { FetchingStateName, FetchingStatus, SelectedHomeSlide } from './enums';
+import { SnackModel } from './snacks';
 
 declare module 'react-redux' {
   export interface DefaultRootState extends AppState {}
@@ -19,7 +20,7 @@ export type AppState = {
     notifications: boolean;
     online: boolean;
     isAppUser: boolean;
-    errorsQueue: string[];
+    snacksQueue: SnackModel[];
     snackVisible: boolean;
     selectedWordId: string;
     selectedHomeSlide: SelectedHomeSlide;
@@ -55,9 +56,9 @@ export type AppDispatch =
   | { type: 'SET_ADS'; payload: boolean }
   | { type: 'SET_ADS_ATTEMPTS'; payload: number }
   | { type: 'TELL_AUTO_SET_FORWARD', payload: number }
-  | ErrorEnqueue
-  | ErrorDequeue
-  | ErrorQueue
+  | SnackEnqueue
+  | SnackDequeue
+  | SnackQueue
   | LocationChangeAction
   | CallHistoryMethodAction;
 
@@ -74,9 +75,9 @@ export type FetchErrorAction = {
   payload: { name: FetchingStateName; error: any };
 };
 
-export type ErrorEnqueue = { type: 'ENQUEUE_ERROR'; payload: string };
-export type ErrorDequeue = { type: 'DEQUEUE_ERROR'; payload: string };
-export type ErrorQueue = { type: 'SET_QUEUE_ERROR'; payload: string[] };
+export type SnackEnqueue = { type: 'ENQUEUE_SNACK'; payload: SnackModel };
+export type SnackDequeue = { type: 'DEQUEUE_SNACK'; payload: SnackModel };
+export type SnackQueue = { type: 'SET_QUEUE_SNACKS'; payload: SnackModel[] };
 
 export type FetchingDataType<T> = {
   status: FetchingStatus;

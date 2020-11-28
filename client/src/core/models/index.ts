@@ -5,3 +5,4 @@ export * from './epics';
 export * from './enums';
 export * from './search';
 export * from './photos';
+export * from './snacks';

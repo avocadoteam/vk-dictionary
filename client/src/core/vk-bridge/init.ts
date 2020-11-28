@@ -33,7 +33,7 @@ vkBridge.subscribe(({ detail: { type, data } }) => {
 
   if (type === 'VKWebAppViewHide') {
     store.dispatch({
-      type: 'SET_QUEUE_ERROR',
+      type: 'SET_QUEUE_SNACKS',
       payload: [],
     });
     store.dispatch({

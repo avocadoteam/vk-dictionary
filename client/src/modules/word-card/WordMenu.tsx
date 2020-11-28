@@ -16,6 +16,7 @@ import React from 'react';
 import { useFela } from 'react-fela';
 import { useSelector } from 'react-redux';
 import { animated, useSpring } from 'react-spring';
+import { CopyText } from './CopyText';
 import { MakeFavourite } from './MakeFavourite';
 
 export const WordMenu = React.memo(() => {
@@ -113,7 +114,7 @@ export const WordMenu = React.memo(() => {
             </a>{' '}
             на Unsplash
           </Text>
-          <span className={css({ minWidth: '84px' })}>
+          <span className={css({ minWidth: '84px', display: 'flex' })}>
             <MenuActions />
           </span>
         </If>
@@ -135,6 +136,7 @@ const MenuActions = React.memo(() => {
   return (
     <>
       <MakeFavourite />
+      <CopyText />
       <Button
         mode="tertiary"
         className={css({
@@ -144,8 +146,8 @@ const MenuActions = React.memo(() => {
       >
         <Icon24ShareOutline
           fill={hasPhotos || dark ? 'rgba(255, 255, 255, 0.85)' : '#717171'}
-          width={30}
-          height={30}
+          width={24}
+          height={24}
         />
       </Button>
     </>
