@@ -21,6 +21,7 @@ export const Main = React.memo(() => {
   const up = useSelector(isAutoSet);
   const { css } = useFela({ hasPhotos, dark });
   const dispatch = useDispatch<AppDispatchActions>();
+  const [pushed, Push] = React.useState(0);
 
   const { goBack: handleBack, goForward, history } = useViewChange(MainView, 'Home', true);
 
@@ -33,7 +34,12 @@ export const Main = React.memo(() => {
   const swipeBack = React.useCallback(() => {
     handleBack();
     dispatch(goBack());
+    Push(0);
   }, [handleBack, dispatch]);
+
+  const tapToTopHeader = React.useCallback(() => {
+    Push((v) => v + 1);
+  }, []);
 
   return (
     <>
@@ -45,8 +51,12 @@ export const Main = React.memo(() => {
         </Panel>
         <Panel id={MainView.Word} className={css(panelStyle)}>
           <WordPhoto>
-            <PanelHeader separator={false} left={<BtnBack swipeBack={swipeBack} />} />
-            <WordCard />
+            <PanelHeader
+              separator={false}
+              left={<BtnBack swipeBack={swipeBack} />}
+              onClick={tapToTopHeader}
+            />
+            <WordCard pushed={pushed} />
           </WordPhoto>
         </Panel>
         <Panel id={MainView.Offline}>

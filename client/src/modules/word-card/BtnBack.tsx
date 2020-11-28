@@ -2,6 +2,7 @@ import { Icon24ChevronLeft } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
 import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
+import { stopEvents } from 'core/utils/helpers';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useSelector } from 'react-redux';
@@ -10,6 +11,11 @@ export const BtnBack = React.memo<{ swipeBack: () => void }>(({ swipeBack }) => 
   const { css } = useFela();
   const dark = useSelector(isThemeDrak);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
+
+  const btnClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    stopEvents(e);
+    swipeBack();
+  };
 
   return (
     <Button
@@ -24,7 +30,7 @@ export const BtnBack = React.memo<{ swipeBack: () => void }>(({ swipeBack }) => 
         backdropFilter: hasPhotos ? 'blur(32px)' : undefined,
         borderRadius: '12px',
       })}
-      onClick={swipeBack}
+      onClick={btnClick}
     >
       <Icon24ChevronLeft width={14} height={14} />
     </Button>

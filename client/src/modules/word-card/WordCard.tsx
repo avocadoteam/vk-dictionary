@@ -11,19 +11,26 @@ import { StyleFunction, useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
 import { WordMenu } from './WordMenu';
 
-export const WordCard = React.memo(() => {
+export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
   const data = useSelector(getSelectedCardData);
   const dark = useSelector(isThemeDrak);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
   const isEmpty = useSelector(isWordNonExists);
   const { css } = useFela({ dark, hasPhotos });
   const dispatch = useDispatch<AppDispatchActions>();
+  const textRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     if (isEmpty) {
       dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordInfo });
     }
   }, []);
+
+  React.useEffect(() => {
+    if (pushed && textRef.current) {
+      textRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [pushed, textRef]);
 
   return (
     <div
@@ -72,7 +79,7 @@ export const WordCard = React.memo(() => {
           </Placeholder>
         }
       >
-        <div className={css(textBlur)}>
+        <div className={css(textBlur)} ref={textRef}>
           <div
             className={css(textPreview)}
             dangerouslySetInnerHTML={{

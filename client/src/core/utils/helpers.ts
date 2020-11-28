@@ -1,5 +1,5 @@
 import { OS } from '@vkontakte/vkui';
-import { PointerEvent } from 'react';
+import React from 'react';
 
 export const getOrigin = window.location.origin;
 
@@ -33,7 +33,7 @@ export const sortByCreated = <T extends { created: string }>(f: T, n: T) =>
 export const clamp = (num: number, clamp: number, higher: number) =>
   higher ? Math.min(Math.max(num, clamp), higher) : Math.min(num, clamp);
 
-export const stopEvents = <T>(e: PointerEvent<T>) => {
+export const stopEvents = <T>(e: React.PointerEvent<T> | React.MouseEvent<T, MouseEvent>) => {
   e.preventDefault();
   e.stopPropagation();
 };
