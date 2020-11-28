@@ -8,6 +8,7 @@ import {
   FetchUpdateAction,
 } from 'core/models';
 import { getUserFavourites, setUserFavourite } from 'core/operations/user-favourite';
+import { shapeToPLainDefenition } from 'core/utils/formats';
 import { ofType } from 'redux-observable';
 import { concat, from, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -76,7 +77,7 @@ const getAllFavouritesEpic: AppEpic = (action$, state$) =>
                     name: FetchingStateName.UserFavourites,
                     data: (r?.data ?? []).map((r) => ({
                       ...r,
-                      plainDefinition: r.definition.replace(/<[^>]*>?/gm, ''),
+                      plainDefinition: shapeToPLainDefenition(r.definition),
                     })),
                   },
                 } as AppDispatch);

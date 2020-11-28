@@ -17,6 +17,7 @@ import {
   searchInExpDict,
 } from 'core/operations/exp-dict';
 import { getSelectedWordId } from 'core/selectors/word';
+import { shapeToPLainDefenition } from 'core/utils/formats';
 import { ofType } from 'redux-observable';
 import { from, iif, of } from 'rxjs';
 import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
@@ -59,7 +60,7 @@ const searchExpDictEpic: AppEpic = (action$, state$) =>
                       name: FetchingStateName.SearchExpDict,
                       data: (r?.data ?? []).map((r) => ({
                         ...r,
-                        plainDefinition: r.definition.replace(/<[^>]*>?/gm, ''),
+                        plainDefinition: shapeToPLainDefenition(r.definition),
                       })),
                     },
                   } as AppDispatch);
@@ -101,7 +102,7 @@ const mostFrequentWordsEpic: AppEpic = (action$, state$) =>
                     name: FetchingStateName.MostFrequentWords,
                     data: (r?.data ?? []).map((r) => ({
                       ...r,
-                      plainDefinition: r.definition.replace(/<[^>]*>?/gm, ''),
+                      plainDefinition: shapeToPLainDefenition(r.definition),
                     })),
                   },
                 } as AppDispatch);
@@ -171,7 +172,7 @@ const getWordInfoEpic: AppEpic = (action$, state$) =>
                     name: FetchingStateName.WordInfo,
                     data: {
                       ...data,
-                      plainDefinition: data.definition.replace(/<[^>]*>?/gm, ''),
+                      plainDefinition: shapeToPLainDefenition(data.definition),
                     } as SearchResult,
                   },
                 } as AppDispatch);
