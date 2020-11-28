@@ -36,6 +36,17 @@ export const SearchDict = React.memo<{ openCard: () => void }>(({ openCard: goFo
     });
   }, []);
 
+  const sumbitSearch = React.useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      dispatch({
+        type: 'SET_EXP_DICT_Q',
+        payload: q,
+      });
+    },
+    [q]
+  );
+
   const openCard = React.useCallback(
     (payload: string) => {
       goForward();
@@ -79,20 +90,21 @@ export const SearchDict = React.memo<{ openCard: () => void }>(({ openCard: goFo
 
   return (
     <>
-      <Search
-        after={null}
-        className={css({
-          backgroundColor: 'transparent',
-          padding: '0 15px 1px',
-          borderRadius: '18px',
-        })}
-        onChange={handleSearch}
-        icon={updating ? <Spinner /> : undefined}
-        placeholder={`Поиск ${showFullText ? 'минимально' : 'мин'} 3 символа`}
-        value={q}
-        maxLength={35}
-        onSubmit={handleSearch}
-      />
+      <form onSubmit={sumbitSearch}>
+        <Search
+          after={null}
+          className={css({
+            backgroundColor: 'transparent',
+            padding: '0 15px 1px',
+            borderRadius: '18px',
+          })}
+          onChange={handleSearch}
+          icon={updating ? <Spinner /> : undefined}
+          placeholder={`Поиск ${showFullText ? 'минимально' : 'мин'} 3 символа`}
+          value={q}
+          maxLength={35}
+        />
+      </form>
       <WordDay openCard={goForward} />
       <div
         className={css({

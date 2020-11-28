@@ -39,6 +39,17 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
     });
   }, []);
 
+  const sumbitSearch = React.useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      dispatch({
+        type: 'SET_FAVOURITES_Q',
+        payload: query,
+      });
+    },
+    [query]
+  );
+
   const transRef = React.useRef<any>();
   const transition = useTransition(values, {
     from: {
@@ -71,18 +82,20 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
 
   return (
     <>
-      <Search
-        after={null}
-        className={css({
-          backgroundColor: 'transparent',
-          padding: '0 15px 1px',
-          borderRadius: '18px',
-        })}
-        onChange={handleSearch}
-        placeholder={'Поиск'}
-        value={query}
-        maxLength={35}
-      />
+      <form onSubmit={sumbitSearch}>
+        <Search
+          after={null}
+          className={css({
+            backgroundColor: 'transparent',
+            padding: '0 15px 1px',
+            borderRadius: '18px',
+          })}
+          onChange={handleSearch}
+          placeholder={'Поиск'}
+          value={query}
+          maxLength={35}
+        />
+      </form>
       <If is={!!values?.length}>
         <div
           className={css({
