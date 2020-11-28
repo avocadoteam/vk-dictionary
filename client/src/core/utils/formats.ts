@@ -33,6 +33,6 @@ export const shapeTextSearch = (v: string) => {
 };
 export const shapeToPLainDefenition = (v: string) =>
   v
-    ?.replaceAll('◊', '')
-    .replaceAll('&nbsp;', '')
+    ?.replaceAll('◊', ' ')
+    .replaceAll('&nbsp;', ' ')
     .replace(/<[^>]*>?/gm, '') ?? '';
