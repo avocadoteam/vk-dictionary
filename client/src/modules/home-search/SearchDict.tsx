@@ -18,6 +18,7 @@ const adsArr: (SearchResult | { t: 'ads' })[] = [{ t: 'ads' }];
 const showFullText = window.screen.width > 320;
 
 export const SearchDict = React.memo<{ openCard: () => void }>(({ openCard: goForward }) => {
+  const searchRef = React.useRef<HTMLInputElement | null>(null);
   const dark = useSelector(isThemeDrak);
   const { css } = useFela({ dark });
   const q = useSelector(sSel.getExpDictQ);
@@ -43,6 +44,7 @@ export const SearchDict = React.memo<{ openCard: () => void }>(({ openCard: goFo
         type: 'SET_EXP_DICT_Q',
         payload: q,
       });
+      searchRef.current?.blur();
     },
     [q]
   );
@@ -103,6 +105,7 @@ export const SearchDict = React.memo<{ openCard: () => void }>(({ openCard: goFo
           placeholder={`Поиск ${showFullText ? 'минимально' : 'мин'} 3 символа`}
           value={q}
           maxLength={35}
+          getRef={searchRef}
         />
       </form>
       <WordDay openCard={goForward} />

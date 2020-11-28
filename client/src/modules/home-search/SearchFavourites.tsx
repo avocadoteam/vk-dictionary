@@ -15,6 +15,7 @@ import { textPreview } from './style';
 
 export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard: goForward }) => {
   const dark = useSelector(isThemeDrak);
+  const searchRef = React.useRef<HTMLInputElement | null>(null);
   const { css } = useFela({ dark });
   const query = useSelector(getFavQ);
   const values = useSelector(getUserFavouritesList);
@@ -46,6 +47,7 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
         type: 'SET_FAVOURITES_Q',
         payload: query,
       });
+      searchRef.current?.blur();
     },
     [query]
   );
@@ -94,6 +96,7 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
           placeholder={'Поиск'}
           value={query}
           maxLength={35}
+          getRef={searchRef}
         />
       </form>
       <If is={!!values?.length}>
