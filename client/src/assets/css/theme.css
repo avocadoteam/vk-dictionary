@@ -2,7 +2,7 @@ body[scheme='space_gray'] {
   --background_content: #2b2b2b;
   --header_alternate_background: #2b2b2b;
   --search_bar_field_background: #4b4b4b;
-  --text_primary: #a6a6a6;
+  --search_bar_field_tint: #a6a6a6;
   --header_background: transparent;
   --search_default_height: 48px;
 }
@@ -11,7 +11,7 @@ body {
   --background_content: #fcfcfc;
   --header_alternate_background: #fcfcfc;
   --search_bar_field_background: #fbfbfb;
-  --text_primary: #a6a6a6;
+  --search_bar_field_tint: #a6a6a6;
   --header_background: transparent;
   --search_default_height: 48px;
 }
