@@ -62,7 +62,7 @@ export const WordPhoto = React.memo(({ children }) => {
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
             transition: 'opacity .2s ease',
-            willChange: 'backgroundImage, opacity',
+            willChange: 'background-image, opacity',
           })}
         />
       </If>
