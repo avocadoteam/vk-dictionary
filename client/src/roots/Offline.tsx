@@ -29,7 +29,7 @@ export const Offline = React.memo(() => {
       });
       vkBridge.send('VKWebAppEnableSwipeBack');
     };
-  }, []);
+  }, [location]);
 
   React.useEffect(() => {
     if (online) {
