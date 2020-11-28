@@ -30,23 +30,21 @@ const App = React.memo(() => {
     if (!online) {
       console.log('popstate added', online, location);
 
-      window.addEventListener('popstate', (e) => {
-        e.preventDefault();
-        console.debug('location', location);
-        dispatch(push(location));
-      });
+      window.addEventListener('popstate', kekw);
     }
 
     return () => {
       console.log('popstate removed', online, location);
 
-      window.removeEventListener('popstate', (e) => {
-        e.preventDefault();
-        console.debug('location', location);
-        dispatch(push(location));
-      });
+      window.removeEventListener('popstate', kekw);
     };
   }, [online]);
+
+  const kekw = (e: any) => {
+    e.preventDefault();
+    console.debug('location', location);
+    dispatch(push(location));
+  };
 
   return (
     <ConfigProvider isWebView={online} scheme={scheme}>
