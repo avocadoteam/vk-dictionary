@@ -25,30 +25,28 @@ const App = React.memo(() => {
     console.log('App version is', appV);
   }, []);
 
-  const preventPop = React.useCallback(
-    (e: PopStateEvent) => {
-      e.preventDefault();
-      console.debug('location', location);
-      dispatch(push(location));
-      vkBridge.send('VKWebAppDisableSwipeBack');
-    },
-    [location]
-  );
-
   React.useEffect(() => {
     console.log('popstate online', online, location);
     if (!online) {
       console.log('popstate added', online, location);
 
-      window.addEventListener('popstate', preventPop);
+      window.addEventListener('popstate', (e) => {
+        e.preventDefault();
+        console.debug('location', location);
+        dispatch(push(location));
+      });
     }
 
     return () => {
       console.log('popstate removed', online, location);
 
-      window.removeEventListener('popstate', preventPop);
+      window.removeEventListener('popstate', (e) => {
+        e.preventDefault();
+        console.debug('location', location);
+        dispatch(push(location));
+      });
     };
-  }, [preventPop, online]);
+  }, [online]);
 
   return (
     <ConfigProvider isWebView={online} scheme={scheme}>
