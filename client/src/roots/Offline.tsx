@@ -5,11 +5,26 @@ import { useFela } from 'react-fela';
 import { useSelector, useDispatch } from 'react-redux';
 import { getStateUi } from 'core/selectors/common';
 import { AppDispatchActions, FetchingStateName } from 'core/models';
+import { vkBridge } from 'core/vk-bridge/instance';
 
 export const Offline = React.memo(() => {
   const { css } = useFela();
   const online = useSelector(getStateUi).online;
   const dispatch = useDispatch<AppDispatchActions>();
+
+  React.useEffect(() => {
+    window.addEventListener('popstate', (e) => {
+      e.preventDefault();
+    });
+    vkBridge.send('VKWebAppDisableSwipeBack');
+
+    return () => {
+      window.removeEventListener('popstate', (e) => {
+        e.preventDefault();
+      });
+      vkBridge.send('VKWebAppEnableSwipeBack');
+    };
+  }, []);
 
   React.useEffect(() => {
     if (online) {
