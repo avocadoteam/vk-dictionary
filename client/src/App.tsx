@@ -8,6 +8,7 @@ import { appV, FetchingStateName } from 'core/models';
 
 const App = React.memo(() => {
   const scheme = useSelector((state) => state.ui.theme);
+  const online = useSelector((state) => state.ui.online);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -21,7 +22,7 @@ const App = React.memo(() => {
   }, []);
 
   return (
-    <ConfigProvider isWebView scheme={scheme}>
+    <ConfigProvider isWebView={online} scheme={scheme}>
       <Router />
     </ConfigProvider>
   );

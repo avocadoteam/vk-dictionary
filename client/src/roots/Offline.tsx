@@ -1,30 +1,15 @@
-import React from 'react';
-import { PanelHeader, Div, Group, Title, Text, Spinner } from '@vkontakte/vkui';
+import { Div, Group, PanelHeader, Spinner, Text, Title } from '@vkontakte/vkui';
 import { AlienOffline } from 'assets/svg/AlienOffline';
-import { useFela } from 'react-fela';
-import { useSelector, useDispatch } from 'react-redux';
-import { getStateUi } from 'core/selectors/common';
 import { AppDispatchActions, FetchingStateName } from 'core/models';
-import { vkBridge } from 'core/vk-bridge/instance';
+import { getStateUi } from 'core/selectors/common';
+import React from 'react';
+import { useFela } from 'react-fela';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Offline = React.memo(() => {
   const { css } = useFela();
   const online = useSelector(getStateUi).online;
   const dispatch = useDispatch<AppDispatchActions>();
-
-  React.useEffect(() => {
-    window.addEventListener('popstate', (e) => {
-      e.preventDefault();
-    });
-    vkBridge.send('VKWebAppDisableSwipeBack');
-
-    return () => {
-      window.removeEventListener('popstate', (e) => {
-        e.preventDefault();
-      });
-      vkBridge.send('VKWebAppEnableSwipeBack');
-    };
-  }, []);
 
   React.useEffect(() => {
     if (online) {

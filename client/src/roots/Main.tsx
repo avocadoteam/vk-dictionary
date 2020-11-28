@@ -35,6 +35,7 @@ export const Main = React.memo(() => {
     handleBack();
     dispatch(goBack());
     Push(0);
+    dispatch({ type: 'SET_SELECTED_WORD_ID', payload: '' });
   }, [handleBack, dispatch]);
 
   const tapToTopHeader = React.useCallback(() => {
