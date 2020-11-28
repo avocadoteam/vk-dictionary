@@ -36,11 +36,16 @@ const App = React.memo(() => {
   );
 
   React.useEffect(() => {
+    console.log('popstate online', online, location);
     if (!online) {
+      console.log('popstate added', online, location);
+
       window.addEventListener('popstate', preventPop);
     }
 
     return () => {
+      console.log('popstate removed', online, location);
+
       window.removeEventListener('popstate', preventPop);
     };
   }, [preventPop, online]);
