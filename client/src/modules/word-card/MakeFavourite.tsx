@@ -26,7 +26,7 @@ export const MakeFavourite = React.memo(() => {
     } else if (!isSelected && selected && !updating) {
       setSelected(false);
     }
-  }, [isSelected, selected, updating]);
+  }, []);
 
   const handleToggle = () => {
     setSelected(!selected);
