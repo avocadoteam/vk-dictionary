@@ -1,7 +1,7 @@
 import { Placeholder, Text } from '@vkontakte/vkui';
 import { useLongPress } from 'core/hooks';
 import { AppDispatchActions, FetchingStateName, SnackType } from 'core/models';
-import { isThemeDrak } from 'core/selectors/common';
+import { isCopyBlocked, isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { isPlatformIOS } from 'core/selectors/settings';
 import { getSelectedCardData, isWordNonExists } from 'core/selectors/word';
@@ -20,12 +20,14 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
   const dark = useSelector(isThemeDrak);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
   const isEmpty = useSelector(isWordNonExists);
+  const copyBlocked = useSelector(isCopyBlocked);
   const { css } = useFela({ dark, hasPhotos });
   const dispatch = useDispatch<AppDispatchActions>();
   const textRef = React.useRef<HTMLDivElement | null>(null);
   const definitionRef = React.useRef<HTMLDivElement | null>(null);
 
   const copyText = React.useCallback(() => {
+    if (copyBlocked) return;
     vkBridge
       .send('VKWebAppCopyText', { text: data.plainDefinition })
       .then(() => {
@@ -43,7 +45,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
           payload: { type: SnackType.Error, message: 'Не удалось скопировать текст' },
         })
       );
-  }, [data.plainDefinition]);
+  }, [data.plainDefinition, copyBlocked]);
 
   const detections = useLongPress<HTMLDivElement>(copyText, { delay: 1000 });
 

@@ -33,6 +33,7 @@ export type AppState = {
       beforeNext: number;
     };
     autoSetForward: number;
+    copyBlocked: boolean;
   };
   router: RouterState;
 };
@@ -56,6 +57,7 @@ export type AppDispatch =
   | { type: 'SET_ADS'; payload: boolean }
   | { type: 'SET_ADS_ATTEMPTS'; payload: number }
   | { type: 'TELL_AUTO_SET_FORWARD', payload: number }
+  | { type: 'SET_BLOCK_COPY', payload: boolean }
   | SnackEnqueue
   | SnackDequeue
   | SnackQueue
