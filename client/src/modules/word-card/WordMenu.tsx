@@ -32,7 +32,7 @@ export const WordMenu = React.memo(() => {
 
   const [{ height, padding, opacity }] = useSpring(
     () => ({
-      height: show ? 56 : 0,
+      height: show ? 65 : 0,
       padding: show ? '8px 21px' : 0,
       opacity: show ? 1 : 0,
     }),
