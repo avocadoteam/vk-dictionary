@@ -36,25 +36,15 @@ export const Main = React.memo(() => {
     handleBack();
     dispatch(goBack());
     Push(0);
-    dispatch({ type: 'SET_BLOCK_COPY', payload: false });
-  }, [handleBack]);
+  }, [handleBack, dispatch]);
 
   const tapToTopHeader = React.useCallback(() => {
     Push((v) => v + 1);
   }, []);
 
-  const blockCopy = React.useCallback(() => {
-    dispatch({ type: 'SET_BLOCK_COPY', payload: true });
-  }, []);
-
   return (
     <>
-      <View
-        activePanel={activePanel}
-        history={history}
-        onSwipeBack={swipeBack}
-        onSwipeBackStart={blockCopy}
-      >
+      <View activePanel={activePanel} history={history} onSwipeBack={swipeBack}>
         <Panel id={MainView.Home} className={css({ position: 'fixed' })}>
           <PanelHeader separator={false} />
           <DictGallery />

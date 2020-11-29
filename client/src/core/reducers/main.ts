@@ -27,7 +27,6 @@ export const initialState: models.AppState['ui'] = {
     beforeNext: ATTEMPTS_BEFORE_NEXT,
   },
   autoSetForward: 0,
-  copyBlocked: false,
 };
 
 export const reducer = (
@@ -192,12 +191,6 @@ export const reducer = (
       return {
         ...state,
         autoSetForward: state.autoSetForward + 1,
-      };
-    }
-    case 'SET_BLOCK_COPY': {
-      return {
-        ...state,
-        copyBlocked: dispatch.payload,
       };
     }
 

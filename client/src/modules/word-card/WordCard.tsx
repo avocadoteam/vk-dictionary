@@ -1,14 +1,10 @@
 import { Placeholder, Text } from '@vkontakte/vkui';
-import { useLongPress } from 'core/hooks';
-import { AppDispatchActions, FetchingStateName, SnackType } from 'core/models';
-import { isCopyBlocked, isThemeDrak } from 'core/selectors/common';
+import { AppDispatchActions, FetchingStateName } from 'core/models';
+import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
-import { isPlatformIOS } from 'core/selectors/settings';
 import { getSelectedCardData, isWordNonExists } from 'core/selectors/word';
 import { iOS } from 'core/utils';
 import { normalizeText } from 'core/utils/formats';
-import { vkBridge } from 'core/vk-bridge/instance';
-import { tapticSelected } from 'core/vk-bridge/taptic';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
@@ -20,34 +16,10 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
   const dark = useSelector(isThemeDrak);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
   const isEmpty = useSelector(isWordNonExists);
-  const copyBlocked = useSelector(isCopyBlocked);
   const { css } = useFela({ dark, hasPhotos });
   const dispatch = useDispatch<AppDispatchActions>();
   const textRef = React.useRef<HTMLDivElement | null>(null);
   const definitionRef = React.useRef<HTMLDivElement | null>(null);
-
-  const copyText = React.useCallback(() => {
-    if (copyBlocked) return;
-    vkBridge
-      .send('VKWebAppCopyText', { text: data.plainDefinition })
-      .then(() => {
-        if (isPlatformIOS()) {
-          tapticSelected();
-        }
-        dispatch({
-          type: 'ENQUEUE_SNACK',
-          payload: { type: SnackType.Success, message: 'Текст скопирован' },
-        });
-      })
-      .catch(() =>
-        dispatch({
-          type: 'ENQUEUE_SNACK',
-          payload: { type: SnackType.Error, message: 'Не удалось скопировать текст' },
-        })
-      );
-  }, [data.plainDefinition, copyBlocked]);
-
-  const detections = useLongPress<HTMLDivElement>(copyText, { delay: 1000 });
 
   React.useEffect(() => {
     if (isEmpty) {
@@ -124,7 +96,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
           </Placeholder>
         }
       >
-        <div className={css(textBlur)} ref={textRef} {...detections}>
+        <div className={css(textBlur)} ref={textRef}>
           <div
             ref={definitionRef}
             className={css(textPreview)}

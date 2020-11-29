@@ -9,8 +9,6 @@ export const getTheme = createSelector(getStateUi, (ui) => ui.theme);
 
 export const isAutoSet = createSelector(getStateUi, (ui) => ui.autoSetForward);
 
-export const isCopyBlocked = createSelector(getStateUi, (ui) => ui.copyBlocked);
-
 export const isThemeDrak = createSelector(getTheme, (theme) => theme === ClientTheme.Dark);
 
 export const isAppUser = createSelector(getStateUi, (ui) => ui.isAppUser);
