@@ -15,37 +15,37 @@
 
 @font-face {
   font-family: Manrope;
-  src: url(/web/Manrope-Light.woff2) format('woff2');
+  src: url(/web/manrope-light.woff2) format('woff2');
   font-weight: 300;
 }
 
 @font-face {
   font-family: Manrope;
-  src: url(/web/Manrope-Regular.woff2) format('woff2');
+  src: url(/web/manrope-regular.woff2) format('woff2');
   font-weight: 400;
 }
 
 @font-face {
   font-family: Manrope;
-  src: url(/web/Manrope-Medium.woff2) format('woff2');
+  src: url(/web/manrope-medium.woff2) format('woff2');
   font-weight: 500;
 }
 
 @font-face {
   font-family: Manrope;
-  src: url(/web/Manrope-SemiBold.woff2) format('woff2');
+  src: url(/web/manrope-semibold.woff2) format('woff2');
   font-weight: 600;
 }
 
 @font-face {
   font-family: Manrope;
-  src: url(/web/Manrope-Bold.woff2) format('woff2');
+  src: url(/web/manrope-bold.woff2) format('woff2');
   font-weight: 700;
 }
 
 @font-face {
   font-family: Manrope;
-  src: url(/web/Manrope-ExtraBold.woff2) format('woff2');
+  src: url(/web/manrope-extrabold.woff2) format('woff2');
   font-weight: 800;
 }
 
