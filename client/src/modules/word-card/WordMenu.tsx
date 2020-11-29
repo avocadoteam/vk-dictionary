@@ -4,7 +4,7 @@ import {
   Icon28ChevronDownOutline,
 } from '@vkontakte/icons';
 import { Button, Spinner, Text } from '@vkontakte/vkui';
-import { appId } from 'core/models';
+import { appId, MENU_ICON_SIZE } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { getFirstPhoto, hasAtLeastOnePhoto, isPhotosUpdating } from 'core/selectors/photos';
 import { getSelectedWordId } from 'core/selectors/word';
@@ -146,8 +146,8 @@ const MenuActions = React.memo(() => {
       >
         <Icon24ShareOutline
           fill={hasPhotos || dark ? 'rgba(255, 255, 255, 0.85)' : '#717171'}
-          width={24}
-          height={24}
+          width={MENU_ICON_SIZE}
+          height={MENU_ICON_SIZE}
         />
       </Button>
     </>

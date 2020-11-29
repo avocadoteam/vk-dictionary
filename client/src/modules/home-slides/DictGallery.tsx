@@ -1,7 +1,6 @@
 import { Gallery, Group } from '@vkontakte/vkui';
 import { SmallStar } from 'assets/svg/SmallStar';
 import { AppDispatchActions, SelectedHomeSlide } from 'core/models';
-import { isThemeDrak } from 'core/selectors/common';
 import { getSelectedSlide } from 'core/selectors/settings';
 import React from 'react';
 import { useFela } from 'react-fela';
@@ -10,7 +9,6 @@ import { GallerySlide } from './GallerySlide';
 
 export const DictGallery = React.memo(() => {
   const slide = useSelector(getSelectedSlide);
-  const dark = useSelector(isThemeDrak);
   const { css } = useFela();
   const dispatch = useDispatch<AppDispatchActions>();
 

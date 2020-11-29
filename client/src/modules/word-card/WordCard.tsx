@@ -23,6 +23,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
   const { css } = useFela({ dark, hasPhotos });
   const dispatch = useDispatch<AppDispatchActions>();
   const textRef = React.useRef<HTMLDivElement | null>(null);
+  const definitionRef = React.useRef<HTMLDivElement | null>(null);
 
   const copyText = React.useCallback(() => {
     vkBridge
@@ -57,6 +58,22 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
       textRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [pushed, textRef]);
+
+  React.useEffect(() => {
+    if (data.definition && definitionRef.current) {
+      definitionRef.current.childNodes.forEach((e) => {
+        const span = e as HTMLSpanElement;
+        if (span.id?.includes('next-')) {
+          span.addEventListener('click', () => {
+            const [, wordId] = span.id.split('-');
+            dispatch({ type: 'SET_SELECTED_WORD_ID', payload: wordId });
+            dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordInfo });
+            dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordPhotos });
+          });
+        }
+      });
+    }
+  }, [data.definition, definitionRef]);
 
   return (
     <div
@@ -107,6 +124,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
       >
         <div className={css(textBlur)} ref={textRef} {...detections}>
           <div
+            ref={definitionRef}
             className={css(textPreview)}
             dangerouslySetInnerHTML={{
               __html: normalizeText(data.definition ?? ''),

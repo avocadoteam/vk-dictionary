@@ -2,7 +2,6 @@ import { FetchingDataType, FetchingStateName, FetchingStatus, SearchResult } fro
 import { createSelector } from 'reselect';
 import { getStateUi } from './common';
 import { getLocationSubPath } from './router';
-import { mostFreqExpDictResult, searchExpDictResult } from './search';
 
 export const getSelectedWordId = createSelector(
   getStateUi,
@@ -23,14 +22,9 @@ const getWordInfoData = createSelector(getWordInfoDataState, (dataState) => data
 
 export const getSelectedCardData = createSelector(
   getSelectedWordId,
-  searchExpDictResult,
-  mostFreqExpDictResult,
   getWordInfoData,
-  (selectedWordId, sData, mfData, wordInfo): SearchResult =>
-    (sData?.find((d) => d.id === selectedWordId) ||
-      mfData?.find((d) => 'id' in d && d.id === selectedWordId) ||
-      (wordInfo?.id === selectedWordId && wordInfo) ||
-      ({} as SearchResult)) as SearchResult
+  (selectedWordId, wordInfo): SearchResult =>
+    wordInfo?.id === selectedWordId ? wordInfo : ({} as SearchResult)
 );
 
 export const isWordNonExists = createSelector(

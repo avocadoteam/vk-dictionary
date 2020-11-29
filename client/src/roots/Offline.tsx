@@ -2,7 +2,6 @@ import { Div, Group, PanelHeader, Spinner, Text, Title } from '@vkontakte/vkui';
 import { AlienOffline } from 'assets/svg/AlienOffline';
 import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { getStateUi } from 'core/selectors/common';
-import { getFullLocation } from 'core/selectors/router';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 export const Offline = React.memo(() => {
   const { css } = useFela();
   const online = useSelector(getStateUi).online;
-  const location = useSelector(getFullLocation);
   const dispatch = useDispatch<AppDispatchActions>();
 
   React.useEffect(() => {

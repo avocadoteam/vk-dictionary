@@ -9,3 +9,5 @@ export const premiumPrice = 228;
 export const isDev = process.env.NODE_ENV !== 'production';
 
 export const ATTEMPTS_BEFORE_NEXT = 5;
+
+export const MENU_ICON_SIZE = 28;

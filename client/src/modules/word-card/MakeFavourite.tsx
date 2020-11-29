@@ -1,6 +1,6 @@
 import { Icon20FavoriteOutline, Icon24Favorite } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
-import { AppDispatchActions, FetchingStateName } from 'core/models';
+import { AppDispatchActions, FetchingStateName, MENU_ICON_SIZE } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { isUserFavouritesUpdating, isWordFavourite } from 'core/selectors/favourites';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
@@ -49,8 +49,8 @@ export const MakeFavourite = React.memo(() => {
       })}
       onClick={handleToggle}
     >
-      <If is={selected} else={<Icon20FavoriteOutline fill={color} width={24} height={24} />}>
-        <Icon24Favorite fill={color} width={24} height={24} />
+      <If is={selected} else={<Icon20FavoriteOutline fill={color} width={MENU_ICON_SIZE} height={MENU_ICON_SIZE} />}>
+        <Icon24Favorite fill={color} width={MENU_ICON_SIZE} height={MENU_ICON_SIZE} />
       </If>
     </Button>
   );

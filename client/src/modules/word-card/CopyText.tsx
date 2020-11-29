@@ -1,6 +1,6 @@
 import { Icon24Copy } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
-import { AppDispatchActions, SnackType } from 'core/models';
+import { AppDispatchActions, MENU_ICON_SIZE, SnackType } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { isPlatformIOS } from 'core/selectors/settings';
@@ -52,7 +52,7 @@ export const CopyText = React.memo(() => {
       })}
       onClick={copyText}
     >
-      <Icon24Copy fill={color} width={24} height={24} />
+      <Icon24Copy fill={color} width={MENU_ICON_SIZE} height={MENU_ICON_SIZE} />
     </Button>
   );
 });

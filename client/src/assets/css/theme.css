@@ -68,3 +68,7 @@ body {
 .Search__control {
   border-radius: 18px;
 }
+
+.word-next {
+  text-decoration: underline;
+}

@@ -187,13 +187,60 @@ export class ExpDictionaryService {
     }
   }
 
+  async tryToFindSublinks(def: string) {
+    const linkProb = '<i>см.</i>';
+    let newDefinition = def;
+
+    const matches = def.match(/<i>см\.<\/i> .*? /g);
+    if (matches) {
+      const wordsToSearch = matches.map((m) =>
+        m.replace(linkProb, '').replace('.', '').replace(',', '').trim(),
+      );
+
+      if (!wordsToSearch.length) {
+        return newDefinition;
+      }
+
+      const found = await this.getWords(wordsToSearch);
+
+      found.map((f) => {
+        newDefinition = newDefinition.replace(
+          f.name,
+          `<span id="next-${f.id}" class="word-next">${f.name}</span>`,
+        );
+      });
+      if (found.length !== wordsToSearch.length) {
+        const toSaveWords = wordsToSearch.filter(
+          (word) => !found.find((f) => f.name === word),
+        );
+        toSaveWords.forEach((tsw) => this.silentParse(tsw));
+      }
+    }
+    return newDefinition;
+  }
+
   async getWordInfo(wordId: string) {
     const word = await this.tableDict.findOne(wordId, {
       select: ['id', 'definition'],
     });
     if (word) {
-      this.wordFreqService.incrementFrequency([word.id])
+      this.wordFreqService.incrementFrequency([word.id]);
+      return {
+        ...word,
+        definition: await this.tryToFindSublinks(word.definition),
+      };
     }
-    return word;
+    return null;
+  }
+
+  async getWords(wordNames: string[]) {
+    const words = await this.tableDict
+      .createQueryBuilder('dict')
+      .where('dict.name in (:...names)', { names: wordNames })
+      .select('dict.id')
+      .addSelect('dict.name')
+      .getMany();
+
+    return words;
   }
 }

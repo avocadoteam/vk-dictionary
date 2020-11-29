@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  NotFoundException,
   Query,
   UseGuards,
   UseInterceptors,
@@ -44,8 +45,13 @@ export class ExpDictionaryController {
   }
 
   @Get('/word')
-  getWord(@Query() model: WordPhotoModel) {
-    return this.expDictService.getWordInfo(model.wordId);
+  async getWord(@Query() model: WordPhotoModel) {
+    const word = await this.expDictService.getWordInfo(model.wordId);
+
+    if (!word) {
+      throw new NotFoundException();
+    }
+    return word;
   }
 
   @Get('/word-day')
