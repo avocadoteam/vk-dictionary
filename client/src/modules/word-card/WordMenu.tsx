@@ -72,7 +72,7 @@ export const WordMenu = React.memo(() => {
         </If>
       </div>
       <animated.div
-        style={{ padding, height, opacity, maxHeight: 56 } as any}
+        style={{ padding, height, opacity, maxHeight: 50 } as any}
         className={css({
           background: `linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), ${hexToRgba(
             photo.color ?? '',
