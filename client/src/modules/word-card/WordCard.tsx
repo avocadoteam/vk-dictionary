@@ -181,7 +181,7 @@ const textPreview: StyleFunction<{}, StyleProps> = ({ dark, hasPhotos }) => ({
 
 const textBlur: StyleFunction<{}, StyleProps> = ({ hasPhotos }) => ({
   padding: '1rem 1rem 1.5rem',
-  maxHeight: hasPhotos ? 'calc(100vh - 160px)' : undefined,
+  maxHeight: hasPhotos ? 'calc(100vh - 170px)' : undefined,
   overflowY: 'scroll',
   maskImage: 'linear-gradient(to bottom, black 95%, transparent 100%)',
   '-webkit-mask-image': 'linear-gradient(to bottom, black 95%, transparent 100%)',

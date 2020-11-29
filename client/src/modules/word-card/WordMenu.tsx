@@ -32,7 +32,7 @@ export const WordMenu = React.memo(() => {
 
   const [{ height, padding, opacity }] = useSpring(
     () => ({
-      height: show ? 65 : 0,
+      height: show ? 75 : 0,
       padding: show ? '8px 21px' : 0,
       opacity: show ? 1 : 0,
     }),
@@ -72,7 +72,7 @@ export const WordMenu = React.memo(() => {
         </If>
       </div>
       <animated.div
-        style={{ padding, height, opacity, maxHeight: 50 } as any}
+        style={{ padding, height, opacity, maxHeight: 60 } as any}
         className={css({
           background: `linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), ${hexToRgba(
             photo.color ?? '',
