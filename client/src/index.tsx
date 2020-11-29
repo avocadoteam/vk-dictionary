@@ -17,7 +17,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import 'core/global-listen';
 import 'assets/css/theme.css';
 import 'assets/fonts/style.css';
-import 'core/helpers/shims'
+import 'core/helpers/shims';
 
 const felaRenderer = configureFela();
 
@@ -31,6 +31,7 @@ ReactDOM.render(
   </Redux>,
   document.getElementById('root')
 );
-// if (process.env.NODE_ENV === 'development') {
+
+if (process.env.NODE_ENV === 'development') {
   import('./eruda').then(({ default: eruda }) => {}); //runtime download
-// }
+}
