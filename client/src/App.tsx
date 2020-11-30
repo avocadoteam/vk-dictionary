@@ -25,6 +25,8 @@ const App = React.memo(() => {
     console.log('Screen h', window.screen.height, 'w', window.screen.width);
     console.log('Screen av h', window.screen.availHeight, 'w', window.screen.availWidth);
     console.log('Screen zoomed is', window.devicePixelRatio);
+    console.log('Platform', navigator.platform);
+    console.log('UA', navigator.userAgent);
   }, []);
 
   React.useEffect(() => {
