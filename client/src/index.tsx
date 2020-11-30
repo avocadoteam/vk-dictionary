@@ -18,7 +18,7 @@ import 'core/global-listen';
 import 'assets/css/theme.css';
 import 'assets/fonts/style.css';
 import 'core/helpers/shims';
-import './eruda';
+// import './eruda';
 
 const felaRenderer = configureFela();
 
