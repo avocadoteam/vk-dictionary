@@ -19,6 +19,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
   const { css } = useFela({ dark, hasPhotos });
   const dispatch = useDispatch<AppDispatchActions>();
   const textRef = React.useRef<HTMLDivElement | null>(null);
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
   const definitionRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
@@ -32,6 +33,12 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
       textRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [pushed, textRef]);
+
+  React.useEffect(() => {
+    if (containerRef.current) {
+      setTimeout(() => containerRef.current?.click(), 200);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (data.definition && definitionRef.current) {
@@ -60,6 +67,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
         zIndex: 2,
         overflow: 'hidden',
       })}
+      ref={containerRef}
     >
       <If
         is={!isEmpty}
