@@ -22,6 +22,9 @@ const App = React.memo(() => {
     });
     dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.Ads });
     console.log('App version is', appV);
+    console.log('Screen h', window.screen.height, 'w', window.screen.width);
+    console.log('Screen av h', window.screen.availHeight, 'w', window.screen.availWidth);
+    console.log('Screen zoomed is', window.devicePixelRatio);
   }, []);
 
   React.useEffect(() => {

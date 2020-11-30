@@ -18,6 +18,7 @@ import 'core/global-listen';
 import 'assets/css/theme.css';
 import 'assets/fonts/style.css';
 import 'core/helpers/shims';
+import './eruda';
 
 const felaRenderer = configureFela();
 
@@ -32,6 +33,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-if (process.env.NODE_ENV === 'development') {
-  import('./eruda').then(({ default: eruda }) => {}); //runtime download
-}
+// if (process.env.NODE_ENV === 'development') {
+//   import('./eruda').then(({ default: eruda }) => {}); //runtime download
+// }
