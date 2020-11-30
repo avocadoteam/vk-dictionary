@@ -26,8 +26,7 @@ function iOS() {
 }
 export function shitAndroid() {
   return (
-    window.devicePixelRatio === 3 &&
-    navigator.userAgent.includes('Android 7.1.1') &&
+    navigator.userAgent.includes('Android 7.1') ||
     navigator.userAgent.includes('Chrome/51')
   );
 }
