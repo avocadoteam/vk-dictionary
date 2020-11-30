@@ -5,6 +5,7 @@ import { AppDispatchActions, MainView } from 'core/models';
 import { isAutoSet, isThemeDrak } from 'core/selectors/common';
 import { getMainView } from 'core/selectors/main';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
+import { isPlatformIOS } from 'core/selectors/settings';
 import { SearchLayout } from 'modules/home-search';
 import { DictGallery } from 'modules/home-slides';
 import { Snakbars } from 'modules/snaks';
@@ -45,7 +46,10 @@ export const Main = React.memo(() => {
   return (
     <>
       <View activePanel={activePanel} history={history} onSwipeBack={swipeBack}>
-        <Panel id={MainView.Home} className={css({ position: 'fixed' })}>
+        <Panel
+          id={MainView.Home}
+          className={css({ position: isPlatformIOS() ? 'fixed' : undefined })}
+        >
           <PanelHeader separator={false} />
           <DictGallery />
           <SearchLayout openCard={() => goForward(MainView.Word)} />
