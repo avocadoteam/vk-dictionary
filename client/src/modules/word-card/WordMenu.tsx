@@ -8,7 +8,7 @@ import { appId, MENU_ICON_SIZE } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { getFirstPhoto, hasAtLeastOnePhoto, isPhotosUpdating } from 'core/selectors/photos';
 import { getSelectedWordId } from 'core/selectors/word';
-import { iOS } from 'core/utils';
+import { isDifferentLayout } from 'core/utils';
 import { hexToRgba } from 'core/utils/formats';
 import { vkBridge } from 'core/vk-bridge/instance';
 import { If } from 'modules/atoms';
@@ -43,7 +43,7 @@ export const WordMenu = React.memo(() => {
     <>
       <div
         className={css({
-          margin: `auto 1.5rem ${iOS() && !show ? '2rem' : 0} auto`,
+          margin: `auto 1.5rem ${isDifferentLayout() && !show ? '2rem' : 0} auto`,
         })}
       >
         <If is={!updating} else={<Spinner />}>

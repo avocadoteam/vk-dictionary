@@ -15,7 +15,7 @@ export const errMap = (error: any) =>
     'stack',
   ]);
 
-export function iOS() {
+function iOS() {
   return (
     ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(
       navigator.platform
@@ -23,6 +23,17 @@ export function iOS() {
     // iPad on iOS 13 detection
     (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
   );
+}
+export function shitAndroid() {
+  return (
+    window.devicePixelRatio === 3 &&
+    navigator.userAgent.includes('Android 7.1.1') &&
+    navigator.userAgent.includes('Chrome/51')
+  );
+}
+
+export function isDifferentLayout() {
+  return iOS() || shitAndroid();
 }
 
 export const platform = () => (iOS() ? OS.IOS : OS.ANDROID);
@@ -38,4 +49,4 @@ export const stopEvents = <T>(e: React.PointerEvent<T> | React.MouseEvent<T, Mou
   e.stopPropagation();
 };
 
-export const defaultSearchLayoutHeight = iOS() ? '56vh' : '60vh';
+export const defaultSearchLayoutHeight = isDifferentLayout() ? '56vh' : '60vh';

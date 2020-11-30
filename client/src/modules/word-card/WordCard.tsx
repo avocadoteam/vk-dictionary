@@ -3,7 +3,7 @@ import { AppDispatchActions, FetchingStateName } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { getSelectedCardData, isWordNonExists } from 'core/selectors/word';
-import { iOS } from 'core/utils';
+import { isDifferentLayout } from 'core/utils';
 import { normalizeText } from 'core/utils/formats';
 import { If } from 'modules/atoms';
 import React from 'react';
@@ -56,7 +56,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
         flexDirection: 'column',
         position: 'absolute',
         width: '100vw',
-        height: iOS() ? 'calc(100vh - 95px)' : 'calc(100vh - 56px)',
+        height: isDifferentLayout() ? 'calc(100vh - 95px)' : 'calc(100vh - 56px)',
         zIndex: 2,
         overflow: 'hidden',
       })}
