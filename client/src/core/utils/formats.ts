@@ -36,3 +36,5 @@ export const shapeToPLainDefenition = (v: string) =>
     ?.replaceAll('◊', ' ')
     .replaceAll('&nbsp;', ' ')
     .replace(/<[^>]*>?/gm, '') ?? '';
+
+export const cleanFromNumbers = (v: string) => v.replace(/[0-9]/g, '');

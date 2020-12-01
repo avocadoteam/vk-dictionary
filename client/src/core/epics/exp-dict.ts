@@ -17,7 +17,7 @@ import {
   searchInExpDict,
 } from 'core/operations/exp-dict';
 import { getSelectedWordId } from 'core/selectors/word';
-import { shapeToPLainDefenition } from 'core/utils/formats';
+import { cleanFromNumbers, shapeToPLainDefenition } from 'core/utils/formats';
 import { ofType } from 'redux-observable';
 import { from, iif, of } from 'rxjs';
 import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
@@ -200,11 +200,15 @@ const getWordOfTheDayEpic: AppEpic = (action$, state$) =>
           if (response.ok) {
             return from<Promise<FetchResponse<WordPhotoOfTheDay>>>(response.json()).pipe(
               switchMap((r) => {
+                const data = r?.data ?? {};
                 return of({
                   type: 'SET_READY_DATA',
                   payload: {
                     name: FetchingStateName.WordOfDay,
-                    data: r?.data,
+                    data: {
+                      ...data,
+                      name: cleanFromNumbers(data.name ?? ''),
+                    },
                   },
                 } as AppDispatch);
               })
