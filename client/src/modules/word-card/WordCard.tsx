@@ -42,7 +42,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
 
   React.useEffect(() => {
     if (data.definition && definitionRef.current) {
-      definitionRef.current.childNodes.forEach((e) => {
+      definitionRef.current.childNodes?.forEach((e) => {
         const span = e as HTMLSpanElement;
         if (span.id?.includes('next-')) {
           span.addEventListener('click', () => {
