@@ -57,4 +57,4 @@ const watchBeforeNextEpic: AppEpic = (action$, state$) =>
     )
   );
 
-export const adsEpics = safeCombineEpics(watchBeforeNextEpic);
+export const adsEpics = safeCombineEpics(getAdsEpic, watchBeforeNextEpic);
