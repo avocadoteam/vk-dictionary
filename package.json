@@ -3,8 +3,8 @@
   "version": "1.0",
   "private": true,
   "scripts": {
-    "heroku-prebuild": "yarn build:client && yarn build:server",
-    "build:client": "cd client && yarn && yarn build",
+    "heroku-prebuild": "yarn build:server",
+    "build:client": "cd client && yarn deploy",
     "build:server": "cd server && yarn && yarn build"
   }
 }

@@ -1,7 +1,10 @@
+import { isDev } from 'core/models';
 import { fromFetch } from 'rxjs/fetch';
 
+const mainUrl = isDev ? '' : 'https://dict.app-dich.com';
+
 export const request = <T = {}>(url: string, method: Method, data?: T) =>
-  fromFetch(`/api${url}`, {
+  fromFetch(`${mainUrl}/api${url}`, {
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
     },

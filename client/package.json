@@ -6,8 +6,8 @@
   "proxy": "http://localhost:3000",
   "scripts": {
     "start": "yarn && cross-env PORT=10888 react-scripts start",
-    "build": "react-scripts build && rm -rf ../server/public && mv build ../server/public",
-    "predeploy": "yarn build",
+    "build": "react-scripts build",
+    "predeploy": "yarn && yarn build",
     "deploy": "vk-miniapps-deploy"
   },
   "homepage": "./",
@@ -30,7 +30,7 @@
     "@sentry/browser": "^5.27.4",
     "@vkontakte/icons": "^1.54.0",
     "@vkontakte/vk-bridge": "^2.3.0",
-    "@vkontakte/vk-miniapps-deploy": "^0.0.21",
+    "@vkontakte/vk-miniapps-deploy": "^0.0.25",
     "@vkontakte/vkui": "^3.13.1",
     "abortcontroller-polyfill": "^1.5.0",
     "babel-eslint": "^10.1.0",
