@@ -17,12 +17,6 @@ export const getLocationPathName = createSelector(
   (router) => router?.location.pathname ?? ''
 );
 
-export const getFullLocation = createSelector(
-  getLocationPathName,
-  getStateRouter,
-  (path, r) => path + r?.location.search ?? ''
-);
-
 export const getLocationMainPath = createSelector(getLocationPathName, (pathName) => {
   const match = matchPath<{ main: string }>(pathName, { path: '/:main' });
   return match ? match.params.main : null;

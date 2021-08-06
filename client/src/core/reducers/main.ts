@@ -5,6 +5,7 @@ import {
   SelectedHomeSlide,
   ATTEMPTS_BEFORE_NEXT,
   SnackType,
+  MainView,
 } from 'core/models';
 import { defaultSearchLayoutHeight } from 'core/utils';
 
@@ -27,6 +28,7 @@ export const initialState: models.AppState['ui'] = {
     beforeNext: ATTEMPTS_BEFORE_NEXT,
   },
   autoSetForward: 0,
+  mainView: MainView.Home,
 };
 
 export const reducer = (
@@ -191,6 +193,12 @@ export const reducer = (
       return {
         ...state,
         autoSetForward: state.autoSetForward + 1,
+      };
+    }
+    case 'SET_MAIN_VIEW': {
+      return {
+        ...state,
+        mainView: dispatch.payload,
       };
     }
 

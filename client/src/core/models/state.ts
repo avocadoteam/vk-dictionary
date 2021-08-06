@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { CallHistoryMethodAction, LocationChangeAction, RouterState } from 'connected-react-router';
-import { FetchingStateName, FetchingStatus, SelectedHomeSlide } from './enums';
+import { FetchingStateName, FetchingStatus, MainView, SelectedHomeSlide } from './enums';
 import { SnackModel } from './snacks';
 
 declare module 'react-redux' {
@@ -17,6 +17,7 @@ export type AppState = {
         error: any;
       };
     };
+    mainView: MainView;
     notifications: boolean;
     online: boolean;
     isAppUser: boolean;
@@ -55,7 +56,8 @@ export type AppDispatch =
   | { type: 'TRIGGER_SEARCH_HEIGHT'; payload: string }
   | { type: 'SET_ADS'; payload: boolean }
   | { type: 'SET_ADS_ATTEMPTS'; payload: number }
-  | { type: 'TELL_AUTO_SET_FORWARD', payload: number }
+  | { type: 'TELL_AUTO_SET_FORWARD'; payload: number }
+  | { type: 'SET_MAIN_VIEW'; payload: MainView }
   | SnackEnqueue
   | SnackDequeue
   | SnackQueue

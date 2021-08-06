@@ -3,6 +3,7 @@ import { AppDispatch, AppEpic, AppUser, FetchingStateName, MainView, Skeys } fro
 import { getAdsAttemptsBeforeNext } from 'core/selectors/ads';
 import { getMainView } from 'core/selectors/main';
 import { getLocationNotificationEnabled } from 'core/selectors/router';
+import { isPlatformIOS } from 'core/selectors/settings';
 import { getUserStorageKeys } from 'core/vk-bridge/user';
 import { ofType } from 'redux-observable';
 import { from } from 'rxjs';
@@ -77,7 +78,9 @@ const watchWordIdFromHashEpic: AppEpic = (action$, state$) =>
     mergeMap(
       ({ payload }) =>
         [
-          push(`/${MainView.Word}/${payload}${getSearch(state$.value)}`),
+          isPlatformIOS()
+            ? { type: 'SET_MAIN_VIEW', payload: MainView.Word }
+            : push(`/${MainView.Word}/${payload}${getSearch(state$.value)}`),
           { type: 'TELL_AUTO_SET_FORWARD' },
         ] as AppDispatch[]
     )

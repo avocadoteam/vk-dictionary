@@ -35,7 +35,9 @@ export const Main = React.memo(() => {
   const swipeBack = React.useCallback(() => {
     dispatch({ type: 'SET_SELECTED_WORD_ID', payload: '' });
     handleBack();
-    dispatch(goBack());
+    if (!isPlatformIOS()) {
+      dispatch(goBack());
+    }
     Push(0);
   }, [handleBack, dispatch]);
 

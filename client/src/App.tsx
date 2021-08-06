@@ -1,8 +1,6 @@
 import { ConfigProvider } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { push } from 'connected-react-router';
 import { appV, FetchingStateName } from 'core/models';
-import { getFullLocation } from 'core/selectors/router';
 import { initSentry } from 'core/sentry';
 import { Router } from 'modules/routes';
 import React from 'react';
@@ -12,7 +10,6 @@ const App = React.memo(() => {
   const scheme = useSelector((state) => state.ui.theme);
   const online = useSelector((state) => state.ui.online);
   const dispatch = useDispatch();
-  const location = useSelector(getFullLocation);
 
   React.useEffect(() => {
     initSentry();
@@ -22,27 +19,7 @@ const App = React.memo(() => {
     });
     dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.Ads });
     console.log('App version is', appV);
-    console.log('Screen h', window.screen.height, 'w', window.screen.width);
-    console.log('Screen av h', window.screen.availHeight, 'w', window.screen.availWidth);
-    console.log('Screen zoomed is', window.devicePixelRatio);
-    console.log('Platform', navigator.platform);
-    console.log('UA', navigator.userAgent);
   }, []);
-
-  React.useEffect(() => {
-    if (!online) {
-      window.addEventListener('popstate', preventToGoBack);
-    }
-
-    return () => {
-      window.removeEventListener('popstate', preventToGoBack);
-    };
-  }, [online]);
-
-  const preventToGoBack = (e: PopStateEvent) => {
-    e.preventDefault();
-    dispatch(push(location));
-  };
 
   return (
     <ConfigProvider isWebView={online} scheme={scheme}>
