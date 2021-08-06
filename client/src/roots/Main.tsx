@@ -29,13 +29,19 @@ export const Main = React.memo(() => {
   React.useEffect(() => {
     if (activePanel === MainView.Word && !history.includes(MainView.Word)) {
       goForward(MainView.Word);
+
+      if (isPlatformIOS()) {
+        dispatch({ type: 'SET_MAIN_VIEW', payload: MainView.Word });
+      }
     }
   }, [up]);
 
   const swipeBack = React.useCallback(() => {
     dispatch({ type: 'SET_SELECTED_WORD_ID', payload: '' });
     handleBack();
-    if (!isPlatformIOS()) {
+    if (isPlatformIOS()) {
+      dispatch({ type: 'SET_MAIN_VIEW', payload: MainView.Home });
+    } else {
       dispatch(goBack());
     }
     Push(0);
