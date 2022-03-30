@@ -11,8 +11,14 @@ export const normalizeText = (text: string) =>
     .replaceAll('◊', '')
     .replaceAll('&nbsp;', '');
 
-export const normalizeTextPreview = (text: string) =>
-  text.replaceAll('<br>', '').replaceAll('◊', '').replaceAll('&nbsp;', '');
+export const normalizeTextPreview = (text: string) => {
+  if (text.startsWith('<i>') && text.endsWith('</i>')) {
+    text = text.slice(3);
+    text = text.slice(0, -4);
+  }
+
+  return text.replaceAll('<br>', '').replaceAll('◊', '').replaceAll('&nbsp;', '');
+};
 
 export const hexToRgba = (hex: string, o = 1) => {
   const bigint = parseInt(hex.replace(/[^0-9A-F]/gi, ''), 16);
