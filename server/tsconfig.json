@@ -12,6 +12,7 @@
     "incremental": true,
     "strict": true,
     "useUnknownInCatchVariables": false,
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules",

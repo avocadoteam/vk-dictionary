@@ -19,7 +19,7 @@ import { animated, useSpring } from 'react-spring';
 import { CopyText } from './CopyText';
 import { MakeFavourite } from './MakeFavourite';
 
-export const WordMenu = React.memo(() => {
+export const WordMenu = React.memo<{}>(({}) => {
   const [show, setShow] = React.useState(false);
   const photo = useSelector(getFirstPhoto);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
@@ -123,7 +123,7 @@ export const WordMenu = React.memo(() => {
   );
 });
 
-const MenuActions = React.memo(() => {
+const MenuActions = React.memo<{}>(({}) => {
   const dark = useSelector(isThemeDrak);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
   const { css } = useFela();

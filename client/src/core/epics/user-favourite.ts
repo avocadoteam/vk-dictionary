@@ -7,7 +7,11 @@ import {
   FetchResponse,
   FetchUpdateAction,
 } from 'core/models';
-import { getUserFavourites, setUserFavourite } from 'core/operations/user-favourite';
+import {
+  getUserFavourites,
+  getUserPremium,
+  setUserFavourite,
+} from 'core/operations/user-favourite';
 import { shapeToPLainDefenition } from 'core/utils/formats';
 import { ofType } from 'redux-observable';
 import { concat, from, of } from 'rxjs';
@@ -92,4 +96,39 @@ const getAllFavouritesEpic: AppEpic = (action$, state$) =>
     )
   );
 
-export const userFavourite = safeCombineEpics(toggleUserFavouriteEpic, getAllFavouritesEpic);
+const getPremiumEpic: AppEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('SET_UPDATING_DATA'),
+    filter<FetchUpdateAction>(({ payload }) => payload === FetchingStateName.Premium),
+    map(() => ({
+      q: getSearch(state$.value),
+    })),
+    switchMap(({ q }) =>
+      getUserPremium(q).pipe(
+        switchMap((response) => {
+          if (response.ok) {
+            return from<Promise<FetchResponse<boolean>>>(response.json()).pipe(
+              switchMap((r) => {
+                return of({
+                  type: 'SET_READY_DATA',
+                  payload: {
+                    name: FetchingStateName.Premium,
+                    data: r?.data,
+                  },
+                } as AppDispatch);
+              })
+            );
+          } else {
+            throw new Error(`Http ${response.status} on ${response.url}`);
+          }
+        }),
+        captureFetchError(FetchingStateName.Premium)
+      )
+    )
+  );
+
+export const userFavourite = safeCombineEpics(
+  toggleUserFavouriteEpic,
+  getAllFavouritesEpic,
+  getPremiumEpic
+);

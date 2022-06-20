@@ -1,6 +1,7 @@
 import { FavSearchResult, FetchingDataType, FetchingStateName, FetchingStatus } from 'core/models';
 import { createSelector } from 'reselect';
 import { getStateUi } from './common';
+import { isUserPremium } from './user';
 import { getSelectedWordId } from './word';
 
 const getUserFavouritesDataState = createSelector(
@@ -40,4 +41,10 @@ export const getUserFavouritesList = createSelector(
         d.definition?.toLowerCase()?.includes(q.toLowerCase()) ||
         d.name?.toLowerCase()?.includes(q.toLowerCase())
     )
+);
+
+export const canAddMoreFavourites = createSelector(
+  getUserFavouritesDataState,
+  isUserPremium,
+  (dataSate, premium) => premium || (dataSate.data ?? []).length < 5
 );

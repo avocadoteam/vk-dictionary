@@ -1,9 +1,11 @@
-import { Icon20FavoriteOutline } from '@vkontakte/icons';
-import { Placeholder, Search, Text } from '@vkontakte/vkui';
+import { Icon20FavoriteOutline, Icon20Stars } from '@vkontakte/icons';
+import { Cell, Placeholder, Search, Text } from '@vkontakte/vkui';
 import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import { getFavQ, getUserFavouritesList } from 'core/selectors/favourites';
 import { getSearchHeight } from 'core/selectors/search';
+import { isPlatformIOS } from 'core/selectors/settings';
+import { isUserPremium } from 'core/selectors/user';
 import { stopEvents } from 'core/utils';
 import { normalizeTextPreview, shapeTextSearch } from 'core/utils/formats';
 import { If } from 'modules/atoms';
@@ -21,6 +23,7 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
   const values = useSelector(getUserFavouritesList);
   const parentHeight = useSelector(getSearchHeight);
   const dispatch = useDispatch<AppDispatchActions>();
+  const isPremium = useSelector(isUserPremium);
 
   const openCard = React.useCallback(
     (payload: string) => {
@@ -32,6 +35,12 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
     },
     [goForward]
   );
+  const openModal = React.useCallback(() => {
+    dispatch({
+      type: 'SET_MODAL',
+      payload: 'avoplus',
+    });
+  }, []);
 
   const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -111,6 +120,17 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
           } as any)}
           onPointerDown={stopEvents}
         >
+          {!isPremium && !isPlatformIOS() ? (
+            <Cell
+              className={css({ marginTop: '.5rem' })}
+              onClick={openModal}
+              before={<Icon20Stars />}
+              multiline
+            >
+              Еще больше закладок с подпиской avocado+
+            </Cell>
+          ) : null}
+
           {resultsRender}
         </div>
       </If>

@@ -59,6 +59,7 @@ const setInitInfo: AppEpic = (action$, state$) =>
         { type: 'SET_UPDATING_DATA', payload: FetchingStateName.MostFrequentWords },
         { type: 'SET_UPDATING_DATA', payload: FetchingStateName.UserFavourites },
         { type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordOfDay },
+        { type: 'SET_UPDATING_DATA', payload: FetchingStateName.Premium },
       ];
 
       if (wordId) {

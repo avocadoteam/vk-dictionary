@@ -8,6 +8,7 @@ import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { isPlatformIOS } from 'core/selectors/settings';
 import { SearchLayout } from 'modules/home-search';
 import { DictGallery } from 'modules/home-slides';
+import { RootModals } from 'modules/modals/Root';
 import { Snakbars } from 'modules/snaks';
 import { BtnBack, WordCard, WordPhoto } from 'modules/word-card';
 import React from 'react';
@@ -19,6 +20,7 @@ export const Main = React.memo(() => {
   const activePanel = useSelector(getMainView);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
   const dark = useSelector(isThemeDrak);
+  const appearance = dark ? 'dark' : 'light';
   const up = useSelector(isAutoSet);
   const { css } = useFela({ hasPhotos, dark });
   const dispatch = useDispatch<AppDispatchActions>();
@@ -53,7 +55,12 @@ export const Main = React.memo(() => {
 
   return (
     <>
-      <View activePanel={activePanel} history={history} onSwipeBack={swipeBack}>
+      <View
+        activePanel={activePanel}
+        history={history}
+        onSwipeBack={swipeBack}
+        modal={<RootModals />}
+      >
         <Panel
           id={MainView.Home}
           className={css({ position: isPlatformIOS() ? 'fixed' : undefined })}

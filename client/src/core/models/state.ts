@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux';
 import { CallHistoryMethodAction, LocationChangeAction, RouterState } from 'connected-react-router';
+import { Dispatch } from 'redux';
 import { FetchingStateName, FetchingStatus, MainView, SelectedHomeSlide } from './enums';
 import { SnackModel } from './snacks';
 
@@ -18,6 +18,7 @@ export type AppState = {
       };
     };
     mainView: MainView;
+    activeModal: 'avoplus' | null;
     notifications: boolean;
     online: boolean;
     isAppUser: boolean;
@@ -58,6 +59,7 @@ export type AppDispatch =
   | { type: 'SET_ADS_ATTEMPTS'; payload: number }
   | { type: 'TELL_AUTO_SET_FORWARD'; payload: number }
   | { type: 'SET_MAIN_VIEW'; payload: MainView }
+  | { type: 'SET_MODAL'; payload: AppState['ui']['activeModal'] }
   | SnackEnqueue
   | SnackDequeue
   | SnackQueue
