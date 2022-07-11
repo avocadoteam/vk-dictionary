@@ -24,7 +24,10 @@ import { UserPaymentService } from './user-payment';
 @UseInterceptors(TransformInterceptor)
 export class UserFavouriteController {
   private readonly logger = new Logger(UserFavouriteController.name);
-  constructor(private readonly ufService: UserFavouriteService, private readonly ups: UserPaymentService) {}
+  constructor(
+    private readonly ufService: UserFavouriteService,
+    private readonly ups: UserPaymentService,
+  ) {}
 
   @Get()
   getFavourites(
@@ -36,7 +39,7 @@ export class UserFavouriteController {
   ) {
     return this.ufService.getUserFavourites(`${vkUserId}`);
   }
-  @Get('premium')
+  @Get('/premium')
   getUserPremium(
     @Query(
       'vk_user_id',
