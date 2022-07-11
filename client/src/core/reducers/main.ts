@@ -1,11 +1,11 @@
 import * as models from 'core/models';
 import {
-  FetchingStatus,
-  ClientTheme,
-  SelectedHomeSlide,
   ATTEMPTS_BEFORE_NEXT,
-  SnackType,
+  ClientTheme,
+  FetchingStatus,
   MainView,
+  SelectedHomeSlide,
+  SnackType,
 } from 'core/models';
 import { defaultSearchLayoutHeight } from 'core/utils';
 
@@ -29,6 +29,7 @@ export const initialState: models.AppState['ui'] = {
   },
   autoSetForward: 0,
   mainView: MainView.Home,
+  activeModal: null,
 };
 
 export const reducer = (
@@ -199,6 +200,12 @@ export const reducer = (
       return {
         ...state,
         mainView: dispatch.payload,
+      };
+    }
+    case 'SET_MODAL': {
+      return {
+        ...state,
+        activeModal: dispatch.payload,
       };
     }
 

@@ -21,3 +21,5 @@ export const getMainView = createSelector(getLocationMainPath, getStateUi, (main
       return MainView.Home;
   }
 });
+
+export const getActiveModal = createSelector(getStateUi, (ui) => ui.activeModal);

@@ -4,5 +4,10 @@
     "dist/": true,
     "server/node_modules/": true,
     "client/node_modules/": true
+  },
+  "typescript.tsdk": "client\\node_modules\\typescript\\lib",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
   }
 }

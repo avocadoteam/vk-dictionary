@@ -17,6 +17,7 @@ export enum FetchingStateName {
   WordPhotos = 'word_photos',
   WordInfo = 'word_info',
   WordOfDay = 'word_of_day',
+  Premium = 'premium',
 }
 
 export enum FetchingStatus {
