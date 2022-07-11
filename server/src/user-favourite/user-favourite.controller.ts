@@ -39,6 +39,7 @@ export class UserFavouriteController {
   ) {
     return this.ufService.getUserFavourites(`${vkUserId}`);
   }
+
   @Get('/premium')
   getUserPremium(
     @Query(
