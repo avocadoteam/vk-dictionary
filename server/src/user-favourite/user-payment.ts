@@ -1,7 +1,6 @@
-import { HttpService, Inject, Injectable, Logger } from "@nestjs/common";
-import { ConfigType } from "@nestjs/config";
-import integrationConfig from "src/config/integration.config";
-import { errMap } from "src/utils/errors";
+import { HttpService, Inject, Injectable, Logger } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import integrationConfig from 'src/config/integration.config';
 
 @Injectable()
 export class UserPaymentService {
@@ -25,7 +24,7 @@ export class UserPaymentService {
       return !!data?.data?.vkUserId;
     } catch (error) {
       this.logger.log(`hasUserAvocadoPlus error`);
-      this.logger.error(errMap(error));
+      console.error(error);
       return false;
     }
   }
