@@ -1,5 +1,5 @@
 import { ChangeFragmentResponse } from '@vkontakte/vk-bridge';
-import { ClientTheme } from 'core/models';
+import { ClientTheme, FetchingStateName } from 'core/models';
 import { store } from 'core/store';
 import { vkBridge } from './instance';
 import { manualChangeStatusBar } from './theme';
@@ -31,6 +31,7 @@ vkBridge.subscribe(({ detail: { type, data } }) => {
         type: 'SET_SELECTED_WORD_ID',
         payload: wordId,
       });
+      store.dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.WordInfo });
     }
   }
 
