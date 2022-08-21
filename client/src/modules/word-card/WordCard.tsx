@@ -82,7 +82,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
                   fontSize: '19px',
                   lineHeight: '24px',
                   letterSpacing: '0.38px',
-                })} `}
+                })} usePRO`}
               >
                 Такого слова нет
               </Text>
@@ -97,7 +97,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
                 letterSpacing: '-0.32px',
                 fontStyle: 'normal',
                 fontWeight: 'normal',
-              })}`}
+              })} usePRO`}
             >
               Мы не смогли ничего найти.
             </Text>

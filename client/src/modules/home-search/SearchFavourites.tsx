@@ -151,7 +151,7 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
                 fontSize: '19px',
                 lineHeight: '24px',
                 letterSpacing: '0.38px',
-              })} `}
+              })} usePRO`}
             >
               Закладок нет
             </Text>
@@ -166,7 +166,7 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
               letterSpacing: '-0.32px',
               fontStyle: 'normal',
               fontWeight: 'normal',
-            })}`}
+            })} usePRO`}
           >
             Добавьте любое слово в закладки, чтобы оно появилось тут.
           </Text>

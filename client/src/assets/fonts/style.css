@@ -22,6 +22,11 @@
 
 html,
 body,
-div#root {
+div#root,
+input {
+  font-family: SF Pro Rounded !important;
+}
+
+.usePRO {
   font-family: SF Pro Rounded !important;
 }

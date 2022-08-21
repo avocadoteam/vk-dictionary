@@ -50,3 +50,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 keys
+build.zip
