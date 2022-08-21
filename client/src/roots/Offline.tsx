@@ -39,7 +39,7 @@ export const Offline = React.memo(() => {
         </Div>
       </Group>
       <Group separator="hide" className={css({ textAlign: 'center' })}>
-        <Title weight="bold" level="2" className="useMonrope manropeBold">
+        <Title weight="bold" level="2">
           Нет интернета
         </Title>
       </Group>

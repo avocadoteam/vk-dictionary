@@ -82,7 +82,7 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
                   fontSize: '19px',
                   lineHeight: '24px',
                   letterSpacing: '0.38px',
-                })} useMonrope manropeBold`}
+                })} `}
               >
                 Такого слова нет
               </Text>
@@ -123,7 +123,6 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
 type StyleProps = { dark: boolean; hasPhotos: boolean };
 
 const textPreview: StyleFunction<{}, StyleProps> = ({ dark, hasPhotos }) => ({
-  fontFamily: 'Inter',
   fontSize: '15px',
   fontWeight: 'normal',
   lineHeight: '20px',
@@ -135,7 +134,6 @@ const textPreview: StyleFunction<{}, StyleProps> = ({ dark, hasPhotos }) => ({
     : 'rgba(0, 0, 0, 0.85)',
   '>dfn:first-child': {
     letterSpacing: '1px',
-    fontFamily: `'Manrope VF', Manrope, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;`,
     fontStyle: 'normal !important',
     fontWeight: 'bold',
     display: 'block',

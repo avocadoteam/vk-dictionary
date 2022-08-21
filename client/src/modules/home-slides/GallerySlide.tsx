@@ -18,7 +18,7 @@ export const GallerySlide = React.memo<{ title: string }>(({ title }) => {
           margin: 'auto 44px',
           textAlign: 'center',
           justifyContent: 'center',
-        })} useMonrope manropeBold`}
+        })} `}
       >
         {title}
       </Text>

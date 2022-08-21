@@ -4,7 +4,6 @@ export const textPreview: StyleFunction<{}, { dark: boolean }> = ({ dark }) => (
   padding: '1px 15px',
   height: 44,
   overflow: 'hidden',
-  fontFamily: 'Inter',
   '>dfn:first-child': {
     display: 'block',
     fontSize: '16px',

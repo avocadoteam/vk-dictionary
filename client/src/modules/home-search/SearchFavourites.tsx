@@ -151,7 +151,7 @@ export const SearchFavourites = React.memo<{ openCard: () => void }>(({ openCard
                 fontSize: '19px',
                 lineHeight: '24px',
                 letterSpacing: '0.38px',
-              })} useMonrope manropeBold`}
+              })} `}
             >
               Закладок нет
             </Text>
