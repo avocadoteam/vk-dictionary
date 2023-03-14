@@ -5,6 +5,8 @@ import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { getSelectedCardData, isWordNonExists } from 'core/selectors/word';
 import { isDifferentLayout } from 'core/utils';
 import { normalizeText } from 'core/utils/formats';
+import { useAdsBanner } from 'modules/ads/useAdsBanner';
+import { useCheckNativeAds } from 'modules/ads/useNativeAds';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { StyleFunction, useFela } from 'react-fela';
@@ -21,6 +23,9 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
   const textRef = React.useRef<HTMLDivElement | null>(null);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const definitionRef = React.useRef<HTMLDivElement | null>(null);
+
+  useAdsBanner();
+  useCheckNativeAds();
 
   React.useEffect(() => {
     if (isEmpty) {
@@ -113,7 +118,6 @@ export const WordCard = React.memo<{ pushed: number }>(({ pushed }) => {
             }}
           />
         </div>
-
         <WordMenu />
       </If>
     </div>

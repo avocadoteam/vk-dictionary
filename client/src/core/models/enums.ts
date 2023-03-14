@@ -8,7 +8,7 @@ export enum AppUser {
 }
 
 export enum FetchingStateName {
-  Ads = 'ads',
+  CheckAds = 'check_ads',
   UserSKeys = 'user_storage_keys',
   SearchExpDict = 'search_exp_dict',
   MostFrequentWords = 'most_frequent_words',

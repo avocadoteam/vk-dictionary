@@ -1,16 +1,9 @@
 import * as models from 'core/models';
-import {
-  ATTEMPTS_BEFORE_NEXT,
-  ClientTheme,
-  FetchingStatus,
-  MainView,
-  SelectedHomeSlide,
-  SnackType,
-} from 'core/models';
+import { FetchingStatus, MainView, SelectedHomeSlide, SnackType } from 'core/models';
 import { defaultSearchLayoutHeight } from 'core/utils';
 
 export const initialState: models.AppState['ui'] = {
-  theme: ClientTheme.Light,
+  theme: 'space_gray',
   snacksQueue: [],
   fetchingDatas: {},
   notifications: false,
@@ -23,10 +16,6 @@ export const initialState: models.AppState['ui'] = {
   expDictSearch: '',
   searchHeight: defaultSearchLayoutHeight,
   searchY: 0,
-  ads: {
-    show: true,
-    beforeNext: ATTEMPTS_BEFORE_NEXT,
-  },
   autoSetForward: 0,
   mainView: MainView.Home,
   activeModal: null,
@@ -170,24 +159,6 @@ export const reducer = (
       return {
         ...state,
         searchY: dispatch.payload,
-      };
-    }
-    case 'SET_ADS': {
-      return {
-        ...state,
-        ads: {
-          ...state.ads,
-          show: dispatch.payload,
-        },
-      };
-    }
-    case 'SET_ADS_ATTEMPTS': {
-      return {
-        ...state,
-        ads: {
-          ...state.ads,
-          beforeNext: dispatch.payload,
-        },
       };
     }
     case 'TELL_AUTO_SET_FORWARD': {

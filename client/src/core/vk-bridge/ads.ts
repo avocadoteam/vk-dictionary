@@ -1,5 +1,5 @@
+import { EAdsFormats } from '@vkontakte/vk-bridge';
 import { vkBridge } from './instance';
 
-export const getAdsData = vkBridge.supports('VKWebAppGetAds' as any)
-  ? vkBridge.send('VKWebAppGetAds' as any)
-  : Promise.reject();
+export const checkNativeAds = () =>
+  vkBridge.send('VKWebAppCheckNativeAds', { ad_format: EAdsFormats.INTERSTITIAL });

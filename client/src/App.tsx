@@ -17,7 +17,6 @@ const App = React.memo(() => {
       type: 'SET_UPDATING_DATA',
       payload: FetchingStateName.UserSKeys,
     });
-    dispatch({ type: 'SET_UPDATING_DATA', payload: FetchingStateName.Ads });
     console.log('App version is', appV);
   }, []);
 

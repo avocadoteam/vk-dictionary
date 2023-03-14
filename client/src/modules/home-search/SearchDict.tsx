@@ -1,10 +1,9 @@
 import { Placeholder, Search, Spinner, Text } from '@vkontakte/vkui';
-import { AppDispatchActions, SearchResult } from 'core/models';
+import { AppDispatchActions } from 'core/models';
 import { isThemeDrak } from 'core/selectors/common';
 import * as sSel from 'core/selectors/search';
 import { stopEvents } from 'core/utils';
 import { normalizeTextPreview, shapeTextSearch } from 'core/utils/formats';
-import { AdsBanner } from 'modules/ads';
 import { If } from 'modules/atoms';
 import React from 'react';
 import { useFela } from 'react-fela';
@@ -12,8 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { animated, useChain, useTransition } from 'react-spring';
 import { textPreview } from './style';
 import { WordDay } from './WordDay';
-
-const adsArr: (SearchResult | { t: 'ads' })[] = [{ t: 'ads' }];
 
 const showFullText = window.screen.width > 320;
 
@@ -121,20 +118,15 @@ export const SearchDict = React.memo<{ openCard: () => void }>(({ openCard: goFo
         onPointerDown={stopEvents}
       >
         <If is={!!q}>{resultsRender}</If>
-        <If is={!q && !!mostFreqValues}>
-          {adsArr.concat(mostFreqValues ?? []).map((v) =>
-            't' in v && v.t === 'ads' ? (
-              <AdsBanner key="ads" />
-            ) : 'id' in v ? (
-              <div key={v.id} className={css({ padding: '9px 0' })} onClick={() => openCard(v.id)}>
-                <div
-                  className={css(textPreview)}
-                  dangerouslySetInnerHTML={{ __html: normalizeTextPreview(v.definition ?? '') }}
-                />
-              </div>
-            ) : null
-          )}
-        </If>
+        {!q &&
+          mostFreqValues?.map((v) => (
+            <div key={v.id} className={css({ padding: '9px 0' })} onClick={() => openCard(v.id)}>
+              <div
+                className={css(textPreview)}
+                dangerouslySetInnerHTML={{ __html: normalizeTextPreview(v.definition ?? '') }}
+              />
+            </div>
+          ))}
         <If is={showEmpty}>
           <Placeholder>
             <Text

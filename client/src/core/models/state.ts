@@ -1,3 +1,4 @@
+import { AppearanceSchemeType } from '@vkontakte/vk-bridge';
 import { CallHistoryMethodAction, LocationChangeAction, RouterState } from 'connected-react-router';
 import { Dispatch } from 'redux';
 import { FetchingStateName, FetchingStatus, MainView, SelectedHomeSlide } from './enums';
@@ -9,7 +10,7 @@ declare module 'react-redux' {
 
 export type AppState = {
   ui: {
-    theme: ClientTheme;
+    theme: AppearanceSchemeType;
     fetchingDatas: {
       [key in FetchingStateName]?: {
         status: FetchingStatus;
@@ -30,10 +31,6 @@ export type AppState = {
     expDictSearch: string;
     searchHeight: string;
     searchY: number;
-    ads: {
-      show: boolean;
-      beforeNext: number;
-    };
     autoSetForward: number;
   };
   router: RouterState;
@@ -43,7 +40,7 @@ export type AppDispatch =
   | FetchUpdateAction
   | FetchReadyAction
   | FetchErrorAction
-  | { type: 'SET_THEME'; payload: ClientTheme }
+  | { type: 'SET_THEME'; payload: AppearanceSchemeType }
   | { type: 'SET_NOTIFICATIONS'; payload: boolean }
   | { type: 'SET_APP_CONNECT'; payload: boolean }
   | { type: 'SET_APP_USER'; payload: boolean }
@@ -55,8 +52,6 @@ export type AppDispatch =
   | { type: 'SET_SEARCH_HEIGHT'; payload: string }
   | { type: 'SET_SEARCH_Y'; payload: number }
   | { type: 'TRIGGER_SEARCH_HEIGHT'; payload: string }
-  | { type: 'SET_ADS'; payload: boolean }
-  | { type: 'SET_ADS_ATTEMPTS'; payload: number }
   | { type: 'TELL_AUTO_SET_FORWARD'; payload: number }
   | { type: 'SET_MAIN_VIEW'; payload: MainView }
   | { type: 'SET_MODAL'; payload: AppState['ui']['activeModal'] }
@@ -94,9 +89,3 @@ export type FetchResponse<T> = {
 };
 
 export type FetchigReadyPayload = { name: FetchingStateName; data: any };
-
-export enum ClientTheme {
-  oldLight = 'client_light',
-  Light = 'bright_light',
-  Dark = 'space_gray',
-}
