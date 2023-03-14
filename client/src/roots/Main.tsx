@@ -1,11 +1,14 @@
+import { EAdsFormats } from '@vkontakte/vk-bridge';
 import { Panel, PanelHeader, View } from '@vkontakte/vkui';
 import { goBack } from 'connected-react-router';
 import { useViewChange } from 'core/hooks';
 import { AppDispatchActions, MainView } from 'core/models';
+import { canShowNativeAds } from 'core/selectors/ads';
 import { isAutoSet, isThemeDrak } from 'core/selectors/common';
 import { getMainView } from 'core/selectors/main';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { isPlatformIOS } from 'core/selectors/settings';
+import { vkBridge } from 'core/vk-bridge/instance';
 import { SearchLayout } from 'modules/home-search';
 import { DictGallery } from 'modules/home-slides';
 import { RootModals } from 'modules/modals/Root';
@@ -20,7 +23,7 @@ export const Main = React.memo(() => {
   const activePanel = useSelector(getMainView);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
   const dark = useSelector(isThemeDrak);
-  const appearance = dark ? 'dark' : 'light';
+  const canAds = useSelector(canShowNativeAds);
   const up = useSelector(isAutoSet);
   const { css } = useFela({ hasPhotos, dark });
   const dispatch = useDispatch<AppDispatchActions>();
@@ -47,7 +50,10 @@ export const Main = React.memo(() => {
       dispatch(goBack());
     }
     Push(0);
-  }, [handleBack, dispatch]);
+    if (canAds) {
+      vkBridge.send('VKWebAppShowNativeAds', { ad_format: EAdsFormats.INTERSTITIAL });
+    }
+  }, [handleBack, dispatch, canAds]);
 
   const tapToTopHeader = React.useCallback(() => {
     Push((v) => v + 1);

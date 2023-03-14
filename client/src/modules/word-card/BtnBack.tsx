@@ -1,11 +1,8 @@
 import { Icon24ChevronLeft } from '@vkontakte/icons';
-import { EAdsFormats } from '@vkontakte/vk-bridge';
 import { Button } from '@vkontakte/vkui';
-import { canShowNativeAds } from 'core/selectors/ads';
 import { isThemeDrak } from 'core/selectors/common';
 import { hasAtLeastOnePhoto } from 'core/selectors/photos';
 import { stopEvents } from 'core/utils/helpers';
-import { vkBridge } from 'core/vk-bridge/instance';
 import React from 'react';
 import { useFela } from 'react-fela';
 import { useSelector } from 'react-redux';
@@ -14,13 +11,10 @@ export const BtnBack = React.memo<{ swipeBack: () => void }>(({ swipeBack }) => 
   const { css } = useFela();
   const dark = useSelector(isThemeDrak);
   const hasPhotos = useSelector(hasAtLeastOnePhoto);
-  const canAds = useSelector(canShowNativeAds);
 
   const btnClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     stopEvents(e);
-    if (canAds) {
-      vkBridge.send('VKWebAppShowNativeAds', { ad_format: EAdsFormats.INTERSTITIAL });
-    }
+
     swipeBack();
   };
 
